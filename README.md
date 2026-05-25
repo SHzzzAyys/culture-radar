@@ -42,6 +42,8 @@ The script creates:
 - Do not use buy, sell, hold, target price, position sizing, or personalized investment advice language.
 - Treat every company direction as `TBD` until the evidence log is complete.
 
+See also: [`docs/first_judgment_runbook.md`](docs/first_judgment_runbook.md) — the single-day execution checklist used to produce the first real, pre-registered judgment. Re-read its "no optimizing templates today" rule whenever you feel the urge to extend scaffolding instead of running research.
+
 ## Default Company Universe
 
 The first 15 selected names are split between enterprise SaaS and semiconductors:
