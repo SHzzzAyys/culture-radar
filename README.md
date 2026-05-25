@@ -53,7 +53,7 @@ The first 15 selected names are split between enterprise SaaS and semiconductors
 
 Alternates:
 
-- Okta, Twilio, KLA.
+- Okta, Twilio, KLA, Tesla (cross-sector — auto / EV / energy).
 
 ## Three-Month Output Target
 

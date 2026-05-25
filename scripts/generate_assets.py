@@ -271,6 +271,20 @@ COMPANIES = [
         "why": "Backup semicap comparator for AMAT/Lam Research.",
         "ir_url": "https://ir.kla.com",
     },
+    {
+        "company": "Tesla",
+        "ticker": "TSLA",
+        "industry": "Automotive / EV",
+        "segment": "Electric vehicles / energy / autonomy",
+        "selected": "No",
+        "priority": "Alternate",
+        "data_score": 5,
+        "story_score": 5,
+        "peer_score": 3,
+        "pilot_role": "Alternate (cross-sector)",
+        "why": "Cross-sector alternate. Huge public employee footprint, extreme management-language volatility, frequent talent inflows/outflows; no clean SaaS or semi peer, so kept as alternate rather than core.",
+        "ir_url": "https://ir.tesla.com",
+    },
 ]
 
 COMPANY_HEADERS = [
@@ -769,11 +783,11 @@ def build_workbook() -> None:
     create_readme_sheet(workbook)
     add_table_sheet(workbook, "Company Universe", COMPANY_HEADERS, company_rows())
     universe = workbook["Company Universe"]
-    add_validation(universe, "E2:E19", ["Yes", "No"])
-    add_validation(universe, "F2:F19", ["Core", "Alternate"])
+    add_validation(universe, "E2:E20", ["Yes", "No"])
+    add_validation(universe, "F2:F20", ["Core", "Alternate"])
     add_validation(
         universe,
-        "M2:M19",
+        "M2:M20",
         ["Not started", "In progress", "Baseline complete", "Ready to publish", "Paused"],
     )
     add_table_sheet(workbook, "Judgment Tracker", TRACKER_HEADERS, [])
