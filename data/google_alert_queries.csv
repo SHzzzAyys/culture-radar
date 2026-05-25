@@ -1,0 +1,91 @@
+﻿Company,Ticker,Category,Google Alerts Query,Alert Frequency,Owner,Status
+Salesforce,CRM,Layoffs,Salesforce layoffs,At most once a day,,Not configured
+Salesforce,CRM,Lawsuit,Salesforce lawsuit,At most once a day,,Not configured
+Salesforce,CRM,SEC,Salesforce SEC,At most once a day,,Not configured
+Salesforce,CRM,Investigation,Salesforce investigation,At most once a day,,Not configured
+Salesforce,CRM,Culture,Salesforce culture,At most once a day,,Not configured
+Salesforce,CRM,Executive Departure,Salesforce executive departure,At most once a day,,Not configured
+ServiceNow,NOW,Layoffs,ServiceNow layoffs,At most once a day,,Not configured
+ServiceNow,NOW,Lawsuit,ServiceNow lawsuit,At most once a day,,Not configured
+ServiceNow,NOW,SEC,ServiceNow SEC,At most once a day,,Not configured
+ServiceNow,NOW,Investigation,ServiceNow investigation,At most once a day,,Not configured
+ServiceNow,NOW,Culture,ServiceNow culture,At most once a day,,Not configured
+ServiceNow,NOW,Executive Departure,ServiceNow executive departure,At most once a day,,Not configured
+Workday,WDAY,Layoffs,Workday layoffs,At most once a day,,Not configured
+Workday,WDAY,Lawsuit,Workday lawsuit,At most once a day,,Not configured
+Workday,WDAY,SEC,Workday SEC,At most once a day,,Not configured
+Workday,WDAY,Investigation,Workday investigation,At most once a day,,Not configured
+Workday,WDAY,Culture,Workday culture,At most once a day,,Not configured
+Workday,WDAY,Executive Departure,Workday executive departure,At most once a day,,Not configured
+Snowflake,SNOW,Layoffs,Snowflake layoffs,At most once a day,,Not configured
+Snowflake,SNOW,Lawsuit,Snowflake lawsuit,At most once a day,,Not configured
+Snowflake,SNOW,SEC,Snowflake SEC,At most once a day,,Not configured
+Snowflake,SNOW,Investigation,Snowflake investigation,At most once a day,,Not configured
+Snowflake,SNOW,Culture,Snowflake culture,At most once a day,,Not configured
+Snowflake,SNOW,Executive Departure,Snowflake executive departure,At most once a day,,Not configured
+Datadog,DDOG,Layoffs,Datadog layoffs,At most once a day,,Not configured
+Datadog,DDOG,Lawsuit,Datadog lawsuit,At most once a day,,Not configured
+Datadog,DDOG,SEC,Datadog SEC,At most once a day,,Not configured
+Datadog,DDOG,Investigation,Datadog investigation,At most once a day,,Not configured
+Datadog,DDOG,Culture,Datadog culture,At most once a day,,Not configured
+Datadog,DDOG,Executive Departure,Datadog executive departure,At most once a day,,Not configured
+HubSpot,HUBS,Layoffs,HubSpot layoffs,At most once a day,,Not configured
+HubSpot,HUBS,Lawsuit,HubSpot lawsuit,At most once a day,,Not configured
+HubSpot,HUBS,SEC,HubSpot SEC,At most once a day,,Not configured
+HubSpot,HUBS,Investigation,HubSpot investigation,At most once a day,,Not configured
+HubSpot,HUBS,Culture,HubSpot culture,At most once a day,,Not configured
+HubSpot,HUBS,Executive Departure,HubSpot executive departure,At most once a day,,Not configured
+Atlassian,TEAM,Layoffs,Atlassian layoffs,At most once a day,,Not configured
+Atlassian,TEAM,Lawsuit,Atlassian lawsuit,At most once a day,,Not configured
+Atlassian,TEAM,SEC,Atlassian SEC,At most once a day,,Not configured
+Atlassian,TEAM,Investigation,Atlassian investigation,At most once a day,,Not configured
+Atlassian,TEAM,Culture,Atlassian culture,At most once a day,,Not configured
+Atlassian,TEAM,Executive Departure,Atlassian executive departure,At most once a day,,Not configured
+MongoDB,MDB,Layoffs,MongoDB layoffs,At most once a day,,Not configured
+MongoDB,MDB,Lawsuit,MongoDB lawsuit,At most once a day,,Not configured
+MongoDB,MDB,SEC,MongoDB SEC,At most once a day,,Not configured
+MongoDB,MDB,Investigation,MongoDB investigation,At most once a day,,Not configured
+MongoDB,MDB,Culture,MongoDB culture,At most once a day,,Not configured
+MongoDB,MDB,Executive Departure,MongoDB executive departure,At most once a day,,Not configured
+NVIDIA,NVDA,Layoffs,NVIDIA layoffs,At most once a day,,Not configured
+NVIDIA,NVDA,Lawsuit,NVIDIA lawsuit,At most once a day,,Not configured
+NVIDIA,NVDA,SEC,NVIDIA SEC,At most once a day,,Not configured
+NVIDIA,NVDA,Investigation,NVIDIA investigation,At most once a day,,Not configured
+NVIDIA,NVDA,Culture,NVIDIA culture,At most once a day,,Not configured
+NVIDIA,NVDA,Executive Departure,NVIDIA executive departure,At most once a day,,Not configured
+AMD,AMD,Layoffs,AMD layoffs,At most once a day,,Not configured
+AMD,AMD,Lawsuit,AMD lawsuit,At most once a day,,Not configured
+AMD,AMD,SEC,AMD SEC,At most once a day,,Not configured
+AMD,AMD,Investigation,AMD investigation,At most once a day,,Not configured
+AMD,AMD,Culture,AMD culture,At most once a day,,Not configured
+AMD,AMD,Executive Departure,AMD executive departure,At most once a day,,Not configured
+Intel,INTC,Layoffs,Intel layoffs,At most once a day,,Not configured
+Intel,INTC,Lawsuit,Intel lawsuit,At most once a day,,Not configured
+Intel,INTC,SEC,Intel SEC,At most once a day,,Not configured
+Intel,INTC,Investigation,Intel investigation,At most once a day,,Not configured
+Intel,INTC,Culture,Intel culture,At most once a day,,Not configured
+Intel,INTC,Executive Departure,Intel executive departure,At most once a day,,Not configured
+Micron,MU,Layoffs,Micron layoffs,At most once a day,,Not configured
+Micron,MU,Lawsuit,Micron lawsuit,At most once a day,,Not configured
+Micron,MU,SEC,Micron SEC,At most once a day,,Not configured
+Micron,MU,Investigation,Micron investigation,At most once a day,,Not configured
+Micron,MU,Culture,Micron culture,At most once a day,,Not configured
+Micron,MU,Executive Departure,Micron executive departure,At most once a day,,Not configured
+Qualcomm,QCOM,Layoffs,Qualcomm layoffs,At most once a day,,Not configured
+Qualcomm,QCOM,Lawsuit,Qualcomm lawsuit,At most once a day,,Not configured
+Qualcomm,QCOM,SEC,Qualcomm SEC,At most once a day,,Not configured
+Qualcomm,QCOM,Investigation,Qualcomm investigation,At most once a day,,Not configured
+Qualcomm,QCOM,Culture,Qualcomm culture,At most once a day,,Not configured
+Qualcomm,QCOM,Executive Departure,Qualcomm executive departure,At most once a day,,Not configured
+Applied Materials,AMAT,Layoffs,Applied Materials layoffs,At most once a day,,Not configured
+Applied Materials,AMAT,Lawsuit,Applied Materials lawsuit,At most once a day,,Not configured
+Applied Materials,AMAT,SEC,Applied Materials SEC,At most once a day,,Not configured
+Applied Materials,AMAT,Investigation,Applied Materials investigation,At most once a day,,Not configured
+Applied Materials,AMAT,Culture,Applied Materials culture,At most once a day,,Not configured
+Applied Materials,AMAT,Executive Departure,Applied Materials executive departure,At most once a day,,Not configured
+Lam Research,LRCX,Layoffs,Lam Research layoffs,At most once a day,,Not configured
+Lam Research,LRCX,Lawsuit,Lam Research lawsuit,At most once a day,,Not configured
+Lam Research,LRCX,SEC,Lam Research SEC,At most once a day,,Not configured
+Lam Research,LRCX,Investigation,Lam Research investigation,At most once a day,,Not configured
+Lam Research,LRCX,Culture,Lam Research culture,At most once a day,,Not configured
+Lam Research,LRCX,Executive Departure,Lam Research executive departure,At most once a day,,Not configured

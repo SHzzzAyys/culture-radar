@@ -1,0 +1,14 @@
+﻿Week,Phase,Monday,Tuesday,Wednesday,Thursday,Friday Deliverable,Acceptance Check
+0,Setup,Create workbook and source library.,Confirm first 15 companies and 3 alternates.,Set Google Alerts query list.,Assign 3 pilot companies.,Research base ready.,Workbook exists; selected company count is 15; no judgment rows without validation metrics.
+1,Pilot research,Read alerts and IR pages for pilot companies.,Record Glassdoor ratings and review themes.,Map LinkedIn talent-flow sample.,Read latest 2-3 transcripts.,3 internal draft cards.,Each draft card has four evidence lines and source links.
+2,Pilot close,Patch missing sources.,Normalize evidence notes.,Pick the strongest publishable card.,Prepare public about page.,Public launch package ready.,Pilot workload is measured; publishing cadence is set.
+3,Launch,Publish about page.,Publish methodology article.,Publish first card.,Post bilingual X thread.,Update judgment tracker.,Every public claim has a timestamp and source link.
+4,Launch,Refresh alerts.,Review second batch company evidence.,Update LinkedIn notes.,Draft second card.,Publish newsletter issue 2.,One new falsifiable judgment is logged.
+5,Weekly rhythm,"Alerts, transcript, red flags.",Glassdoor and review themes.,LinkedIn talent-flow notes.,Select 1-2 companies.,Publish bilingual issue.,No more than one main judgment per issue.
+6,Weekly rhythm,"Alerts, transcript, red flags.",Glassdoor and review themes.,LinkedIn talent-flow notes.,Select 1-2 companies.,Publish bilingual issue.,At least 10 high-quality external interactions.
+7,Weekly rhythm,"Alerts, transcript, red flags.",Glassdoor and review themes.,LinkedIn talent-flow notes.,Select 1-2 companies.,Publish bilingual issue.,Reader feedback log includes 3-5 conversations.
+8,Weekly rhythm,"Alerts, transcript, red flags.",Glassdoor and review themes.,LinkedIn talent-flow notes.,Select 1-2 companies.,Publish bilingual issue.,Six-week streak remains intact.
+9,Validation loop,Audit tracker for missing thresholds.,Update baseline coverage map.,Patch weakest company tabs.,Draft recap notes.,Publish bilingual issue.,"Every open judgment has one primary metric, threshold, and deadline."
+10,Validation loop,Refresh alerts.,Complete remaining baseline gaps.,Review reader feedback.,Pick follow-up companies.,Publish bilingual issue.,Baseline progress reaches at least 12 companies.
+11,Validation loop,Review tracker statuses.,Prepare methodology recap.,Identify signal/noise lessons.,Draft week-12 review.,Publish bilingual issue.,Do not publish hit-rate percentages before 10 closed judgments.
+12,Review,Close any due judgments.,Update all statuses honestly.,Write method review.,Decide next operating mode.,Publish three-month review.,"12-15 baseline files, 8-12 cards, 10 reader feedback points."

@@ -1,0 +1,2081 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CultureRadar — MVP Command Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,500&family=Inter:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #0a0a0a;
+      --ink-2: #1a1a1a;
+      --grey-1: #4a4a4a;
+      --grey-2: #767676;
+      --grey-3: #b5b5b5;
+      --grey-4: #e6e6e6;
+      --rule: #000000;
+      --rule-soft: #d8d8d8;
+      --paper: #ffffff;
+      --paper-tint: #fafafa;
+      --accent: #c8102e;
+      --serif: "Source Serif 4", "Noto Serif SC", "Source Han Serif SC", "Songti SC", SimSun, Georgia, serif;
+      --sans: Inter, "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    html {
+      background: #f0ede4;
+    }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      font-feature-settings: "pnum", "lnum", "kern", "liga";
+      padding: 0 24px;
+      max-width: 1500px;
+      margin: 0 auto;
+    }
+    @media (min-width: 720px) {
+      body { padding: 0 56px; }
+    }
+    @media (min-width: 1100px) {
+      body { padding: 0 88px; }
+    }
+    @media (min-width: 1400px) {
+      body { padding: 0 120px; }
+    }
+
+    a {
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--rule-soft);
+      transition: border-color .15s, color .15s;
+    }
+    a:hover { border-bottom-color: var(--ink); }
+
+    .shell { max-width: 1120px; margin: 0 auto; padding: 0; }
+
+    /* ─── Masthead ─────────────────────────────────── */
+    .masthead {
+      border-top: 4px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      padding: 12px 0;
+      background: var(--paper);
+    }
+    .masthead .shell {
+      display: flex; justify-content: space-between; align-items: baseline;
+      gap: 24px;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--grey-1);
+      font-weight: 500;
+    }
+    .masthead .meta {
+      display: flex; gap: 22px; flex-wrap: wrap;
+    }
+    .masthead .meta span { display: inline-block; }
+    .masthead .live {
+      color: var(--accent);
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .masthead .live::before {
+      content: ""; width: 6px; height: 6px;
+      background: var(--accent);
+      display: inline-block;
+    }
+
+    /* ─── Topbar ─────────────────────────────────── */
+    .topbar {
+      position: sticky; top: 0; z-index: 30;
+      border-bottom: 1px solid var(--rule);
+      background: var(--paper);
+    }
+    .topbar .shell {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 48px;
+      min-height: 72px;
+    }
+    .brand {
+      display: flex; align-items: baseline; gap: 14px;
+      border: 0;
+    }
+    .brand-mark {
+      font-family: var(--serif);
+      font-weight: 700;
+      font-size: 30px;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: var(--accent);
+      font-style: italic;
+    }
+    .brand-text strong {
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: 22px;
+      line-height: 1;
+      letter-spacing: -0.015em;
+      color: var(--ink);
+    }
+    nav {
+      display: flex; align-items: center; gap: 26px;
+      overflow-x: auto; white-space: nowrap;
+      scrollbar-width: none;
+      justify-self: end;
+    }
+    nav::-webkit-scrollbar { display: none; }
+    nav a {
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 4px 0;
+      border-bottom: 0;
+      position: relative;
+    }
+    nav a::after {
+      content: "";
+      position: absolute; left: 0; right: 0; bottom: -2px;
+      height: 1px; background: var(--ink);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .2s ease;
+    }
+    nav a:hover::after { transform: scaleX(1); }
+
+    /* ─── Hero ───────────────────────────────────── */
+    .hero {
+      padding: 96px 0 64px;
+      border-bottom: 1px solid var(--rule);
+      position: relative;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      max-width: 1080px;
+    }
+    .hero-kicker {
+      display: flex; align-items: baseline; gap: 18px;
+      margin-bottom: 32px;
+      font-family: var(--serif);
+      font-size: 14px;
+      font-style: italic;
+      color: var(--grey-1);
+    }
+    .hero-kicker .vol {
+      color: var(--accent);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+    .hero-kicker .dash {
+      color: var(--grey-3); font-style: normal;
+    }
+    .hero h1 {
+      margin: 0 0 36px;
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: clamp(52px, 7.4vw, 108px);
+      line-height: 0.96;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      max-width: 16ch;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .hero .lead {
+      max-width: 56ch;
+      margin: 0 0 56px;
+      color: var(--ink-2);
+      font-family: var(--serif);
+      font-size: 21px;
+      line-height: 1.5;
+      font-weight: 400;
+    }
+    .hero-actions {
+      display: flex; flex-wrap: wrap;
+      gap: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--rule-soft);
+    }
+    .button {
+      display: inline-flex; align-items: baseline; gap: 8px;
+      color: var(--ink);
+      font-size: 13px; font-weight: 600;
+      letter-spacing: 0.02em;
+      border-bottom: 1px solid var(--ink);
+      padding: 2px 0;
+    }
+    .button:hover {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+    .button.primary { color: var(--accent); border-bottom-color: var(--accent); }
+    .button.primary:hover { color: var(--ink); border-bottom-color: var(--ink); }
+    .button .arrow { font-family: var(--serif); font-size: 17px; }
+
+    /* ─── Snapshot Bar (under hero) ───────────────── */
+    .snapshot {
+      border-bottom: 1px solid var(--rule);
+      padding: 28px 0;
+    }
+    .snapshot .shell {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 48px;
+      align-items: baseline;
+    }
+    .snapshot-label {
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--grey-1);
+      font-weight: 600;
+    }
+    .snapshot-rows {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+    }
+    .snapshot-row {
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .snapshot-row .v {
+      font-family: var(--serif);
+      font-size: 32px;
+      font-weight: 500;
+      line-height: 1;
+      color: var(--grey-2);
+      letter-spacing: -0.015em;
+    }
+    .snapshot-row .v em {
+      font-style: italic;
+      font-size: 16px;
+      color: var(--grey-3);
+      margin-left: 2px;
+      font-weight: 400;
+    }
+    .snapshot-row .k {
+      font-size: 12px;
+      color: var(--ink-2);
+      font-weight: 500;
+    }
+    .snapshot-note {
+      max-width: 78ch;
+      margin: 22px 0 0;
+      grid-column: 1 / -1;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 14.5px;
+      color: var(--grey-1);
+      line-height: 1.5;
+      border-top: 1px dashed var(--rule-soft);
+      padding-top: 16px;
+    }
+    .snapshot-note::before {
+      content: "Note  ";
+      font-style: normal;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 10.5px;
+      color: var(--accent);
+      font-weight: 600;
+      margin-right: 8px;
+      vertical-align: 2px;
+    }
+
+    /* ─── Editor's Note ───────────────────────────── */
+    .pull-quote {
+      border-bottom: 1px solid var(--rule);
+      padding: 80px 0 72px;
+    }
+    .pull-quote .shell {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .pull-quote .tag-col {
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      padding-top: 12px;
+      border-top: 2px solid var(--accent);
+    }
+    .pull-quote blockquote {
+      margin: 0;
+      font-family: var(--serif);
+      font-weight: 400;
+      font-style: italic;
+      font-size: clamp(24px, 2.6vw, 36px);
+      line-height: 1.32;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      max-width: 32ch;
+    }
+    .pull-quote blockquote::before {
+      content: "\201C";
+      display: inline;
+      font-size: 1em;
+      color: var(--accent);
+      margin-right: 4px;
+    }
+    .pull-quote blockquote::after {
+      content: "\201D";
+      color: var(--accent);
+    }
+    .pull-quote .attrib {
+      margin-top: 24px;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--grey-1);
+      font-weight: 500;
+      font-style: normal;
+    }
+    .pull-quote .attrib::before {
+      content: "— ";
+      color: var(--accent);
+    }
+
+    /* ─── Main ───────────────────────────────────── */
+    main { padding: 0 0 96px; }
+    section { padding: 80px 0; border-bottom: 1px solid var(--rule); }
+    section:last-child { border-bottom: 0; }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 48px;
+      margin-bottom: 56px;
+      align-items: baseline;
+    }
+    .section-num {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 14px;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      font-style: italic;
+      padding-top: 12px;
+      border-top: 2px solid var(--accent);
+    }
+    .section-head h2 {
+      margin: 0;
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: clamp(40px, 5.2vw, 68px);
+      line-height: 0.98;
+      color: var(--ink);
+      letter-spacing: -0.025em;
+      max-width: 16ch;
+    }
+    .section-head p {
+      margin: 16px 0 0;
+      max-width: 56ch;
+      color: var(--grey-1);
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 17px;
+      line-height: 1.55;
+    }
+
+    /* ─── Metric Grid (asymmetric) ────────────────── */
+    .metric-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: 0;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+    .metric {
+      padding: 40px 32px 40px 0;
+      border-right: 1px solid var(--rule-soft);
+      position: relative;
+    }
+    .metric:not(:first-child) { padding-left: 32px; }
+    .metric:first-child {
+      background: var(--paper-tint);
+      padding-left: 32px;
+      padding-right: 32px;
+      margin-left: -32px;
+      width: calc(100% + 32px);
+    }
+    .metric:last-child { border-right: 0; padding-right: 0; }
+    .metric-key {
+      font-size: 10.5px;
+      color: var(--grey-1);
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+    .metric b {
+      display: block;
+      font-family: var(--serif);
+      font-weight: 500;
+      color: var(--ink);
+      font-size: 64px;
+      line-height: 0.95;
+      letter-spacing: -0.035em;
+    }
+    .metric:first-child b {
+      font-size: 128px;
+      letter-spacing: -0.045em;
+      color: var(--accent);
+    }
+    .metric b sup {
+      font-family: var(--serif);
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--grey-1);
+      margin-left: 4px;
+      vertical-align: super;
+      letter-spacing: 0;
+      font-style: italic;
+    }
+    .metric:first-child b sup {
+      font-size: 24px;
+      color: var(--grey-2);
+    }
+    .metric span {
+      display: block;
+      margin-top: 20px;
+      color: var(--grey-1);
+      font-size: 13px;
+      line-height: 1.5;
+      max-width: 30ch;
+    }
+
+    /* ─── Workflow ───────────────────────────────── */
+    .workflow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0;
+      border-top: 1px solid var(--rule);
+    }
+    .workflow-step {
+      padding: 36px 28px 36px 0;
+      border-right: 1px solid var(--rule-soft);
+      border-bottom: 1px solid var(--rule);
+      position: relative;
+    }
+    .workflow-step:not(:first-child) { padding-left: 28px; }
+    .workflow-step:last-child { border-right: 0; padding-right: 0; }
+    .workflow-step .num {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 13px;
+      color: var(--accent);
+      letter-spacing: 0;
+      font-weight: 500;
+      margin-bottom: 18px;
+      display: block;
+    }
+    .workflow-step h3 {
+      margin: 0 0 14px;
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 28px;
+      line-height: 1.08;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+    .workflow-step p {
+      margin: 0;
+      color: var(--grey-1);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* ─── Tabs & Table ───────────────────────────── */
+    .tabs {
+      display: flex; flex-wrap: wrap; gap: 0;
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .tab {
+      border: 0; background: transparent;
+      color: var(--grey-1); cursor: pointer;
+      font: inherit;
+      font-size: 14px; font-weight: 500;
+      padding: 14px 24px 14px 0;
+      margin-right: 4px;
+      position: relative;
+      transition: color .15s;
+      font-family: var(--serif);
+    }
+    .tab:hover { color: var(--ink); }
+    .tab.is-active { color: var(--ink); }
+    .tab.is-active::after {
+      content: "";
+      position: absolute;
+      left: 0; right: 24px; bottom: -1px;
+      height: 2px; background: var(--accent);
+    }
+    .tab-count {
+      font-family: var(--serif);
+      font-size: 12px;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--grey-2);
+      margin-left: 6px;
+    }
+    .tab.is-active .tab-count { color: var(--accent); }
+
+    .table-wrap {
+      overflow-x: auto;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+    table {
+      width: 100%; border-collapse: collapse; min-width: 880px;
+    }
+    th, td {
+      border: 0;
+      padding: 16px 18px 16px 0;
+      text-align: left; vertical-align: middle;
+      font-size: 14px;
+    }
+    th:last-child, td:last-child { padding-right: 0; }
+    thead tr {
+      border-bottom: 1px solid var(--rule);
+    }
+    th {
+      background: transparent;
+      color: var(--grey-2);
+      font-weight: 500;
+      font-style: italic;
+      font-family: var(--serif);
+      font-size: 13px;
+      letter-spacing: 0;
+      text-transform: none;
+      padding-top: 16px; padding-bottom: 16px;
+    }
+    tbody tr {
+      border-bottom: 1px solid var(--rule-soft);
+      transition: background .12s;
+    }
+    tbody tr:hover { background: var(--paper-tint); }
+    tbody tr:last-child { border-bottom: 0; }
+    td.company-name {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 18px;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+    }
+    td.ticker {
+      font-family: var(--serif);
+      font-size: 14px;
+      font-weight: 500;
+      font-style: italic;
+      color: var(--grey-1);
+    }
+    td.pilot {
+      color: var(--grey-1);
+      font-size: 13px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 0;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--grey-1);
+      background: transparent;
+      letter-spacing: 0;
+      text-transform: none;
+      border: 0;
+      font-family: var(--serif);
+      font-style: italic;
+    }
+    .tag.saas { color: var(--ink-2); }
+    .tag.semi { color: var(--ink-2); }
+    .tag.alt {
+      color: var(--accent);
+      font-style: italic;
+      font-family: var(--serif);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .score {
+      display: inline-flex; align-items: baseline; gap: 6px;
+      min-width: 90px;
+      text-align: right;
+      width: 100%;
+      justify-content: flex-end;
+    }
+    .score-num {
+      font-family: var(--serif);
+      font-size: 19px;
+      font-weight: 500;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+    }
+    .score-line { display: none; }
+    .score.high .score-num { color: var(--accent); }
+    td:nth-child(6) { text-align: right; padding-right: 24px; }
+    th:nth-child(6) { text-align: right; padding-right: 24px; }
+
+    /* ─── Roadmap ────────────────────────────────── */
+    .roadmap { display: grid; gap: 0; border-top: 1px solid var(--rule); }
+    .phase {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      border-bottom: 1px solid var(--rule);
+      padding: 44px 0;
+      gap: 48px;
+    }
+    .phase-label {
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .phase-week {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 14px;
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .phase-label b {
+      color: var(--ink);
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 38px;
+      line-height: 1.02;
+      letter-spacing: -0.025em;
+    }
+    .phase-label span {
+      color: var(--grey-1);
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+    .phase-body {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0;
+    }
+    .phase-item {
+      padding: 0 24px 0 0;
+      border-right: 1px solid var(--rule-soft);
+    }
+    .phase-item:not(:first-child) { padding-left: 24px; }
+    .phase-item:last-child { border-right: 0; padding-right: 0; }
+    .phase-item h3 {
+      margin: 0 0 10px;
+      font-family: var(--serif);
+      font-size: 19px;
+      font-weight: 500;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+    }
+    .phase-item p {
+      margin: 0;
+      color: var(--grey-1);
+      font-size: 13.5px;
+      line-height: 1.6;
+    }
+
+    /* ─── Week Table ─────────────────────────────── */
+    .week-table {
+      width: 100%;
+      border-collapse: collapse;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+    .week-table tr {
+      border-bottom: 1px dashed var(--rule-soft);
+    }
+    .week-table tr:last-child { border-bottom: 0; }
+    .week-table td {
+      padding: 22px 0;
+      vertical-align: baseline;
+      border: 0;
+    }
+    .week-table .day {
+      width: 200px;
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 26px;
+      color: var(--ink);
+      letter-spacing: -0.015em;
+    }
+    .week-table .day-num {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 13px;
+      color: var(--accent);
+      margin-right: 12px;
+      letter-spacing: 0;
+      font-weight: 500;
+    }
+    .week-table .task {
+      color: var(--ink-2);
+      font-size: 15px;
+      line-height: 1.55;
+      max-width: 56ch;
+      padding-right: 32px;
+    }
+    .week-table .est {
+      width: 120px;
+      text-align: right;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 14px;
+      color: var(--grey-1);
+    }
+
+    /* ─── Assets ─────────────────────────────────── */
+    .asset-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0;
+      border-top: 1px solid var(--rule);
+    }
+    .asset {
+      display: flex; flex-direction: column; gap: 14px;
+      padding: 40px 32px 40px 0;
+      border-right: 1px solid var(--rule-soft);
+      border-bottom: 1px solid var(--rule);
+      min-height: 220px;
+      position: relative;
+    }
+    .asset:not(:nth-child(3n+1)) { padding-left: 32px; }
+    .asset:nth-child(3n) { border-right: 0; padding-right: 0; }
+    .asset .num {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 13px;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+    .asset h3 {
+      margin: 0;
+      font-family: var(--serif);
+      font-weight: 500;
+      color: var(--ink);
+      font-size: 30px;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+    }
+    .asset p {
+      margin: 0;
+      color: var(--grey-1);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .asset .links {
+      display: flex; flex-wrap: wrap; gap: 4px 22px;
+      margin-top: auto;
+      padding-top: 18px;
+      border-top: 1px solid var(--rule-soft);
+    }
+    .mini-link {
+      display: inline-flex; align-items: baseline; gap: 4px;
+      padding: 0;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--ink);
+      letter-spacing: 0;
+      font-family: var(--serif);
+      border-bottom: 1px solid var(--rule-soft);
+    }
+    .mini-link:hover {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+    .mini-link::after {
+      content: "→";
+      font-family: var(--serif);
+      font-size: 13px;
+      letter-spacing: 0;
+      font-weight: 400;
+      margin-left: 2px;
+    }
+
+    /* ─── Protocols ──────────────────────────────── */
+    .protocol-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+    .protocol {
+      padding: 40px 40px 40px 0;
+      border-right: 1px solid var(--rule-soft);
+      position: relative;
+    }
+    .protocol:last-child { border-right: 0; padding-left: 40px; padding-right: 0; }
+    .protocol h3 {
+      margin: 0 0 28px;
+      color: var(--ink);
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 32px;
+      letter-spacing: -0.02em;
+    }
+    .protocol ul {
+      margin: 0; padding: 0;
+      list-style: none;
+      counter-reset: protocol-counter;
+    }
+    .protocol li {
+      counter-increment: protocol-counter;
+      position: relative;
+      padding: 16px 0 16px 44px;
+      border-bottom: 1px dashed var(--rule-soft);
+      color: var(--ink-2);
+      font-size: 14.5px;
+      line-height: 1.6;
+    }
+    .protocol li:last-child { border-bottom: 0; }
+    .protocol li::before {
+      content: counter(protocol-counter, lower-roman) ".";
+      position: absolute;
+      left: 0; top: 17px;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 14.5px;
+      color: var(--accent);
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+
+    /* ─── Colophon (Footer) ──────────────────────── */
+    .colophon {
+      border-top: 4px solid var(--rule);
+      background: var(--paper);
+      padding: 48px 0 64px;
+    }
+    .colophon .shell {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 48px;
+    }
+    .colophon-mast {
+      font-family: var(--serif);
+    }
+    .colophon-mast .name {
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+    .colophon-mast .name em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .colophon-mast p {
+      margin: 14px 0 0;
+      font-style: italic;
+      font-size: 14.5px;
+      color: var(--grey-1);
+      max-width: 46ch;
+      line-height: 1.5;
+    }
+    .colophon-col h4 {
+      margin: 0 0 14px;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .colophon-col p, .colophon-col ul {
+      margin: 0;
+      font-size: 13.5px;
+      color: var(--grey-1);
+      line-height: 1.7;
+      list-style: none;
+      padding: 0;
+    }
+    .colophon-col a {
+      color: var(--ink-2);
+      border-bottom: 1px solid var(--rule-soft);
+    }
+    .colophon-col a:hover {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    /* ─── Expanded company row ──────────────────── */
+    .company-row { cursor: pointer; transition: background .12s; }
+    .company-row td.company-name {
+      position: relative;
+    }
+    .company-row td.company-name::before {
+      content: "›";
+      display: inline-block;
+      margin-right: 12px;
+      color: var(--grey-3);
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 500;
+      line-height: 1;
+      vertical-align: -2px;
+      transition: transform .18s ease, color .18s ease;
+      transform-origin: 50% 55%;
+    }
+    .company-row.is-open td.company-name::before {
+      transform: rotate(90deg);
+      color: var(--accent);
+    }
+    .company-row.is-open { background: var(--paper-tint); }
+
+    .expand-row td {
+      padding: 0;
+      background: var(--paper-tint);
+      border-bottom: 1px solid var(--rule);
+    }
+    .expand-wrap {
+      display: grid;
+      gap: 32px;
+      padding: 36px 0 40px;
+    }
+    .expand-lede {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: 18px;
+      font-style: italic;
+      line-height: 1.55;
+      color: var(--ink-2);
+      letter-spacing: -0.005em;
+      max-width: 72ch;
+    }
+
+    .key-facts {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--rule-soft);
+      border-bottom: 1px solid var(--rule-soft);
+      padding: 18px 0;
+    }
+    .key-fact {
+      padding: 2px 18px 2px 0;
+      border-right: 1px solid var(--rule-soft);
+    }
+    .key-fact:not(:first-child) { padding-left: 18px; }
+    .key-fact:last-child { border-right: 0; padding-right: 0; }
+    .key-fact .label {
+      font-size: 9.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--grey-2);
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-family: var(--sans);
+    }
+    .key-fact .value {
+      font-family: var(--serif);
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--ink);
+      letter-spacing: -0.015em;
+      line-height: 1.15;
+    }
+    .key-fact .value.muted { color: var(--grey-1); }
+    .key-fact .value.accent { color: var(--accent); }
+
+    .expand-columns {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+      gap: 48px;
+    }
+    .expand-col h4 {
+      font-size: 10.5px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin: 0 0 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--rule-soft);
+      font-family: var(--sans);
+    }
+
+    .biz-list { display: grid; gap: 18px; }
+    .biz-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 6px 16px;
+      align-items: baseline;
+    }
+    .biz-row .name {
+      font-family: var(--serif);
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--ink);
+      letter-spacing: -0.005em;
+    }
+    .biz-row .share {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 15px;
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .biz-bar {
+      grid-column: 1 / -1;
+      height: 4px;
+      background: var(--grey-4);
+      overflow: hidden;
+      position: relative;
+    }
+    .biz-bar i {
+      display: block;
+      height: 100%;
+      background: var(--accent);
+    }
+    .biz-row .note {
+      grid-column: 1 / -1;
+      font-size: 12.5px;
+      color: var(--grey-1);
+      font-family: var(--serif);
+      font-style: italic;
+      line-height: 1.45;
+      margin: 0;
+    }
+
+    .culture-tags {
+      display: flex; flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+    .culture-chip {
+      display: inline-flex;
+      padding: 3px 10px;
+      font-size: 12.5px;
+      font-weight: 400;
+      color: var(--ink-2);
+      background: var(--paper);
+      border: 1px solid var(--rule-soft);
+      letter-spacing: 0;
+      font-family: var(--serif);
+      font-style: italic;
+    }
+    .culture-row {
+      padding: 14px 0;
+      border-bottom: 1px dashed var(--rule-soft);
+      font-size: 14px;
+      color: var(--ink-2);
+      line-height: 1.55;
+      font-family: var(--serif);
+    }
+    .culture-row:last-child { border-bottom: 0; }
+    .culture-row .key {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--grey-2);
+      font-weight: 600;
+      font-family: var(--sans);
+      font-style: normal;
+      margin-bottom: 6px;
+    }
+    .culture-row .glassdoor {
+      font-family: var(--serif);
+      font-size: 24px;
+      font-weight: 500;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      margin-right: 10px;
+      vertical-align: -1px;
+    }
+    .culture-row .ceo-pct {
+      color: var(--accent);
+      font-style: italic;
+      font-size: 14px;
+      font-family: var(--serif);
+    }
+    .culture-row .gd-note {
+      display: block;
+      margin-top: 8px;
+      font-style: italic;
+      font-size: 13px;
+      color: var(--grey-1);
+      line-height: 1.5;
+    }
+    .culture-row em {
+      font-style: italic;
+      color: var(--ink-2);
+    }
+
+    .expand-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-top: 20px;
+      border-top: 1px solid var(--rule-soft);
+    }
+    .pilot-note {
+      margin: 0;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 14px;
+      color: var(--grey-1);
+      line-height: 1.5;
+      max-width: 70%;
+    }
+    .pilot-note::before {
+      content: "Pilot note";
+      font-style: normal;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 10.5px;
+      font-family: var(--sans);
+      margin-right: 10px;
+      vertical-align: 1px;
+    }
+    .demo-tag {
+      display: inline-flex;
+      flex-shrink: 0;
+      padding: 5px 10px;
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      font-family: var(--sans);
+    }
+
+    .table-hint {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 6px 0 0;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 13.5px;
+      color: var(--grey-1);
+    }
+    .table-hint::before {
+      content: "›";
+      color: var(--accent);
+      font-style: normal;
+      margin-right: 8px;
+      font-size: 16px;
+      vertical-align: -1px;
+    }
+
+    /* ─── Responsive ─────────────────────────────── */
+    @media (max-width: 980px) {
+      .expand-wrap { padding: 28px 0 32px; gap: 24px; }
+      .key-facts { grid-template-columns: repeat(4, 1fr); gap: 16px 0; padding: 16px 0; }
+      .key-fact { padding: 4px 14px 4px 0; }
+      .key-fact:not(:first-child) { padding-left: 14px; }
+      .key-fact:nth-child(4n) { border-right: 0; padding-right: 0; }
+      .key-fact:nth-child(4n+1) { padding-left: 0; }
+      .expand-columns { grid-template-columns: 1fr; gap: 32px; }
+      .expand-footer { flex-direction: column; align-items: flex-start; }
+      .pilot-note { max-width: 100%; }
+      .masthead .meta { gap: 14px; }
+      .topbar .shell { grid-template-columns: 1fr; gap: 12px; min-height: auto; padding-top: 14px; padding-bottom: 14px; }
+      nav { justify-self: start; gap: 18px; }
+      .hero { padding: 64px 0 48px; }
+      .hero h1 { font-size: clamp(40px, 8vw, 64px); }
+      .hero .lead { font-size: 18px; margin-bottom: 40px; }
+      .snapshot .shell { grid-template-columns: 1fr; gap: 24px; }
+      .snapshot-rows { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+      .pull-quote .shell { grid-template-columns: 1fr; gap: 20px; }
+      .pull-quote blockquote { font-size: clamp(22px, 4vw, 32px); }
+      .section-head { grid-template-columns: 1fr; gap: 16px; }
+      .metric-grid { grid-template-columns: 1fr; }
+      .metric { border-right: 0; border-bottom: 1px solid var(--rule-soft); padding: 32px 0 !important; margin-left: 0 !important; width: 100% !important; background: transparent !important; }
+      .metric:first-child b { font-size: 96px; }
+      .metric:last-child { border-bottom: 0; }
+      .workflow, .asset-grid {
+        grid-template-columns: 1fr;
+      }
+      .workflow-step, .asset {
+        padding: 28px 0 !important;
+        border-right: 0;
+      }
+      .phase { grid-template-columns: 1fr; gap: 24px; padding: 32px 0; }
+      .phase-body { grid-template-columns: 1fr; gap: 0; }
+      .phase-item { border-right: 0; padding: 16px 0 !important; border-bottom: 1px dashed var(--rule-soft); }
+      .phase-item:last-child { border-bottom: 0; }
+      .week-table .day { width: auto; font-size: 22px; }
+      .week-table .est { display: none; }
+      .week-table .task { padding-right: 0; font-size: 14px; }
+      .week-table td { padding: 18px 0; }
+      .protocol-grid { grid-template-columns: 1fr; }
+      .protocol { padding: 28px 0 !important; border-right: 0; border-bottom: 1px solid var(--rule-soft); }
+      .protocol:last-child { border-bottom: 0; }
+      .colophon .shell { grid-template-columns: 1fr; gap: 32px; }
+    }
+    @media (max-width: 560px) {
+      .key-facts { grid-template-columns: repeat(2, 1fr); }
+      .key-fact { border-right: 0 !important; padding: 6px 0 !important; }
+      .key-fact:nth-child(odd) { border-right: 1px solid var(--rule-soft) !important; padding-right: 12px !important; }
+      .key-fact:nth-child(even) { padding-left: 12px !important; }
+      .masthead .shell { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .hero { padding: 48px 0 36px; }
+      .hero-kicker { flex-direction: column; gap: 6px; align-items: flex-start; }
+      .hero-kicker .dash { display: none; }
+      .hero-actions { flex-direction: column; gap: 14px; }
+      .snapshot-rows { grid-template-columns: 1fr 1fr; }
+      .section-head h2 { font-size: 36px; }
+      .week-table .day { font-size: 19px; }
+      .week-table td { padding: 16px 0; }
+      section { padding: 56px 0; }
+    }
+  </style>
+</head>
+<body>
+  <header class="masthead">
+    <div class="shell">
+      <div class="meta">
+        <span>Vol. 0 — Issue 01</span>
+        <span>2026 · 05 · 22</span>
+        <span>Bilingual · 双语</span>
+      </div>
+      <span class="live">Pre-launch · 内部稿</span>
+    </div>
+  </header>
+
+  <header class="topbar">
+    <div class="shell">
+      <a class="brand" href="#overview">
+        <span class="brand-mark" aria-hidden="true">CR</span>
+        <span class="brand-text">
+          <strong>CultureRadar</strong>
+        </span>
+      </a>
+      <nav aria-label="页面导航">
+        <a href="#overview">总览</a>
+        <a href="#workflow">研究流程</a>
+        <a href="#companies">公司池</a>
+        <a href="#roadmap">12 周路线图</a>
+        <a href="#assets">文件入口</a>
+        <a href="#protocol">规则</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" id="overview">
+    <div class="shell">
+      <div class="hero-grid">
+        <div class="hero-kicker">
+          <span class="vol">第 0 卷 · 创刊筹备号</span>
+          <span class="dash">—</span>
+          <span>美股 · 文化拐点研究</span>
+        </div>
+        <h1>在故事被市场<br>讲完之前，<em>先听见它。</em></h1>
+        <p class="lead">
+          CultureRadar 是一份面向长线个人投资者的研究通讯，专注于美股公司里那些尚未被叙事化的文化裂缝。
+          第一版手工研究、免费公开、中英双语，并把每一条判断的阈值、期限、来源全部写明。
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="data/CultureRadar_MVP_Workbook.xlsx">
+            打开主工作簿 <span class="arrow">→</span>
+          </a>
+          <a class="button" href="docs/launch_checklist.md">启动清单</a>
+          <a class="button" href="templates/culture_health_card.md">解读卡模板</a>
+          <a class="button" href="content/public_about_page.md">公开说明页</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="snapshot" aria-label="本周状态">
+    <div class="shell">
+      <div class="snapshot-label">本周状态<br>This Week</div>
+      <div class="snapshot-rows">
+        <div class="snapshot-row">
+          <span class="v">0<em>/15</em></span>
+          <span class="k">公司基线</span>
+        </div>
+        <div class="snapshot-row">
+          <span class="v">0<em>/12</em></span>
+          <span class="k">已发布解读卡</span>
+        </div>
+        <div class="snapshot-row">
+          <span class="v">0<em>/50</em></span>
+          <span class="k">追踪中的判断</span>
+        </div>
+        <div class="snapshot-row">
+          <span class="v">0<em>/10</em></span>
+          <span class="k">读者访谈</span>
+        </div>
+        <p class="snapshot-note">
+          所有公司方向均为待定。四条证据线、主验证指标、阈值、截止日期、来源链接缺一不可，否则不出稿。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="pull-quote" aria-label="编者按">
+    <div class="shell">
+      <div class="tag-col">编者按 · §</div>
+      <div>
+        <blockquote>
+          文化信号通常被同一时期的市场叙事盖住，但最后决定故事走向的，恰恰是它们。
+        </blockquote>
+        <p class="attrib">主编手记 · Notes from the Editor · 2026 — 05</p>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <section id="key-numbers">
+      <div class="section-head">
+        <span class="section-num">§ I</span>
+        <div>
+          <h2>数字摘要</h2>
+          <p>第一阶段不追求样本量，先把流程稳定下来。下面四个数字是 MVP 的全部边界。</p>
+        </div>
+      </div>
+      <div class="metric-grid">
+        <div class="metric">
+          <div class="metric-key">Cadence · 节奏</div>
+          <b>12<sup>wk</sup></b>
+          <span>周试运行节奏。前三个月不优化收入，只优化可信度和连续交付。</span>
+        </div>
+        <div class="metric">
+          <div class="metric-key">Universe · 公司池</div>
+          <b>15</b>
+          <span>首批入选，覆盖 SaaS 与半导体两个核心赛道。</span>
+        </div>
+        <div class="metric">
+          <div class="metric-key">Alerts · 监听</div>
+          <b>90</b>
+          <span>Google Alerts 查询，覆盖裁员、诉讼、SEC、调查、管理层离任。</span>
+        </div>
+        <div class="metric">
+          <div class="metric-key">Tracker · 判断</div>
+          <b>50</b>
+          <span>判断追踪表预留行，每条都写明阈值、期限和结案状态。</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="workflow">
+      <div class="section-head">
+        <span class="section-num">§ II</span>
+        <div>
+          <h2>四条证据线</h2>
+          <p>每一张文化健康度解读卡都必须凑齐四条线索。我们看的是变化率，不是绝对评分——后者太容易被打扮。</p>
+        </div>
+      </div>
+      <div class="workflow">
+        <article class="workflow-step">
+          <span class="num">Evidence i.</span>
+          <h3>关键人才流向</h3>
+          <p>手工记录 VP 以上、Staff+ 工程、核心产品人才的季度流入流出、去向和层级。</p>
+        </article>
+        <article class="workflow-step">
+          <span class="num">Evidence ii.</span>
+          <h3>员工评价趋势</h3>
+          <p>记录综合评分、CEO 认可度、业务前景、管理层信心，并提炼 20-30 条评论的主题漂移。</p>
+        </article>
+        <article class="workflow-step">
+          <span class="num">Evidence iii.</span>
+          <h3>管理层语言</h3>
+          <p>阅读最近 2-3 次财报会，观察"增长""扩张""效率""纪律""重组"等措辞的此消彼长。</p>
+        </article>
+        <article class="workflow-step">
+          <span class="num">Evidence iv.</span>
+          <h3>外部红旗</h3>
+          <p>跟踪裁员、诉讼、SEC、调查、地方新闻、高管离任——用作兜底和交叉验证。</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="companies">
+      <div class="section-head">
+        <span class="section-num">§ III</span>
+        <div>
+          <h2>公司池</h2>
+          <p>15 家核心 + 3 家候补。下方的"评分"只代表 MVP 阶段的研究优先级，不是对公司文化的褒贬。</p>
+          <span class="table-hint">点击任一行可展开四条证据线的最新走势 — 目前为示意数据。</span>
+        </div>
+      </div>
+      <div class="tabs" role="group" aria-label="公司筛选">
+        <button class="tab is-active" type="button" data-filter="all">全部 <span class="tab-count">18</span></button>
+        <button class="tab" type="button" data-filter="core">核心 <span class="tab-count">15</span></button>
+        <button class="tab" type="button" data-filter="saas">SaaS <span class="tab-count">10</span></button>
+        <button class="tab" type="button" data-filter="semi">半导体 <span class="tab-count">8</span></button>
+        <button class="tab" type="button" data-filter="alt">候补 <span class="tab-count">3</span></button>
+      </div>
+      <div class="table-wrap">
+        <table id="companyTable">
+          <thead>
+            <tr>
+              <th>Company</th>
+              <th>Ticker</th>
+              <th>Industry</th>
+              <th>Segment</th>
+              <th>Priority</th>
+              <th>Score</th>
+              <th>Pilot Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-kind="core saas"><td class="company-name">Salesforce</td><td class="ticker">CRM</td><td><span class="tag saas">SaaS</span></td><td>CRM / enterprise platform</td><td>Core</td><td><div class="score high"><span class="score-num">14/15</span></div></td><td class="pilot">Deterioration/improvement candidate TBD</td></tr>
+            <tr data-kind="core saas"><td class="company-name">ServiceNow</td><td class="ticker">NOW</td><td><span class="tag saas">SaaS</span></td><td>Workflow automation</td><td>Core</td><td><div class="score high"><span class="score-num">14/15</span></div></td><td class="pilot">Stable candidate TBD</td></tr>
+            <tr data-kind="core saas"><td class="company-name">Workday</td><td class="ticker">WDAY</td><td><span class="tag saas">SaaS</span></td><td>HCM / finance SaaS</td><td>Core</td><td><div class="score"><span class="score-num">13/15</span></div></td><td class="pilot">TBD</td></tr>
+            <tr data-kind="core saas"><td class="company-name">Snowflake</td><td class="ticker">SNOW</td><td><span class="tag saas">SaaS</span></td><td>Data cloud</td><td>Core</td><td><div class="score high"><span class="score-num">14/15</span></div></td><td class="pilot">Improvement/deterioration candidate TBD</td></tr>
+            <tr data-kind="core saas"><td class="company-name">Datadog</td><td class="ticker">DDOG</td><td><span class="tag saas">SaaS</span></td><td>Observability / cloud monitoring</td><td>Core</td><td><div class="score"><span class="score-num">13/15</span></div></td><td class="pilot">TBD</td></tr>
+            <tr data-kind="core saas"><td class="company-name">HubSpot</td><td class="ticker">HUBS</td><td><span class="tag saas">SaaS</span></td><td>SMB CRM / marketing automation</td><td>Core</td><td><div class="score"><span class="score-num">13/15</span></div></td><td class="pilot">TBD</td></tr>
+            <tr data-kind="core saas"><td class="company-name">Atlassian</td><td class="ticker">TEAM</td><td><span class="tag saas">SaaS</span></td><td>Collaboration / developer tools</td><td>Core</td><td><div class="score"><span class="score-num">13/15</span></div></td><td class="pilot">TBD</td></tr>
+            <tr data-kind="core saas"><td class="company-name">MongoDB</td><td class="ticker">MDB</td><td><span class="tag saas">SaaS</span></td><td>Database / developer platform</td><td>Core</td><td><div class="score"><span class="score-num">13/15</span></div></td><td class="pilot">TBD</td></tr>
+            <tr data-kind="core semi"><td class="company-name">NVIDIA</td><td class="ticker">NVDA</td><td><span class="tag semi">Semiconductor</span></td><td>Accelerated computing / GPUs</td><td>Core</td><td><div class="score high"><span class="score-num">15/15</span></div></td><td class="pilot">Stable/improvement candidate TBD</td></tr>
+            <tr data-kind="core semi"><td class="company-name">AMD</td><td class="ticker">AMD</td><td><span class="tag semi">Semiconductor</span></td><td>CPUs / GPUs / data center chips</td><td>Core</td><td><div class="score high"><span class="score-num">15/15</span></div></td><td class="pilot">TBD</td></tr>
+            <tr data-kind="core semi"><td class="company-name">Intel</td><td class="ticker">INTC</td><td><span class="tag semi">Semiconductor</span></td><td>Integrated device manufacturer / foundry</td><td>Core</td><td><div class="score high"><span class="score-num">15/15</span></div></td><td class="pilot">Deterioration/improvement candidate TBD</td></tr>
+            <tr data-kind="core semi"><td class="company-name">Micron</td><td class="ticker">MU</td><td><span class="tag semi">Semiconductor</span></td><td>Memory</td><td>Core</td><td><div class="score"><span class="score-num">13/15</span></div></td><td class="pilot">TBD</td></tr>
+            <tr data-kind="core semi"><td class="company-name">Qualcomm</td><td class="ticker">QCOM</td><td><span class="tag semi">Semiconductor</span></td><td>Wireless / edge AI chips</td><td>Core</td><td><div class="score high"><span class="score-num">14/15</span></div></td><td class="pilot">TBD</td></tr>
+            <tr data-kind="core semi"><td class="company-name">Applied Materials</td><td class="ticker">AMAT</td><td><span class="tag semi">Semiconductor</span></td><td>Semiconductor equipment</td><td>Core</td><td><div class="score"><span class="score-num">13/15</span></div></td><td class="pilot">TBD</td></tr>
+            <tr data-kind="core semi"><td class="company-name">Lam Research</td><td class="ticker">LRCX</td><td><span class="tag semi">Semiconductor</span></td><td>Semiconductor equipment</td><td>Core</td><td><div class="score"><span class="score-num">13/15</span></div></td><td class="pilot">TBD</td></tr>
+            <tr data-kind="alt saas"><td class="company-name">Okta</td><td class="ticker">OKTA</td><td><span class="tag saas">SaaS</span></td><td>Identity / security SaaS</td><td><span class="tag alt">Alternate</span></td><td><div class="score"><span class="score-num">12/15</span></div></td><td class="pilot">Alternate</td></tr>
+            <tr data-kind="alt saas"><td class="company-name">Twilio</td><td class="ticker">TWLO</td><td><span class="tag saas">SaaS</span></td><td>Communications platform</td><td><span class="tag alt">Alternate</span></td><td><div class="score"><span class="score-num">13/15</span></div></td><td class="pilot">Alternate</td></tr>
+            <tr data-kind="alt semi"><td class="company-name">KLA</td><td class="ticker">KLAC</td><td><span class="tag semi">Semiconductor</span></td><td>Process control / metrology</td><td><span class="tag alt">Alternate</span></td><td><div class="score"><span class="score-num">12/15</span></div></td><td class="pilot">Alternate</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="roadmap">
+      <div class="section-head">
+        <span class="section-num">§ IV</span>
+        <div>
+          <h2>12 周路线图</h2>
+          <p>从研究底座到公开发布，再到第一次回头看自己。前三个月不优化收入，只优化"被检验"的能力。</p>
+        </div>
+      </div>
+      <div class="roadmap">
+        <article class="phase">
+          <div class="phase-label">
+            <span class="phase-week">Week 0 — 1</span>
+            <b>搭建底座</b>
+            <span>研究基础设施 + 一次小规模 pilot</span>
+          </div>
+          <div class="phase-body">
+            <div class="phase-item"><h3>主工作簿</h3><p>确认公司池、四条证据线、来源库、判断追踪表的字段。</p></div>
+            <div class="phase-item"><h3>Alerts</h3><p>为每家公司配齐 6 类、共 90 个 Google Alerts 查询项。</p></div>
+            <div class="phase-item"><h3>Pilot</h3><p>选 3 家公司跑完整闭环，测出单卡耗时。</p></div>
+          </div>
+        </article>
+
+        <article class="phase">
+          <div class="phase-label">
+            <span class="phase-week">Week 2 — 4</span>
+            <b>首次公开</b>
+            <span>对外亮相 + 第一批解读卡</span>
+          </div>
+          <div class="phase-body">
+            <div class="phase-item"><h3>说明页</h3><p>发布定位、方法论、合规边界，以及追踪表入口。</p></div>
+            <div class="phase-item"><h3>第一批卡片</h3><p>发出 3 张文化健康度解读卡，全部带来源链接和验证标准。</p></div>
+            <div class="phase-item"><h3>分发</h3><p>英文主稿、中文摘要，同步 X / FinTwit 和一个中文渠道。</p></div>
+          </div>
+        </article>
+
+        <article class="phase">
+          <div class="phase-label">
+            <span class="phase-week">Week 5 — 8</span>
+            <b>稳定周更</b>
+            <span>固定节奏 + 双语 newsletter</span>
+          </div>
+          <div class="phase-body">
+            <div class="phase-item"><h3>周一至周三</h3><p>更新 alerts、员工评价、LinkedIn 人才流动和 transcript。</p></div>
+            <div class="phase-item"><h3>周四</h3><p>选出本周最强的一条可发布判断，宁缺毋滥。</p></div>
+            <div class="phase-item"><h3>周五</h3><p>发布双语 newsletter，并登记进追踪表。</p></div>
+          </div>
+        </article>
+
+        <article class="phase">
+          <div class="phase-label">
+            <span class="phase-week">Week 9 — 12</span>
+            <b>验证闭环</b>
+            <span>三个月复盘 + 第一次可证伪审计</span>
+          </div>
+          <div class="phase-body">
+            <div class="phase-item"><h3>Baseline</h3><p>完成 12 至 15 家公司的基线档案。</p></div>
+            <div class="phase-item"><h3>Tracker</h3><p>审计所有开放判断：指标、阈值、期限、状态必须齐全。</p></div>
+            <div class="phase-item"><h3>Review</h3><p>发布三个月复盘；结案少于 10 条前，不公布命中率。</p></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="rhythm">
+      <div class="section-head">
+        <span class="section-num">§ V</span>
+        <div>
+          <h2>每周节奏</h2>
+          <p>把研究变成"动作"而不是"判断"。每周一开始就知道今天该做什么，不需要每次重新决策。</p>
+        </div>
+      </div>
+      <table class="week-table" aria-label="每周节奏">
+        <tbody>
+          <tr>
+            <td class="day"><span class="day-num">Mon</span>周一</td>
+            <td class="task">更新 Google Alerts、最新一季 transcript、本周新闻红旗。把变化项标记到对应公司行。</td>
+            <td class="est">约 90 分钟</td>
+          </tr>
+          <tr>
+            <td class="day"><span class="day-num">Tue</span>周二</td>
+            <td class="task">更新 Glassdoor 综合评分与分项，提炼员工评论的主题漂移。</td>
+            <td class="est">约 60 分钟</td>
+          </tr>
+          <tr>
+            <td class="day"><span class="day-num">Wed</span>周三</td>
+            <td class="task">手工记录 LinkedIn 关键人才流动：VP+、Staff+、核心产品与工程岗。</td>
+            <td class="est">约 75 分钟</td>
+          </tr>
+          <tr>
+            <td class="day"><span class="day-num">Thu</span>周四</td>
+            <td class="task">从本周候选里挑出 1 至 2 家公司，锁定主验证指标、阈值和截止日期。</td>
+            <td class="est">约 90 分钟</td>
+          </tr>
+          <tr>
+            <td class="day"><span class="day-num">Fri</span>周五</td>
+            <td class="task">发布双语 newsletter，更新追踪表，做一次最低限度的分发。</td>
+            <td class="est">约 120 分钟</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="assets">
+      <div class="section-head">
+        <span class="section-num">§ VI</span>
+        <div>
+          <h2>文件入口</h2>
+          <p>HTML 页面只是导览。真正的事实来源始终是表格和原始档案——下面这些链接都指向它们。</p>
+        </div>
+      </div>
+      <div class="asset-grid">
+        <article class="asset">
+          <span class="num">i.</span>
+          <h3>主工作簿</h3>
+          <p>公司池、判断追踪表、来源库、alerts 队列、12 周节奏，都在同一份 Excel 里。</p>
+          <div class="links">
+            <a class="mini-link" href="data/CultureRadar_MVP_Workbook.xlsx">Workbook</a>
+            <a class="mini-link" href="data/company_universe.csv">Company CSV</a>
+            <a class="mini-link" href="data/judgment_tracker.csv">Tracker CSV</a>
+          </div>
+        </article>
+        <article class="asset">
+          <span class="num">ii.</span>
+          <h3>编辑手册</h3>
+          <p>研究 SOP、合规护栏、启动清单——确保每周执行方式不漂移。</p>
+          <div class="links">
+            <a class="mini-link" href="docs/research_sop.md">SOP</a>
+            <a class="mini-link" href="docs/compliance_guardrails.md">Compliance</a>
+            <a class="mini-link" href="docs/launch_checklist.md">Checklist</a>
+          </div>
+        </article>
+        <article class="asset">
+          <span class="num">iii.</span>
+          <h3>模板</h3>
+          <p>文化健康度卡片、newsletter、X thread 和读者访谈用的统一模板。</p>
+          <div class="links">
+            <a class="mini-link" href="templates/culture_health_card.md">Card</a>
+            <a class="mini-link" href="templates/newsletter_issue.md">Newsletter</a>
+            <a class="mini-link" href="templates/x_thread.md">X Thread</a>
+          </div>
+        </article>
+        <article class="asset">
+          <span class="num">iv.</span>
+          <h3>公开内容</h3>
+          <p>公开说明页、方法论长文、第一周发布的草稿——先写好再发。</p>
+          <div class="links">
+            <a class="mini-link" href="content/public_about_page.md">About</a>
+            <a class="mini-link" href="content/methodology_article.md">Methodology</a>
+            <a class="mini-link" href="content/week_01_launch_note.md">Launch Note</a>
+          </div>
+        </article>
+        <article class="asset">
+          <span class="num">v.</span>
+          <h3>来源设置</h3>
+          <p>每家公司 6 类手工来源入口，全部服务四条证据线。</p>
+          <div class="links">
+            <a class="mini-link" href="data/source_library.csv">Source Library</a>
+            <a class="mini-link" href="data/google_alert_queries.csv">Alerts CSV</a>
+          </div>
+        </article>
+        <article class="asset">
+          <span class="num">vi.</span>
+          <h3>再生脚本</h3>
+          <p>用一份公司清单同时生成 Excel 与 CSV，避免资产漂移。</p>
+          <div class="links">
+            <a class="mini-link" href="scripts/generate_assets.py">Python Script</a>
+            <a class="mini-link" href="README.md">README</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="protocol">
+      <div class="section-head">
+        <span class="section-num">§ VII</span>
+        <div>
+          <h2>判断与合规规则</h2>
+          <p>这份通讯的信誉来自"可被检验"，而不是"听起来聪明"。下面两栏是发稿前要过的两道关。</p>
+        </div>
+      </div>
+      <div class="protocol-grid">
+        <article class="protocol">
+          <h3>可证伪</h3>
+          <ul>
+            <li>每条判断只允许一个主验证指标。</li>
+            <li>阈值和截止日期一旦发布即锁死。</li>
+            <li>方向对但时机错，视作失手，并附原因。</li>
+            <li>结案少于 10 条之前，不公布命中率百分比。</li>
+            <li>"部分命中"必须单独统计，防止阈值放水。</li>
+          </ul>
+        </article>
+        <article class="protocol">
+          <h3>合规</h3>
+          <ul>
+            <li>不写买入、卖出、持有、目标价或仓位建议。</li>
+            <li>不做个性化投资建议，也不点评具体组合。</li>
+            <li>用"文化信号""观察""待验证判断"这类措辞。</li>
+            <li>每篇公开内容都保留中英文免责声明。</li>
+            <li>正式收费或高阶会员权益上线前完成法律审查。</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="colophon">
+    <div class="shell">
+      <div class="colophon-mast">
+        <div class="name"><em>Culture</em>Radar</div>
+        <p>
+          一份关于美股公司文化拐点的研究通讯。手工研究、公开方法论、可被复核。
+          Public-information research and investor education only — not investment advice.
+        </p>
+      </div>
+      <div class="colophon-col">
+        <h4>Edition</h4>
+        <p>Vol. 0 — Issue 01<br>2026 · 05 · 22<br>双语 · Bilingual</p>
+      </div>
+      <div class="colophon-col">
+        <h4>Index</h4>
+        <ul>
+          <li><a href="#workflow">研究流程</a></li>
+          <li><a href="#companies">公司池</a></li>
+          <li><a href="#roadmap">12 周路线图</a></li>
+          <li><a href="#protocol">规则</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const COMPANIES = {
+      CRM: {
+        founded:1999, hq:"San Francisco, CA", ceo:"Marc Benioff", employees:"73K",
+        marketCap:"$280B", revenue:"$37.9B", pe:"47", revGrowth:"+11%",
+        about:"全球最大的 CRM 与企业应用 SaaS 厂商。从 Sales Cloud 起家，扩张到 Service / Marketing / Platform / Data Cloud。Slack、Tableau、MuleSoft 是过去五年最重要的三笔并购。",
+        business:[
+          ["Subscription & Support", 92, "Sales / Service / Marketing / Platform 等订阅业务"],
+          ["Professional Services", 8, "实施与培训服务"]
+        ],
+        cultureTags:["销售驱动", "Ohana 传教士", "并购整合者", "西海岸 SaaS"],
+        glassdoor:"4.2", glassdoorCeo:"80%",
+        glassdoorNote:"员工总体认可愿景，但近一年对效率压力与并购整合疲态有抱怨。",
+        ceoStyle:"Benioff 是 CRM 行业的布道者；近年话语权部分让渡给联席与轮换 CEO。",
+        insiderNarrative:"组织正从“传教士”转向“职业经理人”，活动家投资人介入后加速。",
+        pilotNote:"重点观察“增长叙事 → 效率叙事”过渡时员工评价是否同步滑落。"
+      },
+      NOW: {
+        founded:2003, hq:"Santa Clara, CA", ceo:"Bill McDermott", employees:"26K",
+        marketCap:"$210B", revenue:"$10.2B", pe:"88", revGrowth:"+22%",
+        about:"企业工作流自动化平台。从 ITSM 起家，扩展到 HR / 客户服务 / 安全 / AI 工作流。被视为继 Salesforce 之后最具规模的纯 SaaS 工作流公司。",
+        business:[
+          ["Subscription", 97, "Workflow Cloud + AI add-ons (Now Assist)"],
+          ["Professional Services", 3, "实施与咨询"]
+        ],
+        cultureTags:["McDermott 销售文化", "硅谷外貌的纽约执行力", "客户对接强", "高节奏"],
+        glassdoor:"4.4", glassdoorCeo:"92%",
+        glassdoorNote:"增长氛围强，员工对管理层信任度高于行业平均。",
+        ceoStyle:"McDermott 来自 SAP，强销售文化与高执行节奏，公开露面频率极高。",
+        insiderNarrative:"内部把流程纪律当作核心资产 — 自称“execution machine”。",
+        pilotNote:"稳态样本，与 CRM、HUBS 等转型期 SaaS 对比观察。"
+      },
+      WDAY: {
+        founded:2005, hq:"Pleasanton, CA", ceo:"Carl Eschenbach", employees:"19K",
+        marketCap:"$58B", revenue:"$7.7B", pe:"102", revGrowth:"+17%",
+        about:"云端 HCM 与 Finance SaaS 双引擎。HR 是核心业务，Finance Cloud 是公司明确押注的第二增长曲线。客户长期主义是品牌底色。",
+        business:[
+          ["Subscription Services", 89, "HCM + Financial Management 主订阅"],
+          ["Professional Services", 11, "实施与运维"]
+        ],
+        cultureTags:["HR 行业基因", "客户长期主义", "Aneel + Carl 双 CEO", "西海岸保守"],
+        glassdoor:"4.0", glassdoorCeo:"75%",
+        glassdoorNote:"稳定的 HR 工程文化，但销售层近年抱怨增长配额压力。",
+        ceoStyle:"Carl Eschenbach 来自 VMware，强化执行；创始人 Aneel 仍参与战略决策。",
+        insiderNarrative:"“客户在我们的肩膀上构建职业” — 高管经常复用的修辞。",
+        pilotNote:"观察 HR / Finance 双引擎在 AI Agent 推广中是否出现叙事分裂。"
+      },
+      SNOW: {
+        founded:2012, hq:"Bozeman, MT", ceo:"Sridhar Ramaswamy", employees:"8K",
+        marketCap:"$58B", revenue:"$3.6B", pe:"—", revGrowth:"+29%",
+        about:"数据云平台。Data Warehouse 起家，扩展到 Snowpark、AI 数据集成与 Iceberg 表格式支持。消耗式商业模式让收入与客户用量强挂钩。",
+        business:[
+          ["Product Revenue", 95, "Storage + Compute 消耗式计费"],
+          ["Professional Services", 5, "解决方案咨询"]
+        ],
+        cultureTags:["消耗式商业模式", "数据社区驱动", "前 Google AI 高管 CEO", "Slootman 余晖"],
+        glassdoor:"4.2", glassdoorCeo:"88%",
+        glassdoorNote:"技术氛围强，员工对 AI 转型反应积极。",
+        ceoStyle:"Ramaswamy 接班 Slootman 后，叙事从“数据云”明显倾向“AI 数据平台”。",
+        insiderNarrative:"从“打败 Databricks”转向“与 OpenAI / Anthropic 共建”。",
+        pilotNote:"AI 整合是否真正反映在留存与扩张数据上，是关键观察点。"
+      },
+      DDOG: {
+        founded:2010, hq:"New York, NY", ceo:"Olivier Pomel", employees:"7.5K",
+        marketCap:"$45B", revenue:"$2.8B", pe:"95", revGrowth:"+27%",
+        about:"云原生可观测性 SaaS。从基础设施监控扩展到 APM、Log、安全、Cloud SIEM 与 AI 工作流监控。模块化产品扩品类是其商业模式核心。",
+        business:[
+          ["Subscription — Infrastructure", 35, "基础设施监控（起家品类）"],
+          ["Subscription — APM & Logs", 45, "APM、日志、用户监控"],
+          ["Subscription — Security & Other", 20, "Cloud SIEM、CWPP、新品类"]
+        ],
+        cultureTags:["法国创始 / 美国总部", "工程驱动", "产品扩品类大师", "无强销售文化"],
+        glassdoor:"4.5", glassdoorCeo:"94%",
+        glassdoorNote:"工程文化好评，扩张节奏被员工认可。",
+        ceoStyle:"Pomel 工程出身，低调但产品决策清晰；几乎不公开露面。",
+        insiderNarrative:"“我们卖的不是工具，是一种监控的方法论”。",
+        pilotNote:"持续观察新产品扩张对核心 Infra 留存的影响。"
+      },
+      HUBS: {
+        founded:2006, hq:"Cambridge, MA", ceo:"Yamini Rangan", employees:"8.2K",
+        marketCap:"$30B", revenue:"$2.6B", pe:"—", revGrowth:"+21%",
+        about:"面向中小企业的全栈营销 / 销售 / 服务 SaaS。Inbound marketing 是其原始品牌，近年向 CRM 全栈与 AI Agents 扩展。",
+        business:[
+          ["Subscription", 98, "Marketing / Sales / Service / Content / Operations Hubs"],
+          ["Professional Services", 2, "实施培训"]
+        ],
+        cultureTags:["剑桥东岸 SaaS", "Culture Code 公开", "Inbound 信仰", "客户成功导向"],
+        glassdoor:"4.3", glassdoorCeo:"87%",
+        glassdoorNote:"Culture Code 公开是其品牌资产，员工自豪感高。",
+        ceoStyle:"Yamini Rangan 接班 Brian Halligan，从产品 / 客户成功背景出发。",
+        insiderNarrative:"“用对客户的方式对员工” — Culture Code 的核心命题。",
+        pilotNote:"SMB 端宏观压力下，culture code 的实际兑现度是否会受冲击。"
+      },
+      TEAM: {
+        founded:2002, hq:"Sydney, Australia", ceo:"Mike Cannon-Brookes & Scott Farquhar", employees:"12K",
+        marketCap:"$60B", revenue:"$4.6B", pe:"—", revGrowth:"+23%",
+        about:"面向开发者与团队协作的 SaaS。Jira / Confluence / Bitbucket 是核心三件套；Rovo AI 与 Jira Service Management 是新增长来源。Team Anywhere 远程文化是行业知名招牌。",
+        business:[
+          ["Subscription", 78, "Jira / Confluence / JSM 等云订阅"],
+          ["Maintenance", 12, "Data Center 自托管维护"],
+          ["Other", 10, "市场营销、培训等"]
+        ],
+        cultureTags:["澳洲创始 / 无销售 DNA", "Team Anywhere", "工程驱动", "双 CEO"],
+        glassdoor:"4.1", glassdoorCeo:"70%",
+        glassdoorNote:"Team Anywhere 远程文化曾是核心吸引力；近期裁员后评分回落。",
+        ceoStyle:"双 CEO 制；Mike 偏外部影响力 / 社会议题，Scott 偏内部运营。",
+        insiderNarrative:"“No Bullshit”是创始价值观；近期被员工质疑“是否还在”。",
+        pilotNote:"远程 + 无销售文化在效率压力下能否守住？"
+      },
+      MDB: {
+        founded:2007, hq:"New York, NY", ceo:"Dev Ittycheria", employees:"5K",
+        marketCap:"$22B", revenue:"$2.0B", pe:"—", revGrowth:"+22%",
+        about:"文档数据库 + Atlas 云数据平台。Atlas（云托管）占收入大部分；向量搜索与 AI 数据底座是新故事的主轴。",
+        business:[
+          ["Atlas (Cloud)", 70, "MongoDB Atlas 全托管"],
+          ["Enterprise Advanced", 28, "自托管商业版"],
+          ["Services", 2, "实施与咨询"]
+        ],
+        cultureTags:["开发者优先", "纽约 + 远程混合", "印度裔 CEO 长期任职", "开源到云转型"],
+        glassdoor:"4.0", glassdoorCeo:"78%",
+        glassdoorNote:"工程文化稳定，销售层有节奏压力。",
+        ceoStyle:"Dev Ittycheria 任期长，注重商业模式从开源到云的转型。",
+        insiderNarrative:"“developer love → enterprise spend” — 反复使用的内部叙事链。",
+        pilotNote:"向量数据库竞争激烈，“开发者优先”是否会被现实压力削弱。"
+      },
+      NVDA: {
+        founded:1993, hq:"Santa Clara, CA", ceo:"Jensen Huang", employees:"32K",
+        marketCap:"$3.2T", revenue:"$130.5B", pe:"64", revGrowth:"+114%",
+        about:"AI 计算的事实标准。Data Center 业务两年从 30% 体量飙到 ~88%，公司已从 GPU 供应商转为加速计算平台。CUDA 是最深的护城河。",
+        business:[
+          ["Data Center", 88, "Hopper / Blackwell GPU + 网络 + 软件栈"],
+          ["Gaming", 9, "RTX / GeForce 显卡"],
+          ["ProViz & Auto", 3, "工作站、汽车、机器人"]
+        ],
+        cultureTags:["工程师扁平", "高强度", "Jensen-led", "技术布道"],
+        glassdoor:"4.7", glassdoorCeo:"97%",
+        glassdoorNote:"员工对增长机会与技术深度极度认可，但工作强度高。",
+        ceoStyle:"Jensen 有 30+ 直接汇报，绕开传统层级；既是 CEO 又是首席布道者。",
+        insiderNarrative:"“Speed of light”是被反复提及的内部口号。",
+        pilotNote:"样本组中的高基线 — 观察其文化在历史性繁荣期是否出现细微疲态。"
+      },
+      AMD: {
+        founded:1969, hq:"Santa Clara, CA", ceo:"Lisa Su", employees:"26K",
+        marketCap:"$240B", revenue:"$25.8B", pe:"105", revGrowth:"+14%",
+        about:"x86 CPU + GPU 双线选手。MI 系列 AI 加速器是新故事，但与 NVDA 仍有结构性差距。Xilinx（2022）提供 FPGA / DPU 第三条腿。",
+        business:[
+          ["Data Center", 50, "EPYC CPU + MI300 / MI400 GPU"],
+          ["Client (PC CPU)", 25, "消费者与商用 PC 处理器"],
+          ["Gaming", 12, "主机半定制 + 显卡"],
+          ["Embedded (Xilinx)", 13, "FPGA / 自适应计算"]
+        ],
+        cultureTags:["Lisa Su 工程师 CEO", "克制叙事", "执行型组织", "复利式增长"],
+        glassdoor:"4.3", glassdoorCeo:"92%",
+        glassdoorNote:"员工高度认可 Lisa Su 的执行力。",
+        ceoStyle:"Lisa Su 工程师出身，长期复利式叙事，少夸张承诺。",
+        insiderNarrative:"从“追赶者”切换到“第二选择” — 仍在进行中。",
+        pilotNote:"“第二选择”故事的兑现节奏，是文化稳定度的关键。"
+      },
+      INTC: {
+        founded:1968, hq:"Santa Clara, CA", ceo:"Lip-Bu Tan", employees:"108K",
+        marketCap:"$95B", revenue:"$54.2B", pe:"—", revGrowth:"-2%",
+        about:"IDM 元老与美国本土代工新选手。CPU 主业被 AMD 与 ARM 双侧蚕食；Intel Foundry 是 Pat Gelsinger 留下的核心赌注，现已交给 Lip-Bu Tan 推进或收尾。",
+        business:[
+          ["Client Computing", 50, "消费者与商用 PC CPU"],
+          ["Data Center & AI", 30, "至强服务器 + Gaudi 加速器"],
+          ["Network & Edge", 10, "网络芯片、边缘计算"],
+          ["Foundry / Other", 10, "Intel Foundry Services"]
+        ],
+        cultureTags:["IDM 元老", "工程师老兵 + 重组中", "美政府利益绑定", "60 年身份重置"],
+        glassdoor:"3.6", glassdoorCeo:"55%",
+        glassdoorNote:"评分长期下滑；老员工与新管理层叙事冲突。",
+        ceoStyle:"Lip-Bu Tan 上任后强调聚焦与现金；Pat Gelsinger 的“全栈复兴”叙事被淡化。",
+        insiderNarrative:"组织正在经历 60 年来最深刻的身份重置。",
+        pilotNote:"本观察池中唯一“文化崩塌中”样本 — 作为坏情况基线。"
+      },
+      MU: {
+        founded:1978, hq:"Boise, ID", ceo:"Sanjay Mehrotra", employees:"44K",
+        marketCap:"$120B", revenue:"$25.1B", pe:"22", revGrowth:"+62%",
+        about:"DRAM + NAND 内存巨头。HBM3E 在 AI 周期中是关键产品。极强周期性是公司文化的底色。",
+        business:[
+          ["DRAM", 73, "通用 DRAM + HBM3E / HBM4"],
+          ["NAND", 26, "消费级与企业级 SSD"],
+          ["Other", 1, "新兴存储"]
+        ],
+        cultureTags:["爱达荷工厂文化", "周期性强", "工程导向", "本土制造叙事"],
+        glassdoor:"3.8", glassdoorCeo:"78%",
+        glassdoorNote:"工程氛围稳定，周期低谷期评分会波动。",
+        ceoStyle:"Mehrotra 工程师出身，节奏与周期同步，少戏剧性。",
+        insiderNarrative:"“熬过下一个低谷” — 内部不成文的命题。",
+        pilotNote:"HBM 节奏让本轮文化叙事更亮；下一次周期下行是真正考验。"
+      },
+      QCOM: {
+        founded:1985, hq:"San Diego, CA", ceo:"Cristiano Amon", employees:"50K",
+        marketCap:"$200B", revenue:"$39.0B", pe:"18", revGrowth:"+9%",
+        about:"无线 SoC + IP 授权双引擎。手机芯片仍是主业，汽车与边缘 AI 是第二曲线。Apple modem 退出风险是结构性悬疑。",
+        business:[
+          ["QCT — Handsets", 60, "Snapdragon 手机 SoC"],
+          ["QCT — Automotive", 11, "Snapdragon Digital Chassis"],
+          ["QCT — IoT", 15, "工业、PC、可穿戴"],
+          ["QTL (Licensing)", 14, "专利授权"]
+        ],
+        cultureTags:["南加州工程文化", "IP 收割机", "边缘 AI 押注", "Apple 风险悬疑"],
+        glassdoor:"4.0", glassdoorCeo:"86%",
+        glassdoorNote:"工程氛围稳定，对边缘 AI 团队扩张反应积极。",
+        ceoStyle:"Amon 强调“连接性以外”的扩张，叙事从“手机巨头”转向“on-device AI”。",
+        insiderNarrative:"“手机之外”已经讲了 5 年，市场仍在观望。",
+        pilotNote:"新叙事最终能否反映在收入构成上，决定文化转向的可信度。"
+      },
+      AMAT: {
+        founded:1967, hq:"Santa Clara, CA", ceo:"Gary Dickerson", employees:"33K",
+        marketCap:"$140B", revenue:"$27.2B", pe:"22", revGrowth:"+3%",
+        about:"全球最大的半导体设备公司。覆盖刻蚀、沉积、CMP、过程控制等几乎所有 wafer fab 工艺。服务收入是稳定器。",
+        business:[
+          ["Semiconductor Systems", 73, "刻蚀、沉积、CMP、离子注入"],
+          ["Applied Global Services", 24, "设备升级、备件、服务合约"],
+          ["Display & Adjacent", 3, "OLED、新兴市场"]
+        ],
+        cultureTags:["保守工程师文化", "服务收入扎实", "供应链长期主义", "硅谷设备老兵"],
+        glassdoor:"4.0", glassdoorCeo:"84%",
+        glassdoorNote:"稳定工程文化，少戏剧性。",
+        ceoStyle:"Dickerson 任期长，强调跨周期纪律。",
+        insiderNarrative:"“设备公司不该有大新闻” — 默认接受的命题。",
+        pilotNote:"半导体设备组中相对“传统”的样本。"
+      },
+      LRCX: {
+        founded:1980, hq:"Fremont, CA", ceo:"Tim Archer", employees:"17K",
+        marketCap:"$100B", revenue:"$16.2B", pe:"27", revGrowth:"+13%",
+        about:"刻蚀与沉积设备龙头，与 AMAT 在多个工艺节点重叠。HBM 与先进逻辑节点是其核心订单来源。",
+        business:[
+          ["Systems", 64, "刻蚀、沉积、清洗设备"],
+          ["Customer Support-Related", 36, "服务、备件、升级"]
+        ],
+        cultureTags:["设备工程师文化", "硅谷历史悠久", "客户工程深度", "无外向叙事"],
+        glassdoor:"4.1", glassdoorCeo:"86%",
+        glassdoorNote:"工程氛围稳定，客户工程师评价高。",
+        ceoStyle:"Tim Archer 工程师出身，叙事克制。",
+        insiderNarrative:"“我们在客户晶圆厂里几乎和员工一样多”。",
+        pilotNote:"与 AMAT 配对作为周期对照组。"
+      },
+      OKTA: {
+        founded:2009, hq:"San Francisco, CA", ceo:"Todd McKinnon", employees:"6K",
+        marketCap:"$15B", revenue:"$2.6B", pe:"—", revGrowth:"+15%",
+        about:"身份与访问管理 SaaS。Workforce Identity 是核心；Customer Identity（Auth0 收购）是第二条腿。2023-2024 安全事件后正在重建信任。",
+        business:[
+          ["Subscription — Workforce Identity", 60, "员工 SSO / MFA / Lifecycle"],
+          ["Subscription — Customer Identity", 36, "Auth0 集成，B2C / B2B 身份"],
+          ["Professional Services", 4, "实施与咨询"]
+        ],
+        cultureTags:["身份信任品牌", "事件后重建文化", "Workforce + Customer 双产品"],
+        glassdoor:"3.9", glassdoorCeo:"72%",
+        glassdoorNote:"评分受 2023-2024 安全事件影响，正在缓慢恢复。",
+        ceoStyle:"McKinnon 创始人 CEO，强调透明度作为信任修复的核心手段。",
+        insiderNarrative:"“信任不是一次性资产 — 是每天都要赚的”。",
+        pilotNote:"信任修复中的文化样本 — 长期观察其与红旗指标的反向关系。"
+      },
+      TWLO: {
+        founded:2008, hq:"San Francisco, CA", ceo:"Khozema Shipchandler", employees:"5.5K",
+        marketCap:"$15B", revenue:"$4.5B", pe:"—", revGrowth:"+9%",
+        about:"通信 API + Segment CDP 平台。前 CEO Jeff Lawson 时代的“软件传教”文化已被新管理层重置为“盈利能力优先”。",
+        business:[
+          ["Communications (API)", 89, "短信、语音、邮件、视频 API"],
+          ["Segment (Data & Apps)", 11, "客户数据平台 (CDP)"]
+        ],
+        cultureTags:["开发者品牌", "活动家投资人后重置", "盈利能力压力", "创始人离场"],
+        glassdoor:"3.7", glassdoorCeo:"70%",
+        glassdoorNote:"创始人时代后评分先降后稳；新文化仍在塑造中。",
+        ceoStyle:"Shipchandler 来自 GE 与 Twilio 内部财务，强调纪律与现金流。",
+        insiderNarrative:"“从传教到盈利” — 高管反复强调的转向。",
+        pilotNote:"文化重置后的二轮验证 — 员工是否真心买账？"
+      },
+      KLAC: {
+        founded:1975, hq:"Milpitas, CA", ceo:"Rick Wallace", employees:"15K",
+        marketCap:"$95B", revenue:"$10.5B", pe:"30", revGrowth:"+12%",
+        about:"过程控制 / 量测设备龙头。比 AMAT / LRCX 更专业化，毛利率长期高于 60% 是其结构性特征。",
+        business:[
+          ["Wafer Inspection", 50, "晶圆缺陷检测"],
+          ["Patterning", 18, "图案化质量控制"],
+          ["Specialty Semi Process", 16, "化合物半导体、MEMS"],
+          ["PCB / Display / Other", 16, "PCB、显示、其他"]
+        ],
+        cultureTags:["高毛利设备稀缺品", "工程精英文化", "硅谷老兵", "量测壁垒"],
+        glassdoor:"4.4", glassdoorCeo:"91%",
+        glassdoorNote:"设备组评分最高之一，员工对技术深度认可。",
+        ceoStyle:"Rick Wallace 任期长，叙事克制专业。",
+        insiderNarrative:"“量测是半导体里最难造假的工序” — 工程师文化的内核。",
+        pilotNote:"设备组的高质量基线 — 长期与 INTC 对照看上下游分化。"
+      }
+    };
+
+    function buildExpand(ticker) {
+      const c = COMPANIES[ticker];
+      if (!c) return null;
+      const businessRows = c.business.map((b) => `
+        <div class="biz-row">
+          <span class="name">${b[0]}</span>
+          <span class="share">${b[1]}%</span>
+          <div class="biz-bar"><i style="width:${b[1]}%"></i></div>
+          ${b[2] ? `<p class="note">${b[2]}</p>` : ""}
+        </div>
+      `).join("");
+      const tags = c.cultureTags.map((t) => `<span class="culture-chip">${t}</span>`).join("");
+      return `
+        <td colspan="7">
+          <div class="expand-wrap">
+            <p class="expand-lede">${c.about}</p>
+            <div class="key-facts">
+              <div class="key-fact"><div class="label">Founded</div><div class="value">${c.founded}</div></div>
+              <div class="key-fact"><div class="label">HQ</div><div class="value">${c.hq}</div></div>
+              <div class="key-fact"><div class="label">CEO</div><div class="value">${c.ceo}</div></div>
+              <div class="key-fact"><div class="label">Employees</div><div class="value">${c.employees}</div></div>
+              <div class="key-fact"><div class="label">Market Cap</div><div class="value">${c.marketCap}</div></div>
+              <div class="key-fact"><div class="label">Revenue (TTM)</div><div class="value">${c.revenue}</div></div>
+              <div class="key-fact"><div class="label">P/E</div><div class="value muted">${c.pe}</div></div>
+              <div class="key-fact"><div class="label">Rev Growth YoY</div><div class="value accent">${c.revGrowth}</div></div>
+            </div>
+            <div class="expand-columns">
+              <section class="expand-col">
+                <h4>业务构成 · Business Mix</h4>
+                <div class="biz-list">${businessRows}</div>
+              </section>
+              <section class="expand-col">
+                <h4>企业文化 · Culture Profile</h4>
+                <div class="culture-tags">${tags}</div>
+                <div class="culture-row">
+                  <span class="key">Glassdoor</span>
+                  <span class="glassdoor">${c.glassdoor}</span><span class="ceo-pct">CEO ${c.glassdoorCeo}</span>
+                  <span class="gd-note">${c.glassdoorNote}</span>
+                </div>
+                <div class="culture-row">
+                  <span class="key">CEO 风格</span>
+                  ${c.ceoStyle}
+                </div>
+                <div class="culture-row">
+                  <span class="key">内部叙事</span>
+                  <em>${c.insiderNarrative}</em>
+                </div>
+              </section>
+            </div>
+            <div class="expand-footer">
+              <p class="pilot-note">${c.pilotNote}</p>
+              <span class="demo-tag">示意数据 · Demo</span>
+            </div>
+          </div>
+        </td>`;
+    }
+
+    function collapseAll() {
+      document.querySelectorAll(".expand-row").forEach((r) => r.remove());
+      document.querySelectorAll(".company-row.is-open").forEach((r) => r.classList.remove("is-open"));
+    }
+
+    const tabs = Array.from(document.querySelectorAll(".tab"));
+    const rows = Array.from(document.querySelectorAll("#companyTable tbody tr"));
+
+    rows.forEach((tr) => {
+      tr.classList.add("company-row");
+      tr.addEventListener("click", () => {
+        const tickerCell = tr.querySelector("td.ticker");
+        if (!tickerCell) return;
+        const ticker = tickerCell.textContent.trim();
+        if (tr.classList.contains("is-open")) {
+          const next = tr.nextElementSibling;
+          if (next && next.classList.contains("expand-row")) next.remove();
+          tr.classList.remove("is-open");
+          return;
+        }
+        collapseAll();
+        const html = buildExpand(ticker);
+        if (!html) return;
+        const exp = document.createElement("tr");
+        exp.className = "expand-row";
+        exp.innerHTML = html;
+        tr.after(exp);
+        tr.classList.add("is-open");
+      });
+    });
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        collapseAll();
+        const filter = tab.dataset.filter;
+        tabs.forEach((item) => item.classList.toggle("is-active", item === tab));
+        rows.forEach((row) => {
+          const kinds = row.dataset.kind.split(" ");
+          row.style.display = filter === "all" || kinds.includes(filter) ? "" : "none";
+        });
+      });
+    });
+  </script>
+</body>
+</html>

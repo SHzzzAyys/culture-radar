@@ -1,0 +1,1360 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CultureRadar — MVP Command Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0a0d10;
+      --bg-2: #0e1216;
+      --bg-3: #12171c;
+      --bg-row: #0c1014;
+      --bg-row-alt: #0f1419;
+      --line: #1c242c;
+      --line-2: #29333d;
+      --line-3: #3a4753;
+      --ink: #e6ecf2;
+      --ink-2: #b9c3cd;
+      --muted: #6f7c89;
+      --muted-2: #8a96a3;
+      --amber: #ff9933;
+      --amber-2: #ffb55c;
+      --amber-dim: rgba(255, 153, 51, 0.12);
+      --amber-hair: rgba(255, 153, 51, 0.28);
+      --cyan: #4dd0e1;
+      --green: #5cd672;
+      --magenta: #ff5d8a;
+      --red: #ff4d4d;
+      --gold: #f5c451;
+      --blue: #6cb6ff;
+      --mono: "JetBrains Mono", "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      --sans: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      background-image:
+        linear-gradient(rgba(255, 153, 51, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 153, 51, 0.018) 1px, transparent 1px);
+      background-size: 48px 48px;
+      background-position: -1px -1px;
+      background-attachment: fixed;
+    }
+
+    a { color: var(--amber); text-decoration: none; }
+    a:hover { color: var(--amber-2); text-decoration: underline; text-underline-offset: 3px; }
+
+    .zh { font-family: var(--sans); }
+
+    .shell { max-width: 1320px; margin: 0 auto; padding: 0 24px; }
+
+    /* ─── Topbar ─────────────────────────────────────── */
+    .topbar {
+      position: sticky; top: 0; z-index: 30;
+      border-bottom: 1px solid var(--line-2);
+      background: rgba(10, 13, 16, 0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .topbar .shell {
+      display: flex; align-items: center; justify-content: space-between;
+      min-height: 56px; gap: 24px;
+    }
+    .brand { display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .brand-mark {
+      width: 28px; height: 28px; flex-shrink: 0;
+      border: 1px solid var(--amber);
+      background:
+        linear-gradient(135deg, rgba(255,153,51,0.2), rgba(255,153,51,0.05));
+      position: relative;
+    }
+    .brand-mark::before {
+      content: ""; position: absolute; inset: 4px;
+      border: 1px solid var(--amber-hair);
+    }
+    .brand-mark::after {
+      content: ""; position: absolute;
+      left: 50%; top: 50%; width: 4px; height: 4px;
+      background: var(--amber);
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 8px var(--amber);
+    }
+    .brand-text { display: flex; flex-direction: column; min-width: 0; }
+    .brand-text strong {
+      font-family: var(--mono); font-weight: 700;
+      font-size: 16px; line-height: 1; letter-spacing: 0.04em;
+      color: var(--ink); text-transform: uppercase;
+    }
+    .brand-text span {
+      color: var(--amber); font-size: 10px; letter-spacing: 0.22em;
+      text-transform: uppercase; margin-top: 5px;
+      font-family: var(--mono); font-weight: 500;
+    }
+    nav {
+      display: flex; align-items: center; gap: 0;
+      overflow-x: auto; white-space: nowrap;
+      scrollbar-width: none;
+    }
+    nav::-webkit-scrollbar { display: none; }
+    nav a {
+      color: var(--ink-2); font-size: 11.5px; font-weight: 500;
+      font-family: var(--mono);
+      padding: 6px 13px;
+      text-transform: uppercase; letter-spacing: 0.12em;
+      border-left: 1px solid var(--line);
+      transition: color .15s, background .15s;
+    }
+    nav a:first-child { border-left: 1px solid var(--line); }
+    nav a:last-child { border-right: 1px solid var(--line); }
+    nav a:hover {
+      color: var(--amber); background: var(--amber-dim);
+      text-decoration: none;
+    }
+    .top-status {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--mono); font-size: 10.5px; color: var(--green);
+      padding: 5px 12px;
+      border: 1px solid var(--line-2);
+      background: var(--bg-2);
+      letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600;
+    }
+    .top-status::before {
+      content: ""; width: 7px; height: 7px;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+      animation: blink 1.4s steps(2, start) infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.25; }
+    }
+
+    /* ─── Hero ───────────────────────────────────────── */
+    .hero {
+      position: relative; overflow: hidden;
+      padding: 48px 0 44px;
+      border-bottom: 1px solid var(--line-2);
+    }
+    .hero::before {
+      content: ""; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 85% 30%, rgba(255,153,51,0.08), transparent 50%),
+        radial-gradient(ellipse at 15% 80%, rgba(77,208,225,0.04), transparent 50%);
+      pointer-events: none;
+    }
+    .hero .shell { position: relative; z-index: 1; }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(360px, 0.7fr);
+      gap: 32px; align-items: stretch;
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--mono); font-size: 11px; font-weight: 600;
+      color: var(--amber); letter-spacing: 0.22em;
+      text-transform: uppercase; margin-bottom: 20px;
+    }
+    .eyebrow::before {
+      content: "["; color: var(--amber); font-weight: 700;
+    }
+    .eyebrow::after {
+      content: "]"; color: var(--amber); font-weight: 700;
+    }
+    .hero h1 {
+      margin: 0 0 22px;
+      font-family: var(--sans); font-weight: 700;
+      font-size: clamp(36px, 5vw, 64px);
+      line-height: 1.04; letter-spacing: -0.015em;
+      color: var(--ink); max-width: 16ch;
+    }
+    .hero h1 em {
+      font-style: normal; color: var(--amber);
+      position: relative;
+    }
+    .hero h1 em::before,
+    .hero h1 em::after {
+      color: var(--amber-hair); font-family: var(--mono);
+      font-weight: 400; padding: 0 4px;
+    }
+    .hero h1 em::before { content: "[ "; }
+    .hero h1 em::after { content: " ]"; }
+    .hero .lead {
+      max-width: 60ch; margin: 0 0 28px;
+      color: var(--ink-2); font-size: 14.5px; line-height: 1.7;
+      font-family: var(--sans); font-weight: 400;
+    }
+    .hero-actions {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px;
+    }
+    .button {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      min-height: 40px;
+      border: 1px solid var(--line-3);
+      padding: 0 16px;
+      color: var(--ink); background: var(--bg-2);
+      font-family: var(--mono); font-size: 12px; font-weight: 600;
+      text-decoration: none; letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: border-color .15s, background .15s, color .15s;
+    }
+    .button:hover {
+      border-color: var(--amber);
+      background: var(--amber-dim);
+      color: var(--amber);
+      text-decoration: none;
+    }
+    .button.primary {
+      border-color: var(--amber); background: var(--amber); color: var(--bg);
+    }
+    .button.primary:hover {
+      background: var(--amber-2); border-color: var(--amber-2); color: var(--bg);
+    }
+    .button .arrow {
+      font-family: var(--mono); font-size: 13px;
+      transition: transform .15s;
+    }
+    .button:hover .arrow { transform: translateX(2px); }
+
+    /* ─── Status Panel ────────────────────────────────── */
+    .status-panel {
+      border: 1px solid var(--line-2);
+      background: var(--bg-2);
+      display: flex; flex-direction: column;
+      position: relative;
+    }
+    .status-panel::before {
+      content: ""; position: absolute; left: -1px; top: -1px; right: -1px;
+      height: 28px;
+      border-bottom: 1px solid var(--line-2);
+      background:
+        linear-gradient(90deg, var(--bg-3), var(--bg-2));
+    }
+    .terminal-header {
+      position: relative; z-index: 2;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 28px; padding: 0 12px;
+      font-family: var(--mono); font-size: 10px;
+      color: var(--muted-2); letter-spacing: 0.18em;
+      text-transform: uppercase; font-weight: 600;
+    }
+    .terminal-dots { display: flex; gap: 5px; }
+    .terminal-dots i {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--line-3);
+    }
+    .terminal-dots i:nth-child(1) { background: var(--red); opacity: 0.7; }
+    .terminal-dots i:nth-child(2) { background: var(--gold); opacity: 0.7; }
+    .terminal-dots i:nth-child(3) { background: var(--green); opacity: 0.7; }
+    .terminal-label::before { content: "["; color: var(--amber); }
+    .terminal-label::after { content: "]"; color: var(--amber); }
+
+    .status-body {
+      padding: 18px 18px 18px;
+    }
+    .status-title {
+      display: flex; justify-content: space-between;
+      align-items: flex-start; gap: 12px;
+      padding-bottom: 14px;
+      margin-bottom: 16px;
+      border-bottom: 1px dashed var(--line-2);
+    }
+    .status-title h2 {
+      margin: 0;
+      font-family: var(--mono); font-weight: 700;
+      font-size: 14px; line-height: 1.2; color: var(--ink);
+      letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    .status-title .stamp {
+      font-family: var(--mono); font-size: 11px;
+      color: var(--amber); letter-spacing: 0.08em;
+      padding-top: 2px; font-weight: 500;
+    }
+    .signal-stack { display: grid; gap: 12px; }
+    .signal-row {
+      display: grid;
+      grid-template-columns: 96px 1fr 72px;
+      gap: 12px; align-items: center;
+    }
+    .signal-row > span:first-child {
+      font-family: var(--sans); color: var(--ink-2);
+      font-size: 12px; font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+    .signal-row b {
+      font-family: var(--mono); font-size: 12px; font-weight: 600;
+      color: var(--ink); text-align: right;
+      letter-spacing: 0.04em;
+    }
+    .bar {
+      height: 10px; overflow: hidden;
+      background: var(--bg-3);
+      border: 1px solid var(--line);
+      position: relative;
+    }
+    .bar i {
+      display: block; height: 100%;
+      background:
+        repeating-linear-gradient(90deg,
+          var(--amber) 0 4px,
+          var(--amber-2) 4px 8px);
+      transition: width .8s cubic-bezier(.2,.7,.2,1);
+    }
+    .signal-row.idle .bar i {
+      background: repeating-linear-gradient(90deg,
+        var(--line-2) 0 4px,
+        transparent 4px 8px);
+      width: 100% !important;
+      opacity: 0.6;
+    }
+    .signal-row.idle b { color: var(--muted); }
+
+    .disclaimer-strip {
+      margin-top: 18px;
+      padding: 12px 14px;
+      border: 1px solid var(--gold);
+      border-left-width: 3px;
+      background: rgba(245, 196, 81, 0.06);
+      color: var(--gold); font-size: 12px; line-height: 1.55;
+      font-family: var(--sans); font-weight: 400;
+    }
+    .disclaimer-strip::before {
+      content: "// WARN  ";
+      font-family: var(--mono); color: var(--gold);
+      font-weight: 700; letter-spacing: 0.08em;
+    }
+
+    /* ─── Main ───────────────────────────────────────── */
+    main { padding: 40px 0 64px; }
+    section { margin-top: 52px; }
+    section:first-child { margin-top: 0; }
+
+    .section-head {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      gap: 24px; margin-bottom: 22px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line-2);
+      position: relative;
+    }
+    .section-head::after {
+      content: ""; position: absolute;
+      left: 0; bottom: -1px;
+      width: 80px; height: 1px;
+      background: var(--amber);
+    }
+    .section-head-text { min-width: 0; }
+    .section-num {
+      font-family: var(--mono); font-size: 11px; color: var(--amber);
+      letter-spacing: 0.22em; text-transform: uppercase;
+      margin-bottom: 10px; display: block; font-weight: 600;
+    }
+    .section-num::before { content: "// "; color: var(--muted); }
+    .section-head h2 {
+      margin: 0;
+      font-family: var(--sans); font-weight: 700;
+      font-size: clamp(24px, 2.6vw, 32px); line-height: 1.15;
+      color: var(--ink); letter-spacing: -0.005em;
+    }
+    .section-head p {
+      max-width: 68ch; margin: 12px 0 0;
+      color: var(--ink-2); font-size: 13px; line-height: 1.65;
+      font-family: var(--sans);
+    }
+
+    /* ─── Metric Grid ─────────────────────────────────── */
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0;
+      border: 1px solid var(--line-2);
+      background: var(--bg-2);
+    }
+    .metric {
+      padding: 22px 20px;
+      border-right: 1px solid var(--line-2);
+      position: relative;
+    }
+    .metric::before {
+      content: ""; position: absolute;
+      left: 0; top: 0;
+      width: 28px; height: 1px;
+      background: var(--amber);
+    }
+    .metric:last-child { border-right: 0; }
+    .metric-key {
+      font-family: var(--mono); font-size: 10px; color: var(--muted-2);
+      letter-spacing: 0.22em; text-transform: uppercase;
+      margin-bottom: 14px; font-weight: 600;
+    }
+    .metric-key::before { content: "› "; color: var(--amber); }
+    .metric b {
+      display: block;
+      font-family: var(--mono); font-weight: 700;
+      color: var(--amber);
+      font-size: 48px; line-height: 1; letter-spacing: -0.015em;
+    }
+    .metric b sup {
+      font-family: var(--mono); font-size: 13px; font-weight: 500;
+      color: var(--muted-2); margin-left: 4px;
+      vertical-align: super;
+    }
+    .metric span {
+      display: block; margin-top: 14px;
+      color: var(--ink-2); font-size: 12.5px; line-height: 1.55;
+      font-family: var(--sans);
+    }
+
+    /* ─── Workflow ───────────────────────────────────── */
+    .workflow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0;
+      border: 1px solid var(--line-2);
+      background: var(--bg-2);
+    }
+    .workflow-step {
+      position: relative;
+      border-right: 1px solid var(--line-2);
+      padding: 22px 20px;
+      transition: background .2s;
+      overflow: hidden;
+    }
+    .workflow-step:last-child { border-right: 0; }
+    .workflow-step:hover { background: var(--bg-3); }
+    .workflow-step::before {
+      content: ""; position: absolute; left: 0; top: 0;
+      width: 100%; height: 2px;
+      background: var(--amber);
+    }
+    .workflow-step .step-head {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 18px;
+    }
+    .workflow-step small {
+      font-family: var(--mono); font-size: 10px;
+      color: var(--amber); letter-spacing: 0.2em;
+      text-transform: uppercase; font-weight: 700;
+    }
+    .step-icon {
+      width: 34px; height: 34px;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid var(--amber-hair);
+      background: var(--amber-dim);
+      color: var(--amber);
+      flex-shrink: 0;
+    }
+    .step-icon svg { width: 16px; height: 16px; }
+    .workflow-step h3 {
+      margin: 0 0 10px;
+      font-family: var(--sans); font-weight: 700;
+      font-size: 16px; line-height: 1.2;
+      color: var(--ink); letter-spacing: -0.005em;
+    }
+    .workflow-step p {
+      margin: 0;
+      color: var(--ink-2); font-size: 12.5px; line-height: 1.6;
+      font-family: var(--sans);
+    }
+
+    /* ─── Tabs & Table ───────────────────────────────── */
+    .tabs {
+      display: flex; flex-wrap: wrap; gap: 0;
+      margin-bottom: 0;
+      border: 1px solid var(--line-2);
+      border-bottom: 0;
+      background: var(--bg-2);
+    }
+    .tab {
+      border: 0; background: transparent;
+      color: var(--ink-2); cursor: pointer;
+      font: inherit;
+      font-family: var(--mono);
+      font-size: 11px; font-weight: 600;
+      padding: 12px 18px;
+      position: relative;
+      transition: color .15s, background .15s;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      border-right: 1px solid var(--line-2);
+    }
+    .tab:last-child { border-right: 0; }
+    .tab:hover { color: var(--amber); background: var(--bg-3); }
+    .tab.is-active {
+      color: var(--amber); background: var(--bg-3);
+    }
+    .tab.is-active::after {
+      content: ""; position: absolute;
+      left: 0; right: 0; bottom: -1px;
+      height: 2px; background: var(--amber);
+    }
+    .tab-count {
+      font-family: var(--mono); font-size: 10.5px;
+      color: var(--muted-2); margin-left: 8px; font-weight: 500;
+    }
+    .tab.is-active .tab-count { color: var(--amber-2); }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line-2);
+      background: var(--bg-2);
+    }
+    table {
+      width: 100%; border-collapse: collapse; min-width: 920px;
+    }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      padding: 11px 16px;
+      text-align: left; vertical-align: middle;
+      font-size: 12.5px;
+    }
+    th {
+      position: sticky; top: 0; z-index: 1;
+      background: var(--bg-3);
+      color: var(--amber); font-weight: 700;
+      font-family: var(--mono);
+      font-size: 10px; text-transform: uppercase;
+      letter-spacing: 0.18em;
+      padding-top: 12px; padding-bottom: 12px;
+      border-bottom: 1px solid var(--line-2);
+    }
+    tbody tr {
+      transition: background .12s;
+      background: var(--bg-row);
+    }
+    tbody tr:nth-child(even) { background: var(--bg-row-alt); }
+    tbody tr:hover {
+      background: var(--amber-dim);
+    }
+    tbody tr:hover td { color: var(--ink); }
+    tbody tr:last-child td { border-bottom: 0; }
+    td {
+      color: var(--ink-2);
+      font-family: var(--sans);
+    }
+    td.company-name {
+      font-weight: 600; color: var(--ink); font-size: 13px;
+      font-family: var(--sans);
+    }
+    td.ticker {
+      font-family: var(--mono); font-size: 12px; font-weight: 700;
+      color: var(--amber);
+      letter-spacing: 0.06em;
+    }
+    td.pilot {
+      color: var(--muted-2); font-size: 12px;
+      font-family: var(--sans);
+    }
+
+    .tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 3px 8px;
+      font-family: var(--mono);
+      font-size: 10.5px; font-weight: 600;
+      color: var(--ink-2);
+      background: var(--bg-3);
+      border: 1px solid var(--line-2);
+      white-space: nowrap; letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .tag::before {
+      content: ""; width: 5px; height: 5px;
+      background: currentColor; opacity: 0.7;
+    }
+    .tag.saas { color: var(--cyan); border-color: rgba(77,208,225,0.32); }
+    .tag.semi { color: var(--green); border-color: rgba(92,214,114,0.32); }
+    .tag.alt { color: var(--magenta); border-color: rgba(255,93,138,0.32); }
+
+    .score {
+      display: flex; align-items: center; gap: 10px;
+      min-width: 150px;
+    }
+    .score-num {
+      font-family: var(--mono); font-size: 12px; font-weight: 700;
+      color: var(--ink); min-width: 50px;
+      letter-spacing: 0.04em;
+    }
+    .score-line {
+      flex: 1; height: 8px;
+      background: var(--bg-3); overflow: hidden;
+      border: 1px solid var(--line);
+      position: relative;
+    }
+    .score-line i {
+      display: block; height: 100%;
+      background: repeating-linear-gradient(90deg,
+        var(--cyan) 0 3px,
+        rgba(77,208,225,0.6) 3px 6px);
+    }
+    .score.high .score-num { color: var(--amber); }
+    .score.high .score-line i {
+      background: repeating-linear-gradient(90deg,
+        var(--amber) 0 3px,
+        var(--amber-2) 3px 6px);
+    }
+
+    /* ─── Roadmap ────────────────────────────────────── */
+    .roadmap { display: grid; gap: 12px; }
+    .phase {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      border: 1px solid var(--line-2);
+      background: var(--bg-2);
+      overflow: hidden;
+      transition: border-color .15s;
+    }
+    .phase:hover { border-color: var(--line-3); }
+    .phase-label {
+      display: flex; flex-direction: column; justify-content: center; gap: 8px;
+      padding: 22px 20px;
+      background: var(--bg-3);
+      border-right: 1px solid var(--line-2);
+      position: relative;
+    }
+    .phase-label::before {
+      content: ""; position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px; background: var(--amber);
+    }
+    .phase-week {
+      font-family: var(--mono); font-size: 10px; color: var(--amber);
+      letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700;
+    }
+    .phase-week::before { content: "[ "; }
+    .phase-week::after { content: " ]"; }
+    .phase-label b {
+      color: var(--ink);
+      font-family: var(--sans); font-weight: 700;
+      font-size: 17px; line-height: 1.2; letter-spacing: -0.005em;
+    }
+    .phase-label span {
+      color: var(--muted-2); font-size: 11.5px; line-height: 1.5;
+      font-family: var(--sans);
+    }
+    .phase-body {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .phase-item {
+      padding: 20px 18px;
+      border-right: 1px solid var(--line-2);
+    }
+    .phase-item:last-child { border-right: 0; }
+    .phase-item h3 {
+      margin: 0 0 8px;
+      font-family: var(--sans);
+      font-size: 13.5px; font-weight: 700;
+      color: var(--amber); letter-spacing: -0.002em;
+    }
+    .phase-item h3::before {
+      content: "› "; color: var(--muted-2); font-family: var(--mono);
+    }
+    .phase-item p {
+      margin: 0;
+      color: var(--ink-2); font-size: 12px; line-height: 1.6;
+      font-family: var(--sans);
+    }
+
+    /* ─── Week Grid ──────────────────────────────────── */
+    .week-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 0;
+      border: 1px solid var(--line-2);
+      background: var(--bg-2);
+    }
+    .weekday {
+      border-right: 1px solid var(--line-2);
+      padding: 20px 18px;
+      transition: background .15s;
+    }
+    .weekday:last-child { border-right: 0; }
+    .weekday:hover { background: var(--bg-3); }
+    .weekday b {
+      display: block; margin-bottom: 12px;
+      color: var(--amber);
+      font-family: var(--mono); font-weight: 700;
+      font-size: 13px; letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .weekday b::after {
+      content: ""; display: block;
+      width: 28px; height: 2px; background: var(--amber);
+      margin-top: 8px;
+    }
+    .weekday span {
+      color: var(--ink-2); font-size: 12px; line-height: 1.55;
+      font-family: var(--sans);
+    }
+
+    /* ─── Assets ─────────────────────────────────────── */
+    .asset-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .asset {
+      display: flex; flex-direction: column; gap: 12px;
+      border: 1px solid var(--line-2);
+      background: var(--bg-2);
+      padding: 20px;
+      min-height: 200px;
+      transition: border-color .15s, background .15s;
+      position: relative;
+    }
+    .asset::before {
+      content: ""; position: absolute;
+      left: -1px; top: -1px;
+      width: 24px; height: 1px;
+      background: var(--amber);
+    }
+    .asset::after {
+      content: ""; position: absolute;
+      left: -1px; top: -1px;
+      width: 1px; height: 24px;
+      background: var(--amber);
+    }
+    .asset:hover {
+      border-color: var(--amber-hair);
+      background: var(--bg-3);
+    }
+    .asset-icon {
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid var(--amber-hair);
+      background: var(--amber-dim);
+      color: var(--amber);
+      margin-bottom: 2px;
+    }
+    .asset-icon svg { width: 18px; height: 18px; }
+    .asset h3 {
+      margin: 0;
+      font-family: var(--mono); font-weight: 700;
+      color: var(--ink); font-size: 14px;
+      letter-spacing: 0.06em; line-height: 1.2;
+      text-transform: uppercase;
+    }
+    .asset p {
+      margin: 0;
+      color: var(--ink-2); font-size: 12.5px; line-height: 1.6;
+      font-family: var(--sans);
+    }
+    .asset .links {
+      display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto;
+    }
+    .mini-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      min-height: 26px;
+      border: 1px solid var(--line-2);
+      padding: 0 10px;
+      background: var(--bg);
+      font-size: 10.5px; font-weight: 600;
+      color: var(--ink-2); letter-spacing: 0.1em;
+      font-family: var(--mono);
+      text-transform: uppercase;
+      transition: background .15s, border-color .15s, color .15s;
+    }
+    .mini-link:hover {
+      background: var(--amber); border-color: var(--amber); color: var(--bg);
+      text-decoration: none;
+    }
+    .mini-link::after {
+      content: "↗"; font-size: 11px; opacity: 0.7;
+    }
+
+    /* ─── Protocols ──────────────────────────────────── */
+    .protocol-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .protocol {
+      border: 1px solid var(--line-2);
+      background: var(--bg-2);
+      padding: 22px 22px 22px;
+      position: relative;
+      overflow: hidden;
+    }
+    .protocol::before {
+      content: ""; position: absolute;
+      left: 0; top: 0; right: 0; height: 2px;
+      background: var(--amber);
+    }
+    .protocol.compliance::before { background: var(--gold); }
+    .protocol h3 {
+      margin: 0 0 18px;
+      color: var(--ink);
+      font-family: var(--mono); font-weight: 700;
+      font-size: 14px; letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding-bottom: 12px;
+      border-bottom: 1px dashed var(--line-2);
+    }
+    .protocol h3::before {
+      content: "[ "; color: var(--amber);
+    }
+    .protocol h3::after {
+      content: " ]"; color: var(--amber);
+    }
+    .protocol.compliance h3::before,
+    .protocol.compliance h3::after { color: var(--gold); }
+    .protocol ul {
+      margin: 0; padding: 0;
+      list-style: none;
+    }
+    .protocol li {
+      position: relative;
+      padding: 11px 0 11px 28px;
+      border-bottom: 1px dashed var(--line);
+      color: var(--ink-2); font-size: 13px; line-height: 1.6;
+      font-family: var(--sans);
+    }
+    .protocol li:last-child { border-bottom: 0; padding-bottom: 0; }
+    .protocol li::before {
+      content: "›"; position: absolute;
+      left: 6px; top: 11px;
+      color: var(--amber);
+      font-family: var(--mono); font-weight: 700;
+      font-size: 14px;
+    }
+    .protocol.compliance li::before { color: var(--gold); }
+
+    /* ─── Footer ─────────────────────────────────────── */
+    .footer {
+      border-top: 1px solid var(--line-2);
+      background: var(--bg-2);
+      padding: 28px 0;
+      color: var(--muted-2); font-size: 12px;
+      margin-top: 48px;
+      font-family: var(--mono);
+    }
+    .footer .shell {
+      display: flex; justify-content: space-between;
+      gap: 20px; flex-wrap: wrap; align-items: center;
+    }
+    .footer-brand {
+      display: flex; align-items: center; gap: 10px;
+      color: var(--ink); font-weight: 700;
+      font-family: var(--mono);
+      letter-spacing: 0.12em; text-transform: uppercase; font-size: 12px;
+    }
+    .footer-brand .brand-mark { width: 20px; height: 20px; }
+    .footer-note {
+      max-width: 64ch;
+      font-family: var(--sans); font-size: 12px;
+      color: var(--muted-2);
+    }
+    .footer-note::before {
+      content: "// "; color: var(--amber); font-family: var(--mono);
+    }
+
+    /* ─── Responsive ─────────────────────────────────── */
+    @media (max-width: 980px) {
+      .hero-grid, .protocol-grid { grid-template-columns: 1fr; }
+      .metric-grid, .workflow, .asset-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .metric:nth-child(2), .workflow-step:nth-child(2) { border-right: 0; }
+      .metric:nth-child(1), .metric:nth-child(2),
+      .workflow-step:nth-child(1), .workflow-step:nth-child(2) {
+        border-bottom: 1px solid var(--line-2);
+      }
+      .phase { grid-template-columns: 1fr; }
+      .phase-label { border-right: 0; border-bottom: 1px solid var(--line-2); }
+      .phase-label::before { left: 0; top: 0; right: 0; bottom: auto; width: 100%; height: 3px; }
+      .phase-body { grid-template-columns: 1fr; }
+      .phase-item { border-right: 0; border-bottom: 1px solid var(--line-2); }
+      .phase-item:last-child { border-bottom: 0; }
+      .week-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .weekday { border-right: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2); }
+      .weekday:nth-child(2n) { border-right: 0; }
+    }
+    @media (max-width: 640px) {
+      .shell { padding: 0 16px; }
+      .topbar .shell {
+        align-items: flex-start; flex-direction: column; gap: 10px;
+        padding-top: 12px; padding-bottom: 12px;
+      }
+      nav { width: 100%; }
+      .top-status { align-self: flex-start; }
+      .hero { padding: 36px 0 32px; }
+      .hero h1 { font-size: 34px; }
+      .metric-grid, .workflow, .asset-grid, .week-grid { grid-template-columns: 1fr; }
+      .metric, .workflow-step, .weekday {
+        border-right: 0; border-bottom: 1px solid var(--line-2);
+      }
+      .metric:last-child, .workflow-step:last-child, .weekday:last-child {
+        border-bottom: 0;
+      }
+      .section-head { flex-direction: column; align-items: flex-start; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero h1, .hero .lead, .hero-actions, .status-panel {
+      animation: fadeUp .55s ease both;
+    }
+    .hero .lead { animation-delay: .08s; }
+    .hero-actions { animation-delay: .16s; }
+    .status-panel { animation-delay: .12s; }
+
+    .cursor {
+      display: inline-block; width: 8px; height: 1em;
+      background: var(--amber); vertical-align: text-bottom;
+      margin-left: 4px;
+      animation: cursor-blink 1s steps(2, start) infinite;
+    }
+    @keyframes cursor-blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="shell">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"></div>
+        <div class="brand-text">
+          <strong>CultureRadar</strong>
+          <span>MVP · Command Center</span>
+        </div>
+      </div>
+      <nav aria-label="页面导航">
+        <a href="#overview" class="zh">总览</a>
+        <a href="#workflow" class="zh">研究流程</a>
+        <a href="#companies" class="zh">公司池</a>
+        <a href="#roadmap" class="zh">12 周路线图</a>
+        <a href="#assets" class="zh">文件入口</a>
+        <a href="#protocol" class="zh">规则</a>
+      </nav>
+      <span class="top-status">Live · v0.1</span>
+    </div>
+  </header>
+
+  <section class="hero" id="overview">
+    <div class="shell hero-grid">
+      <div>
+        <span class="eyebrow">A culture-signal research desk</span>
+        <h1 class="zh">读懂美股公司的<br><em>文化拐点</em>。<span class="cursor"></span></h1>
+        <p class="lead zh">
+          面向长线个人投资者的美股文化拐点研究通讯。第一版采用手工研究、免费公开、双语并行，
+          用一套工作簿和判断追踪表，沉淀 12 周可证伪记录。
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="data/CultureRadar_MVP_Workbook.xlsx">
+            <span class="zh">打开主工作簿</span> <span class="arrow">→</span>
+          </a>
+          <a class="button" href="docs/launch_checklist.md"><span class="zh">启动清单</span></a>
+          <a class="button" href="templates/culture_health_card.md"><span class="zh">解读卡模板</span></a>
+          <a class="button" href="content/public_about_page.md"><span class="zh">公开说明页</span></a>
+        </div>
+      </div>
+
+      <aside class="status-panel" aria-label="MVP 状态摘要">
+        <div class="terminal-header">
+          <div class="terminal-dots"><i></i><i></i><i></i></div>
+          <span class="terminal-label">STATUS</span>
+          <span>SYS · OK</span>
+        </div>
+        <div class="status-body">
+          <div class="status-title">
+            <h2>Operational Snapshot</h2>
+            <span class="stamp">2026 · 05 · 22</span>
+          </div>
+          <div class="signal-stack">
+            <div class="signal-row idle">
+              <span class="zh">公司基线</span>
+              <div class="bar"><i style="width: 0%"></i></div>
+              <b>0 / 15</b>
+            </div>
+            <div class="signal-row idle">
+              <span class="zh">公开卡片</span>
+              <div class="bar"><i style="width: 0%"></i></div>
+              <b>0 / 12</b>
+            </div>
+            <div class="signal-row idle">
+              <span class="zh">追踪判断</span>
+              <div class="bar"><i style="width: 0%"></i></div>
+              <b>0 / 50</b>
+            </div>
+            <div class="signal-row idle">
+              <span class="zh">读者访谈</span>
+              <div class="bar"><i style="width: 0%"></i></div>
+              <b>0 / 10</b>
+            </div>
+          </div>
+          <div class="disclaimer-strip zh">
+            所有公司方向均为 TBD。必须完成四条证据线、主验证指标、阈值、截止日期和来源链接后，才能发布判断。
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <main class="shell">
+    <section>
+      <div class="metric-grid">
+        <div class="metric">
+          <div class="metric-key">Universe</div>
+          <b>15</b>
+          <span class="zh">首批入选公司，覆盖 SaaS 与半导体。</span>
+        </div>
+        <div class="metric">
+          <div class="metric-key">Alerts</div>
+          <b>90</b>
+          <span class="zh">Google Alerts 查询项，覆盖裁员、诉讼、SEC、调查、文化、管理层离任。</span>
+        </div>
+        <div class="metric">
+          <div class="metric-key">Cadence</div>
+          <b>12<sup>wk</sup></b>
+          <span class="zh">周试运行节奏，先积累公开记录再考虑收费。</span>
+        </div>
+        <div class="metric">
+          <div class="metric-key">Tracker</div>
+          <b>50</b>
+          <span class="zh">判断追踪表预留行，统一记录阈值、截止日期、结案状态。</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="workflow">
+      <div class="section-head">
+        <div class="section-head-text">
+          <span class="section-num">01 — Methodology</span>
+          <h2 class="zh">四条证据线</h2>
+          <p class="zh">每张文化健康度解读卡都必须完成四条证据线。重点看变化率，不给假精确分数。</p>
+        </div>
+      </div>
+      <div class="workflow">
+        <article class="workflow-step">
+          <div class="step-head">
+            <small>Evidence · 01</small>
+            <div class="step-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0-3-3.87"/></svg>
+            </div>
+          </div>
+          <h3 class="zh">关键人才流向</h3>
+          <p class="zh">手工记录 VP+、Staff+、核心产品与工程人才的季度流入流出、去向和角色层级。</p>
+        </article>
+        <article class="workflow-step">
+          <div class="step-head">
+            <small>Evidence · 02</small>
+            <div class="step-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+          </div>
+          <h3 class="zh">员工评价趋势</h3>
+          <p class="zh">记录综合评分、CEO 认可度、业务前景、管理层信心，并提炼 20-30 条评论主题漂移。</p>
+        </article>
+        <article class="workflow-step">
+          <div class="step-head">
+            <small>Evidence · 03</small>
+            <div class="step-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v4H3z"/><path d="M5 7v13h14V7"/><path d="M9 12h6"/><path d="M9 16h6"/></svg>
+            </div>
+          </div>
+          <h3 class="zh">管理层语言</h3>
+          <p class="zh">阅读最近 2-3 次财报会，观察增长、扩张、效率、纪律、重组等措辞变化。</p>
+        </article>
+        <article class="workflow-step">
+          <div class="step-head">
+            <small>Evidence · 04</small>
+            <div class="step-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22V4a2 2 0 0 1 2-2h11l4 4v8a2 2 0 0 1-2 2H7"/><path d="M4 22h6"/><path d="M9 14v8"/></svg>
+            </div>
+          </div>
+          <h3 class="zh">外部红旗</h3>
+          <p class="zh">跟踪裁员、诉讼、SEC、调查、地方新闻和高管离任，用作兜底和交叉验证。</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="companies">
+      <div class="section-head">
+        <div class="section-head-text">
+          <span class="section-num">02 — Universe</span>
+          <h2 class="zh">公司池</h2>
+          <p class="zh">15 家核心公司 + 3 家候补。评分代表 MVP 研究优先级，不代表公司文化好坏。</p>
+        </div>
+      </div>
+      <div class="tabs" role="group" aria-label="公司筛选">
+        <button class="tab is-active" type="button" data-filter="all"><span class="zh">全部</span> <span class="tab-count">18</span></button>
+        <button class="tab" type="button" data-filter="core"><span class="zh">核心</span> <span class="tab-count">15</span></button>
+        <button class="tab" type="button" data-filter="saas">SaaS <span class="tab-count">10</span></button>
+        <button class="tab" type="button" data-filter="semi"><span class="zh">半导体</span> <span class="tab-count">8</span></button>
+        <button class="tab" type="button" data-filter="alt"><span class="zh">候补</span> <span class="tab-count">3</span></button>
+      </div>
+      <div class="table-wrap">
+        <table id="companyTable">
+          <thead>
+            <tr>
+              <th>Company</th>
+              <th>Ticker</th>
+              <th>Industry</th>
+              <th>Segment</th>
+              <th>Priority</th>
+              <th>Score</th>
+              <th>Pilot Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-kind="core saas"><td class="company-name">Salesforce</td><td class="ticker">CRM</td><td><span class="tag saas">SaaS</span></td><td>CRM / enterprise platform</td><td>Core</td><td><div class="score high"><span class="score-num">14/15</span><span class="score-line"><i style="width: 93%"></i></span></div></td><td class="pilot">Deterioration/improvement candidate TBD</td></tr>
+            <tr data-kind="core saas"><td class="company-name">ServiceNow</td><td class="ticker">NOW</td><td><span class="tag saas">SaaS</span></td><td>Workflow automation</td><td>Core</td><td><div class="score high"><span class="score-num">14/15</span><span class="score-line"><i style="width: 93%"></i></span></div></td><td class="pilot">Stable candidate TBD</td></tr>
+            <tr data-kind="core saas"><td class="company-name">Workday</td><td class="ticker">WDAY</td><td><span class="tag saas">SaaS</span></td><td>HCM / finance SaaS</td><td>Core</td><td><div class="score"><span class="score-num">13/15</span><span class="score-line"><i style="width: 87%"></i></span></div></td><td class="pilot">TBD</td></tr>
+            <tr data-kind="core saas"><td class="company-name">Snowflake</td><td class="ticker">SNOW</td><td><span class="tag saas">SaaS</span></td><td>Data cloud</td><td>Core</td><td><div class="score high"><span class="score-num">14/15</span><span class="score-line"><i style="width: 93%"></i></span></div></td><td class="pilot">Improvement/deterioration candidate TBD</td></tr>
+            <tr data-kind="core saas"><td class="company-name">Datadog</td><td class="ticker">DDOG</td><td><span class="tag saas">SaaS</span></td><td>Observability / cloud monitoring</td><td>Core</td><td><div class="score"><span class="score-num">13/15</span><span class="score-line"><i style="width: 87%"></i></span></div></td><td class="pilot">TBD</td></tr>
+            <tr data-kind="core saas"><td class="company-name">HubSpot</td><td class="ticker">HUBS</td><td><span class="tag saas">SaaS</span></td><td>SMB CRM / marketing automation</td><td>Core</td><td><div class="score"><span class="score-num">13/15</span><span class="score-line"><i style="width: 87%"></i></span></div></td><td class="pilot">TBD</td></tr>
+            <tr data-kind="core saas"><td class="company-name">Atlassian</td><td class="ticker">TEAM</td><td><span class="tag saas">SaaS</span></td><td>Collaboration / developer tools</td><td>Core</td><td><div class="score"><span class="score-num">13/15</span><span class="score-line"><i style="width: 87%"></i></span></div></td><td class="pilot">TBD</td></tr>
+            <tr data-kind="core saas"><td class="company-name">MongoDB</td><td class="ticker">MDB</td><td><span class="tag saas">SaaS</span></td><td>Database / developer platform</td><td>Core</td><td><div class="score"><span class="score-num">13/15</span><span class="score-line"><i style="width: 87%"></i></span></div></td><td class="pilot">TBD</td></tr>
+            <tr data-kind="core semi"><td class="company-name">NVIDIA</td><td class="ticker">NVDA</td><td><span class="tag semi">Semiconductor</span></td><td>Accelerated computing / GPUs</td><td>Core</td><td><div class="score high"><span class="score-num">15/15</span><span class="score-line"><i style="width: 100%"></i></span></div></td><td class="pilot">Stable/improvement candidate TBD</td></tr>
+            <tr data-kind="core semi"><td class="company-name">AMD</td><td class="ticker">AMD</td><td><span class="tag semi">Semiconductor</span></td><td>CPUs / GPUs / data center chips</td><td>Core</td><td><div class="score high"><span class="score-num">15/15</span><span class="score-line"><i style="width: 100%"></i></span></div></td><td class="pilot">TBD</td></tr>
+            <tr data-kind="core semi"><td class="company-name">Intel</td><td class="ticker">INTC</td><td><span class="tag semi">Semiconductor</span></td><td>Integrated device manufacturer / foundry</td><td>Core</td><td><div class="score high"><span class="score-num">15/15</span><span class="score-line"><i style="width: 100%"></i></span></div></td><td class="pilot">Deterioration/improvement candidate TBD</td></tr>
+            <tr data-kind="core semi"><td class="company-name">Micron</td><td class="ticker">MU</td><td><span class="tag semi">Semiconductor</span></td><td>Memory</td><td>Core</td><td><div class="score"><span class="score-num">13/15</span><span class="score-line"><i style="width: 87%"></i></span></div></td><td class="pilot">TBD</td></tr>
+            <tr data-kind="core semi"><td class="company-name">Qualcomm</td><td class="ticker">QCOM</td><td><span class="tag semi">Semiconductor</span></td><td>Wireless / edge AI chips</td><td>Core</td><td><div class="score high"><span class="score-num">14/15</span><span class="score-line"><i style="width: 93%"></i></span></div></td><td class="pilot">TBD</td></tr>
+            <tr data-kind="core semi"><td class="company-name">Applied Materials</td><td class="ticker">AMAT</td><td><span class="tag semi">Semiconductor</span></td><td>Semiconductor equipment</td><td>Core</td><td><div class="score"><span class="score-num">13/15</span><span class="score-line"><i style="width: 87%"></i></span></div></td><td class="pilot">TBD</td></tr>
+            <tr data-kind="core semi"><td class="company-name">Lam Research</td><td class="ticker">LRCX</td><td><span class="tag semi">Semiconductor</span></td><td>Semiconductor equipment</td><td>Core</td><td><div class="score"><span class="score-num">13/15</span><span class="score-line"><i style="width: 87%"></i></span></div></td><td class="pilot">TBD</td></tr>
+            <tr data-kind="alt saas"><td class="company-name">Okta</td><td class="ticker">OKTA</td><td><span class="tag saas">SaaS</span></td><td>Identity / security SaaS</td><td><span class="tag alt">Alternate</span></td><td><div class="score"><span class="score-num">12/15</span><span class="score-line"><i style="width: 80%"></i></span></div></td><td class="pilot">Alternate</td></tr>
+            <tr data-kind="alt saas"><td class="company-name">Twilio</td><td class="ticker">TWLO</td><td><span class="tag saas">SaaS</span></td><td>Communications platform</td><td><span class="tag alt">Alternate</span></td><td><div class="score"><span class="score-num">13/15</span><span class="score-line"><i style="width: 87%"></i></span></div></td><td class="pilot">Alternate</td></tr>
+            <tr data-kind="alt semi"><td class="company-name">KLA</td><td class="ticker">KLAC</td><td><span class="tag semi">Semiconductor</span></td><td>Process control / metrology</td><td><span class="tag alt">Alternate</span></td><td><div class="score"><span class="score-num">12/15</span><span class="score-line"><i style="width: 80%"></i></span></div></td><td class="pilot">Alternate</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="roadmap">
+      <div class="section-head">
+        <div class="section-head-text">
+          <span class="section-num">03 — Timeline</span>
+          <h2 class="zh">12 周路线图</h2>
+          <p class="zh">从研究底座到公开发布，再到验证闭环。前三个月不优化收入，优先优化可信度和连续交付。</p>
+        </div>
+      </div>
+      <div class="roadmap">
+        <article class="phase">
+          <div class="phase-label">
+            <span class="phase-week">Week 0 — 1</span>
+            <b class="zh">搭建底座</b>
+            <span>研究基础设施 & pilot</span>
+          </div>
+          <div class="phase-body">
+            <div class="phase-item"><h3 class="zh">主工作簿</h3><p class="zh">确认公司池、四条证据线、来源库、判断追踪表。</p></div>
+            <div class="phase-item"><h3>Alerts</h3><p class="zh">按公司配置 90 个 Google Alerts 查询项。</p></div>
+            <div class="phase-item"><h3>Pilot</h3><p class="zh">选 3 家公司跑完整闭环，测算单卡耗时。</p></div>
+          </div>
+        </article>
+
+        <article class="phase">
+          <div class="phase-label">
+            <span class="phase-week">Week 2 — 4</span>
+            <b class="zh">首次公开</b>
+            <span>对外亮相 & 第一批卡片</span>
+          </div>
+          <div class="phase-body">
+            <div class="phase-item"><h3 class="zh">说明页</h3><p class="zh">发布定位、方法论、合规边界和追踪表入口。</p></div>
+            <div class="phase-item"><h3 class="zh">第一批卡片</h3><p class="zh">发布 3 张文化健康度解读卡，全部带来源和验证标准。</p></div>
+            <div class="phase-item"><h3 class="zh">分发</h3><p class="zh">英文主文，中文摘要，同步 X/FinTwit 和一个中文渠道。</p></div>
+          </div>
+        </article>
+
+        <article class="phase">
+          <div class="phase-label">
+            <span class="phase-week">Week 5 — 8</span>
+            <b class="zh">稳定周更</b>
+            <span>固定节奏 & 双语 newsletter</span>
+          </div>
+          <div class="phase-body">
+            <div class="phase-item"><h3 class="zh">周一到周三</h3><p class="zh">更新 alerts、员工评价、LinkedIn 人才流动和 transcript。</p></div>
+            <div class="phase-item"><h3 class="zh">周四</h3><p class="zh">选择本周最强的一条可发布判断，避免硬凑结论。</p></div>
+            <div class="phase-item"><h3 class="zh">周五</h3><p class="zh">发布一篇双语 newsletter，并登记追踪表。</p></div>
+          </div>
+        </article>
+
+        <article class="phase">
+          <div class="phase-label">
+            <span class="phase-week">Week 9 — 12</span>
+            <b class="zh">验证闭环</b>
+            <span>三个月复盘 & 可证伪审计</span>
+          </div>
+          <div class="phase-body">
+            <div class="phase-item"><h3>Baseline</h3><p class="zh">完成 12-15 家公司基线档案。</p></div>
+            <div class="phase-item"><h3>Tracker</h3><p class="zh">审计所有开放判断：指标、阈值、期限、状态必须齐全。</p></div>
+            <div class="phase-item"><h3>Review</h3><p class="zh">发布三个月复盘，不足 10 条结案前不公布命中率百分比。</p></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div class="section-head-text">
+          <span class="section-num">04 — Weekly Rhythm</span>
+          <h2 class="zh">每周执行节奏</h2>
+          <p class="zh">让研究流程变成固定动作，减少每周重新决策的成本。</p>
+        </div>
+      </div>
+      <div class="week-grid">
+        <div class="weekday"><b>Monday</b><span class="zh">更新 Google Alerts、transcript、新闻红旗。</span></div>
+        <div class="weekday"><b>Tuesday</b><span class="zh">更新 Glassdoor 评分、分项、评论主题漂移。</span></div>
+        <div class="weekday"><b>Wednesday</b><span class="zh">手工记录 LinkedIn 关键人才流动。</span></div>
+        <div class="weekday"><b>Thursday</b><span class="zh">筛选本周 1-2 家，锁定主判断和验证标准。</span></div>
+        <div class="weekday"><b>Friday</b><span class="zh">发布双语 newsletter，更新追踪表，做分发。</span></div>
+      </div>
+    </section>
+
+    <section id="assets">
+      <div class="section-head">
+        <div class="section-head-text">
+          <span class="section-num">05 — Deliverables</span>
+          <h2 class="zh">文件入口</h2>
+          <p class="zh">这些文件就是 MVP 的实际交付物。HTML 页面不替代表格，表格仍是唯一事实来源。</p>
+        </div>
+      </div>
+      <div class="asset-grid">
+        <article class="asset">
+          <div class="asset-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+          </div>
+          <h3>Data / Workbook</h3>
+          <p class="zh">主工作簿、公司池、判断追踪表、来源库、alerts 队列和 12 周节奏。</p>
+          <div class="links">
+            <a class="mini-link" href="data/CultureRadar_MVP_Workbook.xlsx">Workbook</a>
+            <a class="mini-link" href="data/company_universe.csv">Company CSV</a>
+            <a class="mini-link" href="data/judgment_tracker.csv">Tracker CSV</a>
+          </div>
+        </article>
+        <article class="asset">
+          <div class="asset-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
+          </div>
+          <h3>Docs</h3>
+          <p class="zh">研究 SOP、合规护栏和启动清单，确保每周执行方式一致。</p>
+          <div class="links">
+            <a class="mini-link" href="docs/research_sop.md">SOP</a>
+            <a class="mini-link" href="docs/compliance_guardrails.md">Compliance</a>
+            <a class="mini-link" href="docs/launch_checklist.md">Checklist</a>
+          </div>
+        </article>
+        <article class="asset">
+          <div class="asset-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+          </div>
+          <h3>Templates</h3>
+          <p class="zh">文化健康度卡片、newsletter、X thread 和读者访谈模板。</p>
+          <div class="links">
+            <a class="mini-link" href="templates/culture_health_card.md">Card</a>
+            <a class="mini-link" href="templates/newsletter_issue.md">Newsletter</a>
+            <a class="mini-link" href="templates/x_thread.md">X Thread</a>
+          </div>
+        </article>
+        <article class="asset">
+          <div class="asset-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <h3>Public Content</h3>
+          <p class="zh">公开说明页、方法论文章和第一周发布草稿。</p>
+          <div class="links">
+            <a class="mini-link" href="content/public_about_page.md">About</a>
+            <a class="mini-link" href="content/methodology_article.md">Methodology</a>
+            <a class="mini-link" href="content/week_01_launch_note.md">Launch Note</a>
+          </div>
+        </article>
+        <article class="asset">
+          <div class="asset-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <h3>Source Setup</h3>
+          <p class="zh">每家公司 6 类手工来源入口，全部服务四条证据线。</p>
+          <div class="links">
+            <a class="mini-link" href="data/source_library.csv">Source Library</a>
+            <a class="mini-link" href="data/google_alert_queries.csv">Alerts CSV</a>
+          </div>
+        </article>
+        <article class="asset">
+          <div class="asset-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10"/><path d="M20.49 15a9 9 0 0 1-14.85 3.36L1 14"/></svg>
+          </div>
+          <h3>Regeneration</h3>
+          <p class="zh">用脚本从同一份公司清单重建 Excel 和 CSV，避免资产漂移。</p>
+          <div class="links">
+            <a class="mini-link" href="scripts/generate_assets.py">Python Script</a>
+            <a class="mini-link" href="README.md">README</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="protocol">
+      <div class="section-head">
+        <div class="section-head-text">
+          <span class="section-num">06 — Protocol</span>
+          <h2 class="zh">判断与合规规则</h2>
+          <p class="zh">CultureRadar 的信任资产来自可证伪记录，而不是听起来聪明的叙事。</p>
+        </div>
+      </div>
+      <div class="protocol-grid">
+        <article class="protocol">
+          <h3 class="zh">可证伪规则</h3>
+          <ul>
+            <li class="zh">每条判断只允许一个主验证指标。</li>
+            <li class="zh">阈值和截止日期发布即锁死。</li>
+            <li class="zh">方向对但时机错，记为失手并旁注原因。</li>
+            <li class="zh">结案少于 10 条前，不公布命中率百分比。</li>
+            <li class="zh">部分项必须单独统计，防止阈值放水。</li>
+          </ul>
+        </article>
+        <article class="protocol compliance">
+          <h3 class="zh">合规边界</h3>
+          <ul>
+            <li class="zh">不写买入、卖出、持有、目标价、仓位建议。</li>
+            <li class="zh">不做个性化投资建议或组合点评。</li>
+            <li class="zh">使用文化信号、观察、待验证判断等措辞。</li>
+            <li class="zh">每篇公开内容保留中英文免责声明。</li>
+            <li class="zh">正式收费或高阶会员权益上线前做法律审查。</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="shell">
+      <div class="footer-brand">
+        <div class="brand-mark" aria-hidden="true"></div>
+        CultureRadar
+      </div>
+      <span class="footer-note">Public-information research and investor education only. Not investment advice.</span>
+    </div>
+  </footer>
+
+  <script>
+    const tabs = Array.from(document.querySelectorAll(".tab"));
+    const rows = Array.from(document.querySelectorAll("#companyTable tbody tr"));
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const filter = tab.dataset.filter;
+        tabs.forEach((item) => item.classList.toggle("is-active", item === tab));
+        rows.forEach((row) => {
+          const kinds = row.dataset.kind.split(" ");
+          row.style.display = filter === "all" || kinds.includes(filter) ? "" : "none";
+        });
+      });
+    });
+  </script>
+</body>
+</html>
