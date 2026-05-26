@@ -285,6 +285,20 @@ COMPANIES = [
         "why": "Cross-sector alternate. Huge public employee footprint, extreme management-language volatility, frequent talent inflows/outflows; no clean SaaS or semi peer, so kept as alternate rather than core.",
         "ir_url": "https://ir.tesla.com",
     },
+    {
+        "company": "TSMC",
+        "ticker": "TSM",
+        "industry": "Semiconductor",
+        "segment": "Pure-play foundry",
+        "selected": "No",
+        "priority": "Alternate",
+        "data_score": 3,
+        "story_score": 4,
+        "peer_score": 3,
+        "pilot_role": "Alternate (cross-region)",
+        "why": "Cross-region alternate. World's leading pure-play foundry; heavy geopolitical and supply-chain narrative weight. Methodological caveats: Western Glassdoor sample is thin (employees mostly in Taiwan), LinkedIn penetration of TW engineers lower than US peers, transcripts bilingual (set baseline language before language-drift comparison).",
+        "ir_url": "https://investor.tsmc.com",
+    },
 ]
 
 COMPANY_HEADERS = [
@@ -783,11 +797,11 @@ def build_workbook() -> None:
     create_readme_sheet(workbook)
     add_table_sheet(workbook, "Company Universe", COMPANY_HEADERS, company_rows())
     universe = workbook["Company Universe"]
-    add_validation(universe, "E2:E20", ["Yes", "No"])
-    add_validation(universe, "F2:F20", ["Core", "Alternate"])
+    add_validation(universe, "E2:E21", ["Yes", "No"])
+    add_validation(universe, "F2:F21", ["Core", "Alternate"])
     add_validation(
         universe,
-        "M2:M20",
+        "M2:M21",
         ["Not started", "In progress", "Baseline complete", "Ready to publish", "Paused"],
     )
     add_table_sheet(workbook, "Judgment Tracker", TRACKER_HEADERS, [])

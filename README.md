@@ -53,7 +53,7 @@ The first 15 selected names are split between enterprise SaaS and semiconductors
 
 Alternates:
 
-- Okta, Twilio, KLA, Tesla (cross-sector — auto / EV / energy).
+- Okta, Twilio, KLA, Tesla (cross-sector — auto / EV / energy), TSMC (cross-region — Taiwan-headquartered foundry; method caveats: thin Western Glassdoor sample, low LinkedIn penetration of TW engineers, bilingual transcripts).
 
 ## Three-Month Output Target
 

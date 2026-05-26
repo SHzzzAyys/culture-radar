@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1900" viewBox="0 0 1600 1900" role="img" aria-labelledby="title desc">
+  <title id="title">CultureRadar data charts</title>
+  <desc id="desc">Charts based on CultureRadar CSV data: company universe priority scores, selected universe mix, research status, tracker count, and alert category coverage.</desc>
+  <defs>
+    <style>
+      .bg{fill:#f7f4ed}
+      .panel{fill:#fffaf1;stroke:#ded6c7;stroke-width:2}
+      .ink{fill:#211e1a}
+      .soft{fill:#5b554c}
+      .faint{fill:#918879}
+      .grid{stroke:#e4ddcf;stroke-width:1}
+      .axis{stroke:#9f9687;stroke-width:1.5}
+      .saas{fill:#345d7d}
+      .semi{fill:#406a45}
+      .alt{fill:#b68a39}
+      .intel{fill:#a64234}
+      .empty{fill:#d8d0c1}
+      .title{font:700 48px "Microsoft YaHei","PingFang SC",Arial,sans-serif;letter-spacing:0}
+      .h2{font:700 30px "Microsoft YaHei","PingFang SC",Arial,sans-serif;letter-spacing:0}
+      .label{font:600 21px "Microsoft YaHei","PingFang SC",Arial,sans-serif;letter-spacing:0}
+      .body{font:400 21px "Microsoft YaHei","PingFang SC",Arial,sans-serif;letter-spacing:0}
+      .small{font:400 17px "Microsoft YaHei","PingFang SC",Arial,sans-serif;letter-spacing:0}
+      .num{font:700 34px "Microsoft YaHei","PingFang SC",Arial,sans-serif;letter-spacing:0}
+      .mono{font:500 18px Consolas,"Microsoft YaHei",monospace;letter-spacing:0}
+    </style>
+  </defs>
+
+  <rect class="bg" width="1600" height="1900"/>
+
+  <g transform="translate(90 78)">
+    <text class="label soft" x="0" y="0">CultureRadar / CSV data visualization</text>
+    <text class="title ink" x="0" y="66">数据图表：公司池、优先级、研究状态</text>
+    <text class="body soft" x="0" y="108">数据来源：company_universe.csv、google_alert_queries.csv、judgment_tracker.csv；不包含任何未完成的文化判断。</text>
+  </g>
+
+  <g transform="translate(90 200)">
+    <rect class="panel" width="1420" height="1040" rx="18"/>
+    <text class="h2 ink" x="40" y="58">公司优先级总分（Total Priority Score，满分 15）</text>
+    <text class="small faint" x="40" y="92">颜色：蓝 = Enterprise SaaS，绿 = Semiconductor，黄 = Alternate，红 = 已锁定第一家公司 Intel</text>
+
+    <g transform="translate(290 138)">
+      <line class="axis" x1="0" y1="0" x2="0" y2="820"/>
+      <line class="axis" x1="0" y1="820" x2="900" y2="820"/>
+      <line class="grid" x1="300" y1="0" x2="300" y2="820"/>
+      <line class="grid" x1="600" y1="0" x2="600" y2="820"/>
+      <line class="grid" x1="900" y1="0" x2="900" y2="820"/>
+      <text class="small faint" x="-6" y="852">0</text>
+      <text class="small faint" x="288" y="852">5</text>
+      <text class="small faint" x="584" y="852">10</text>
+      <text class="small faint" x="884" y="852">15</text>
+
+      <text class="body ink" x="-250" y="28">NVIDIA</text><rect class="semi" x="0" y="6" width="900" height="24" rx="6"/><text class="label ink" x="918" y="28">15</text>
+      <text class="body ink" x="-250" y="70">AMD</text><rect class="semi" x="0" y="48" width="900" height="24" rx="6"/><text class="label ink" x="918" y="70">15</text>
+      <text class="body ink" x="-250" y="112">Intel</text><rect class="intel" x="0" y="90" width="900" height="24" rx="6"/><text class="label ink" x="918" y="112">15</text>
+
+      <text class="body ink" x="-250" y="170">Salesforce</text><rect class="saas" x="0" y="148" width="840" height="24" rx="6"/><text class="label ink" x="858" y="170">14</text>
+      <text class="body ink" x="-250" y="212">ServiceNow</text><rect class="saas" x="0" y="190" width="840" height="24" rx="6"/><text class="label ink" x="858" y="212">14</text>
+      <text class="body ink" x="-250" y="254">Snowflake</text><rect class="saas" x="0" y="232" width="840" height="24" rx="6"/><text class="label ink" x="858" y="254">14</text>
+      <text class="body ink" x="-250" y="296">Qualcomm</text><rect class="semi" x="0" y="274" width="840" height="24" rx="6"/><text class="label ink" x="858" y="296">14</text>
+
+      <text class="body ink" x="-250" y="354">Workday</text><rect class="saas" x="0" y="332" width="780" height="24" rx="6"/><text class="label ink" x="798" y="354">13</text>
+      <text class="body ink" x="-250" y="396">Datadog</text><rect class="saas" x="0" y="374" width="780" height="24" rx="6"/><text class="label ink" x="798" y="396">13</text>
+      <text class="body ink" x="-250" y="438">HubSpot</text><rect class="saas" x="0" y="416" width="780" height="24" rx="6"/><text class="label ink" x="798" y="438">13</text>
+      <text class="body ink" x="-250" y="480">Atlassian</text><rect class="saas" x="0" y="458" width="780" height="24" rx="6"/><text class="label ink" x="798" y="480">13</text>
+      <text class="body ink" x="-250" y="522">MongoDB</text><rect class="saas" x="0" y="500" width="780" height="24" rx="6"/><text class="label ink" x="798" y="522">13</text>
+      <text class="body ink" x="-250" y="564">Micron</text><rect class="semi" x="0" y="542" width="780" height="24" rx="6"/><text class="label ink" x="798" y="564">13</text>
+      <text class="body ink" x="-250" y="606">Applied Materials</text><rect class="semi" x="0" y="584" width="780" height="24" rx="6"/><text class="label ink" x="798" y="606">13</text>
+      <text class="body ink" x="-250" y="648">Lam Research</text><rect class="semi" x="0" y="626" width="780" height="24" rx="6"/><text class="label ink" x="798" y="648">13</text>
+      <text class="body ink" x="-250" y="690">Twilio</text><rect class="alt" x="0" y="668" width="780" height="24" rx="6"/><text class="label ink" x="798" y="690">13</text>
+      <text class="body ink" x="-250" y="732">Tesla</text><rect class="alt" x="0" y="710" width="780" height="24" rx="6"/><text class="label ink" x="798" y="732">13</text>
+
+      <text class="body ink" x="-250" y="790">Okta</text><rect class="alt" x="0" y="768" width="720" height="24" rx="6"/><text class="label ink" x="738" y="790">12</text>
+      <text class="body ink" x="-250" y="832">KLA</text><rect class="alt" x="0" y="810" width="720" height="24" rx="6"/><text class="label ink" x="738" y="832">12</text>
+    </g>
+  </g>
+
+  <g transform="translate(90 1285)">
+    <rect class="panel" width="450" height="330" rx="18"/>
+    <text class="h2 ink" x="32" y="54">Selected 公司构成</text>
+    <rect class="saas" x="40" y="100" width="224" height="42" rx="8"/>
+    <rect class="semi" x="264" y="100" width="196" height="42" rx="8"/>
+    <text class="label ink" x="40" y="182">Enterprise SaaS</text>
+    <text class="num saas" x="310" y="184">8</text>
+    <text class="label ink" x="40" y="242">Semiconductor</text>
+    <text class="num semi" x="310" y="244">7</text>
+    <text class="small faint" x="40" y="292">共 15 家 Core selected companies</text>
+  </g>
+
+  <g transform="translate(575 1285)">
+    <rect class="panel" width="450" height="330" rx="18"/>
+    <text class="h2 ink" x="32" y="54">研究状态</text>
+    <circle class="intel" cx="85" cy="142" r="52"/>
+    <text class="num" fill="#fffaf1" x="70" y="155">1</text>
+    <text class="body ink" x="160" y="132">First company locked</text>
+    <text class="small faint" x="160" y="166">Intel / INTC</text>
+    <circle class="empty" cx="85" cy="245" r="52"/>
+    <text class="num ink" x="62" y="258">18</text>
+    <text class="body ink" x="160" y="235">Not started / alternates</text>
+    <text class="small faint" x="160" y="269">其余公司尚未完成 baseline</text>
+  </g>
+
+  <g transform="translate(1060 1285)">
+    <rect class="panel" width="450" height="330" rx="18"/>
+    <text class="h2 ink" x="32" y="54">判断追踪表</text>
+    <text class="num intel" x="40" y="142">0</text>
+    <text class="body ink" x="105" y="132">Open judgments</text>
+    <text class="small faint" x="105" y="166">judgment_tracker.csv 仍为空</text>
+    <line class="grid" x1="40" y1="205" x2="390" y2="205"/>
+    <text class="body ink" x="40" y="254">规则：四条证据线完成后才填 001</text>
+    <text class="small faint" x="40" y="288">当前没有 AI 代填的判断数据</text>
+  </g>
+
+  <g transform="translate(90 1655)">
+    <rect class="panel" width="1420" height="165" rx="18"/>
+    <text class="h2 ink" x="32" y="54">Google Alert 队列覆盖</text>
+    <g transform="translate(36 88)">
+      <rect class="saas" x="0" y="0" width="180" height="34" rx="8"/><text class="label ink" x="195" y="26">Layoffs 15</text>
+      <rect class="semi" x="390" y="0" width="180" height="34" rx="8"/><text class="label ink" x="585" y="26">Lawsuit 15</text>
+      <rect class="alt" x="780" y="0" width="180" height="34" rx="8"/><text class="label ink" x="975" y="26">SEC 15</text>
+      <rect class="intel" x="0" y="58" width="180" height="34" rx="8"/><text class="label ink" x="195" y="84">Investigation 15</text>
+      <rect class="saas" opacity=".75" x="390" y="58" width="180" height="34" rx="8"/><text class="label ink" x="585" y="84">Culture 15</text>
+      <rect class="semi" opacity=".75" x="780" y="58" width="180" height="34" rx="8"/><text class="label ink" x="975" y="84">Executive Departure 15</text>
+    </g>
+  </g>
+
+  <text class="mono faint" x="90" y="1864">Generated from CSV state: company_universe.csv + google_alert_queries.csv + judgment_tracker.csv</text>
+</svg>
