@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-27T14:33:34+00:00",
+  "updatedAt": "2026-05-27T14:50:51+00:00",
   "tickers": [
     "CRM",
     "NOW",
@@ -24,105 +24,105 @@
   ],
   "companies": {
     "CRM": {
-      "marketCap": "$150.2B",
+      "marketCap": "$148.9B",
       "revenue": "$41.5B",
-      "pe": "24",
+      "pe": "23",
       "revGrowth": "+12%",
       "employees": "83K"
     },
     "NOW": {
-      "marketCap": "$107.6B",
+      "marketCap": "$107.1B",
       "revenue": "$14.0B",
       "pe": "62",
       "revGrowth": "+22%",
       "employees": "29K"
     },
     "WDAY": {
-      "marketCap": "$31.7B",
+      "marketCap": "$31.5B",
       "revenue": "$9.9B",
       "pe": "40",
       "revGrowth": "+14%",
       "employees": "21K"
     },
     "SNOW": {
-      "marketCap": "$61.5B",
+      "marketCap": "$61.8B",
       "revenue": "$4.7B",
       "pe": "—",
       "revGrowth": "+30%",
       "employees": "9K"
     },
     "DDOG": {
-      "marketCap": "$80.1B",
+      "marketCap": "$80.2B",
       "revenue": "$3.7B",
-      "pe": "592",
+      "pe": "593",
       "revGrowth": "+32%",
       "employees": "8K"
     },
     "HUBS": {
-      "marketCap": "$10.6B",
+      "marketCap": "$10.5B",
       "revenue": "$3.3B",
-      "pe": "109",
+      "pe": "108",
       "revGrowth": "+23%",
       "employees": "9K"
     },
     "TEAM": {
-      "marketCap": "$22.9B",
+      "marketCap": "$22.7B",
       "revenue": "$6.2B",
       "pe": "—",
       "revGrowth": "+32%",
       "employees": "14K"
     },
     "MDB": {
-      "marketCap": "$24.3B",
+      "marketCap": "$24.2B",
       "revenue": "$2.5B",
       "pe": "—",
       "revGrowth": "+27%",
       "employees": "6K"
     },
     "NVDA": {
-      "marketCap": "$5.07T",
+      "marketCap": "$5.09T",
       "revenue": "$253.5B",
       "pe": "32",
       "revGrowth": "+85%",
       "employees": "42K"
     },
     "AMD": {
-      "marketCap": "$794.2B",
+      "marketCap": "$809.6B",
       "revenue": "$37.5B",
-      "pe": "161",
+      "pe": "164",
       "revGrowth": "+38%",
       "employees": "31K"
     },
     "INTC": {
-      "marketCap": "$590.7B",
+      "marketCap": "$604.0B",
       "revenue": "$53.8B",
       "pe": "—",
       "revGrowth": "+7%",
       "employees": "85K"
     },
     "MU": {
-      "marketCap": "$1.00T",
+      "marketCap": "$1.03T",
       "revenue": "$58.1B",
-      "pe": "42",
+      "pe": "43",
       "revGrowth": "+196%",
       "employees": "53K"
     },
     "QCOM": {
-      "marketCap": "$238.7B",
+      "marketCap": "$239.2B",
       "revenue": "$44.5B",
       "pe": "24",
       "revGrowth": "-4%",
       "employees": "52K"
     },
     "AMAT": {
-      "marketCap": "$351.0B",
+      "marketCap": "$355.0B",
       "revenue": "$29.0B",
       "pe": "42",
       "revGrowth": "+11%",
       "employees": "36K"
     },
     "LRCX": {
-      "marketCap": "$394.5B",
+      "marketCap": "$397.9B",
       "revenue": "$21.7B",
       "pe": "60",
       "revGrowth": "+24%",
@@ -136,28 +136,28 @@
       "employees": "6K"
     },
     "TWLO": {
-      "marketCap": "$28.6B",
+      "marketCap": "$28.5B",
       "revenue": "$5.3B",
-      "pe": "286",
+      "pe": "284",
       "revGrowth": "+20%",
       "employees": "6K"
     },
     "KLAC": {
-      "marketCap": "$254.9B",
+      "marketCap": "$257.0B",
       "revenue": "$13.1B",
-      "pe": "55",
+      "pe": "56",
       "revGrowth": "+12%",
       "employees": "15K"
     },
     "TSLA": {
-      "marketCap": "$1.64T",
+      "marketCap": "$1.67T",
       "revenue": "$97.9B",
-      "pe": "405",
+      "pe": "411",
       "revGrowth": "+16%",
       "employees": "135K"
     },
     "TSM": {
-      "marketCap": "$2.16T",
+      "marketCap": "$2.18T",
       "revenue": "$4.10T",
       "pe": "36",
       "revGrowth": "+35%",
