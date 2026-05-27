@@ -1,0 +1,1210 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CultureRadar — MVP Command Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #0a1219;
+      --ink-2: #1f2a35;
+      --muted: #5a6671;
+      --muted-2: #8b97a3;
+      --line: #e7e2d6;
+      --line-strong: #d2ccbe;
+      --paper: #faf7ef;
+      --paper-2: #f3eee2;
+      --panel: #ffffff;
+      --navy: #0b1f2c;
+      --accent: #b8431a;
+      --accent-2: #e36a2d;
+      --accent-soft: #f8e6da;
+      --teal: #066b66;
+      --teal-soft: #d7ece9;
+      --gold: #a47010;
+      --gold-soft: #f3e8cb;
+      --red: #9c2f24;
+      --red-soft: #f3d7d2;
+      --green: #3f7228;
+      --green-soft: #e0ecd4;
+      --shadow-sm: 0 1px 2px rgba(11, 31, 44, 0.05);
+      --shadow-md: 0 8px 18px rgba(11, 31, 44, 0.07);
+      --shadow-lg: 0 24px 48px rgba(11, 31, 44, 0.10);
+      --radius: 4px;
+      --radius-md: 8px;
+      --radius-lg: 14px;
+      --serif: "Instrument Serif", "Source Serif Pro", "Times New Roman", Georgia, serif;
+      --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: var(--sans);
+      font-feature-settings: "cv11", "ss01", "ss03";
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      background-image:
+        radial-gradient(ellipse at top left, rgba(184, 67, 26, 0.04), transparent 50%),
+        radial-gradient(ellipse at bottom right, rgba(6, 107, 102, 0.035), transparent 55%);
+      background-attachment: fixed;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+    .shell { max-width: 1240px; margin: 0 auto; padding: 0 28px; }
+
+    /* ─── Topbar ─────────────────────────────────────── */
+    .topbar {
+      position: sticky; top: 0; z-index: 30;
+      border-bottom: 1px solid var(--line);
+      background: rgba(250, 247, 239, 0.85);
+      backdrop-filter: saturate(180%) blur(14px);
+      -webkit-backdrop-filter: saturate(180%) blur(14px);
+    }
+    .topbar .shell {
+      display: flex; align-items: center; justify-content: space-between;
+      min-height: 64px; gap: 24px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+    .brand-mark {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--accent-2), var(--accent) 55%, var(--navy));
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.25), 0 4px 12px rgba(184,67,26,.25);
+      position: relative; flex-shrink: 0;
+    }
+    .brand-mark::after {
+      content: ""; position: absolute; inset: 6px;
+      border: 1px solid rgba(255,255,255,.45); border-radius: 50%;
+    }
+    .brand-mark::before {
+      content: ""; position: absolute; left: 50%; top: 50%; width: 2px; height: 2px;
+      background: #fff; border-radius: 50%;
+      box-shadow: 0 0 0 4px rgba(255,255,255,.35);
+      transform: translate(-50%, -50%);
+    }
+    .brand-text { display: flex; flex-direction: column; min-width: 0; }
+    .brand-text strong {
+      font-family: var(--serif); font-weight: 400;
+      font-size: 22px; line-height: 1; letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+    .brand-text span {
+      color: var(--muted); font-size: 11px; letter-spacing: 0.12em;
+      text-transform: uppercase; margin-top: 4px;
+      font-family: var(--mono); font-weight: 500;
+    }
+    nav {
+      display: flex; align-items: center; gap: 2px;
+      overflow-x: auto; white-space: nowrap;
+      scrollbar-width: none;
+    }
+    nav::-webkit-scrollbar { display: none; }
+    nav a {
+      color: var(--muted); font-size: 13px; font-weight: 500;
+      padding: 8px 12px; border-radius: 6px;
+      transition: color .15s, background .15s;
+    }
+    nav a:hover {
+      color: var(--ink); background: rgba(11, 31, 44, 0.05);
+      text-decoration: none;
+    }
+    .top-status {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--mono); font-size: 11px; color: var(--muted);
+      padding: 5px 10px; border: 1px solid var(--line);
+      background: var(--panel); border-radius: 999px;
+    }
+    .top-status::before {
+      content: ""; width: 7px; height: 7px; border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 3px rgba(63, 114, 40, 0.18);
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 3px rgba(63, 114, 40, 0.18); }
+      50% { box-shadow: 0 0 0 5px rgba(63, 114, 40, 0.05); }
+    }
+
+    /* ─── Hero ───────────────────────────────────────── */
+    .hero {
+      position: relative; overflow: hidden;
+      padding: 64px 0 56px;
+      border-bottom: 1px solid var(--line);
+      background:
+        linear-gradient(180deg, #fffdf7 0%, var(--paper) 100%);
+    }
+    .hero::before {
+      content: ""; position: absolute; right: -200px; top: -200px;
+      width: 720px; height: 720px; pointer-events: none;
+      background-image:
+        radial-gradient(circle, transparent 0, transparent 110px, rgba(184,67,26,0.08) 111px, transparent 113px),
+        radial-gradient(circle, transparent 0, transparent 200px, rgba(184,67,26,0.06) 201px, transparent 203px),
+        radial-gradient(circle, transparent 0, transparent 300px, rgba(184,67,26,0.05) 301px, transparent 303px),
+        radial-gradient(circle, transparent 0, transparent 360px, rgba(184,67,26,0.04) 361px, transparent 363px);
+      background-position: center;
+      opacity: 0.9;
+    }
+    .hero::after {
+      content: ""; position: absolute; right: 159px; top: 159px;
+      width: 2px; height: 2px; border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(184,67,26,0.18);
+      pointer-events: none;
+    }
+    .hero .shell { position: relative; z-index: 1; }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(340px, 0.65fr);
+      gap: 40px; align-items: stretch;
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--mono); font-size: 11px; font-weight: 500;
+      color: var(--accent); letter-spacing: 0.14em;
+      text-transform: uppercase; margin-bottom: 20px;
+    }
+    .eyebrow::before {
+      content: ""; width: 24px; height: 1px; background: var(--accent);
+    }
+    .hero h1 {
+      margin: 0 0 20px;
+      font-family: var(--serif); font-weight: 400;
+      font-size: clamp(40px, 5.4vw, 72px);
+      line-height: 1.02; letter-spacing: -0.02em;
+      color: var(--ink); max-width: 14ch;
+    }
+    .hero h1 em {
+      font-style: italic; color: var(--accent);
+      font-feature-settings: "ss01";
+    }
+    .hero .lead {
+      max-width: 56ch; margin: 0 0 28px;
+      color: var(--ink-2); font-size: 17px; line-height: 1.62;
+    }
+    .hero-actions {
+      display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px;
+    }
+    .button {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      min-height: 44px;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius);
+      padding: 0 18px;
+      color: var(--ink); background: var(--panel);
+      font-family: var(--sans); font-size: 13.5px; font-weight: 600;
+      text-decoration: none; letter-spacing: 0.005em;
+      transition: transform .15s ease, box-shadow .15s ease, border-color .15s, background .15s;
+      box-shadow: var(--shadow-sm);
+    }
+    .button:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+      text-decoration: none;
+    }
+    .button.primary {
+      border-color: var(--ink); background: var(--ink); color: #fffdf7;
+    }
+    .button.primary:hover { background: #1a2733; border-color: #1a2733; }
+    .button .arrow {
+      display: inline-block; transition: transform .15s;
+    }
+    .button:hover .arrow { transform: translateX(2px); }
+
+    /* ─── Status Panel ────────────────────────────────── */
+    .status-panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: var(--panel);
+      box-shadow: var(--shadow-md);
+      padding: 22px;
+      display: flex; flex-direction: column;
+    }
+    .status-title {
+      display: flex; justify-content: space-between;
+      align-items: flex-start; gap: 12px;
+      padding-bottom: 18px;
+      margin-bottom: 18px;
+      border-bottom: 1px solid var(--line);
+    }
+    .status-title h2 {
+      margin: 0;
+      font-family: var(--serif); font-weight: 400;
+      font-size: 22px; line-height: 1.1; color: var(--ink);
+      letter-spacing: -0.01em;
+    }
+    .status-title .stamp {
+      font-family: var(--mono); font-size: 11px;
+      color: var(--muted); letter-spacing: 0.05em;
+      padding-top: 6px;
+    }
+    .signal-stack { display: grid; gap: 14px; }
+    .signal-row {
+      display: grid;
+      grid-template-columns: 92px 1fr auto;
+      gap: 12px; align-items: center;
+    }
+    .signal-row > span:first-child {
+      color: var(--ink-2); font-size: 13px; font-weight: 500;
+    }
+    .signal-row b {
+      font-family: var(--mono); font-size: 12.5px; font-weight: 600;
+      color: var(--ink); min-width: 42px; text-align: right;
+    }
+    .bar {
+      height: 6px; overflow: hidden; border-radius: 999px;
+      background: var(--paper-2);
+      border: 1px solid var(--line);
+    }
+    .bar i {
+      display: block; height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      border-radius: inherit;
+      transition: width .8s cubic-bezier(.2,.7,.2,1);
+    }
+    .signal-row.idle .bar i {
+      background: repeating-linear-gradient(
+        135deg, var(--line-strong) 0 6px, transparent 6px 12px
+      );
+      width: 100% !important;
+      opacity: 0.5;
+    }
+    .signal-row.idle b { color: var(--muted); }
+
+    .disclaimer-strip {
+      margin-top: 20px;
+      padding: 12px 14px;
+      border-left: 3px solid var(--gold);
+      background: var(--gold-soft);
+      color: #5a4308; font-size: 12.5px; line-height: 1.5;
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+
+    /* ─── Main ───────────────────────────────────────── */
+    main { padding: 48px 0 72px; }
+    section { margin-top: 56px; }
+    section:first-child { margin-top: 0; }
+
+    .section-head {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      gap: 24px; margin-bottom: 24px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+    .section-head-text { min-width: 0; }
+    .section-num {
+      font-family: var(--mono); font-size: 11px; color: var(--accent);
+      letter-spacing: 0.18em; text-transform: uppercase;
+      margin-bottom: 8px; display: block; font-weight: 600;
+    }
+    .section-head h2 {
+      margin: 0;
+      font-family: var(--serif); font-weight: 400;
+      font-size: clamp(28px, 3.2vw, 38px); line-height: 1.1;
+      color: var(--ink); letter-spacing: -0.015em;
+    }
+    .section-head p {
+      max-width: 64ch; margin: 12px 0 0;
+      color: var(--muted); font-size: 14.5px; line-height: 1.6;
+    }
+
+    /* ─── Metric Grid ─────────────────────────────────── */
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: var(--panel);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .metric {
+      padding: 24px 22px;
+      border-right: 1px solid var(--line);
+      position: relative;
+    }
+    .metric:last-child { border-right: 0; }
+    .metric-key {
+      font-family: var(--mono); font-size: 10.5px; color: var(--muted);
+      letter-spacing: 0.16em; text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .metric b {
+      display: block;
+      font-family: var(--serif); font-weight: 400;
+      color: var(--ink);
+      font-size: 48px; line-height: 1; letter-spacing: -0.02em;
+    }
+    .metric b sup {
+      font-family: var(--mono); font-size: 13px; font-weight: 500;
+      color: var(--muted); margin-left: 2px;
+      vertical-align: super;
+    }
+    .metric span {
+      display: block; margin-top: 12px;
+      color: var(--muted); font-size: 13px; line-height: 1.5;
+    }
+
+    /* ─── Workflow ───────────────────────────────────── */
+    .workflow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .workflow-step {
+      position: relative;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: var(--panel);
+      padding: 22px 20px 20px;
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s;
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+    .workflow-step:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--line-strong);
+    }
+    .workflow-step::before {
+      content: ""; position: absolute; left: 0; top: 0;
+      width: 3px; height: 100%;
+      background: var(--accent-line, var(--accent));
+    }
+    .workflow-step .step-head {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .workflow-step small {
+      font-family: var(--mono); font-size: 10.5px;
+      color: var(--muted); letter-spacing: 0.14em;
+      text-transform: uppercase; font-weight: 600;
+    }
+    .step-icon {
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+    .step-icon svg { width: 18px; height: 18px; }
+    .workflow-step h3 {
+      margin: 0 0 8px;
+      font-family: var(--serif); font-weight: 400;
+      font-size: 22px; line-height: 1.15;
+      color: var(--ink); letter-spacing: -0.01em;
+    }
+    .workflow-step p {
+      margin: 0;
+      color: var(--muted); font-size: 13.5px; line-height: 1.55;
+    }
+
+    /* ─── Tabs & Table ───────────────────────────────── */
+    .tabs {
+      display: flex; flex-wrap: wrap; gap: 0;
+      margin-bottom: 18px;
+      border-bottom: 1px solid var(--line);
+    }
+    .tab {
+      border: 0; background: transparent;
+      color: var(--muted); cursor: pointer;
+      font: inherit; font-size: 13px; font-weight: 600;
+      padding: 12px 18px;
+      position: relative;
+      transition: color .15s;
+      letter-spacing: 0.005em;
+    }
+    .tab:hover { color: var(--ink); }
+    .tab.is-active { color: var(--ink); }
+    .tab.is-active::after {
+      content: ""; position: absolute;
+      left: 14px; right: 14px; bottom: -1px;
+      height: 2px; background: var(--accent);
+    }
+    .tab-count {
+      font-family: var(--mono); font-size: 11px;
+      color: var(--muted-2); margin-left: 6px; font-weight: 500;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: var(--panel);
+      box-shadow: var(--shadow-sm);
+    }
+    table {
+      width: 100%; border-collapse: collapse; min-width: 880px;
+    }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      padding: 14px 18px;
+      text-align: left; vertical-align: middle;
+      font-size: 13.5px;
+    }
+    th {
+      position: sticky; top: 0; z-index: 1;
+      background: var(--paper-2);
+      color: var(--muted); font-weight: 600;
+      font-family: var(--mono);
+      font-size: 10.5px; text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding-top: 11px; padding-bottom: 11px;
+    }
+    tbody tr {
+      transition: background .12s;
+    }
+    tbody tr:hover { background: var(--paper-2); }
+    tbody tr:last-child td { border-bottom: 0; }
+    td.company-name {
+      font-weight: 600; color: var(--ink); font-size: 14px;
+    }
+    td.ticker {
+      font-family: var(--mono); font-size: 12.5px; font-weight: 500;
+      color: var(--ink-2);
+    }
+    td.pilot {
+      color: var(--muted); font-size: 13px;
+    }
+
+    .tag {
+      display: inline-flex; align-items: center; gap: 5px;
+      border-radius: 999px;
+      padding: 3px 9px 3px 8px;
+      font-size: 11.5px; font-weight: 600;
+      color: var(--navy); background: var(--paper-2);
+      white-space: nowrap; letter-spacing: 0.01em;
+      border: 1px solid var(--line);
+    }
+    .tag::before {
+      content: ""; width: 5px; height: 5px; border-radius: 50%;
+      background: currentColor; opacity: 0.7;
+    }
+    .tag.saas { color: #075975; background: #e0eff7; border-color: #c4dded; }
+    .tag.semi { color: #066b66; background: var(--teal-soft); border-color: #b8dad6; }
+    .tag.alt { color: #7a4708; background: var(--gold-soft); border-color: #e0cf95; }
+
+    .score {
+      display: flex; align-items: center; gap: 10px;
+      min-width: 140px;
+    }
+    .score-num {
+      font-family: var(--mono); font-size: 13px; font-weight: 600;
+      color: var(--ink); min-width: 44px;
+    }
+    .score-line {
+      flex: 1; height: 4px; border-radius: 999px;
+      background: var(--paper-2); overflow: hidden;
+      border: 1px solid var(--line);
+    }
+    .score-line i {
+      display: block; height: 100%;
+      background: linear-gradient(90deg, var(--teal), #14a89c);
+      border-radius: inherit;
+    }
+    .score.high .score-line i {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    }
+
+    /* ─── Roadmap ────────────────────────────────────── */
+    .roadmap { display: grid; gap: 14px; }
+    .phase {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: var(--panel);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow .2s;
+    }
+    .phase:hover { box-shadow: var(--shadow-md); }
+    .phase-label {
+      display: flex; flex-direction: column; justify-content: center; gap: 6px;
+      padding: 22px 22px;
+      background: linear-gradient(180deg, var(--paper-2), var(--paper));
+      border-right: 1px solid var(--line);
+      position: relative;
+    }
+    .phase-label::before {
+      content: ""; position: absolute; left: 0; top: 22px; bottom: 22px;
+      width: 3px; background: var(--accent);
+    }
+    .phase-week {
+      font-family: var(--mono); font-size: 10.5px; color: var(--accent);
+      letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600;
+    }
+    .phase-label b {
+      color: var(--ink);
+      font-family: var(--serif); font-weight: 400;
+      font-size: 22px; line-height: 1.15; letter-spacing: -0.01em;
+    }
+    .phase-label span {
+      color: var(--muted); font-size: 12.5px; line-height: 1.45;
+    }
+    .phase-body {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .phase-item {
+      padding: 22px 20px;
+      border-right: 1px solid var(--line);
+    }
+    .phase-item:last-child { border-right: 0; }
+    .phase-item h3 {
+      margin: 0 0 8px;
+      font-size: 14.5px; font-weight: 600;
+      color: var(--ink); letter-spacing: -0.005em;
+    }
+    .phase-item p {
+      margin: 0;
+      color: var(--muted); font-size: 13px; line-height: 1.55;
+    }
+
+    /* ─── Week Grid ──────────────────────────────────── */
+    .week-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .weekday {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: var(--panel);
+      padding: 18px 18px 20px;
+      box-shadow: var(--shadow-sm);
+      transition: transform .15s, box-shadow .15s;
+    }
+    .weekday:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .weekday b {
+      display: block; margin-bottom: 10px;
+      color: var(--ink);
+      font-family: var(--serif); font-weight: 400;
+      font-size: 20px; letter-spacing: -0.01em;
+    }
+    .weekday b::after {
+      content: ""; display: block;
+      width: 20px; height: 2px; background: var(--accent);
+      margin-top: 8px;
+    }
+    .weekday span {
+      color: var(--muted); font-size: 13px; line-height: 1.5;
+    }
+
+    /* ─── Assets ─────────────────────────────────────── */
+    .asset-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .asset {
+      display: flex; flex-direction: column; gap: 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: var(--panel);
+      padding: 22px;
+      min-height: 180px;
+      box-shadow: var(--shadow-sm);
+      transition: transform .2s, box-shadow .2s, border-color .2s;
+      position: relative;
+    }
+    .asset:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--line-strong);
+    }
+    .asset-icon {
+      width: 38px; height: 38px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: var(--radius);
+      background: var(--accent-soft); color: var(--accent);
+      margin-bottom: 4px;
+    }
+    .asset-icon svg { width: 19px; height: 19px; }
+    .asset h3 {
+      margin: 0;
+      font-family: var(--serif); font-weight: 400;
+      color: var(--ink); font-size: 22px;
+      letter-spacing: -0.01em; line-height: 1.15;
+    }
+    .asset p {
+      margin: 0;
+      color: var(--muted); font-size: 13.5px; line-height: 1.55;
+    }
+    .asset .links {
+      display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto;
+    }
+    .mini-link {
+      display: inline-flex; align-items: center; gap: 5px;
+      min-height: 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 0 10px;
+      background: var(--paper);
+      font-size: 11.5px; font-weight: 600;
+      color: var(--ink-2); letter-spacing: 0.01em;
+      font-family: var(--mono);
+      transition: background .15s, border-color .15s, color .15s;
+    }
+    .mini-link:hover {
+      background: var(--ink); border-color: var(--ink); color: #fffdf7;
+      text-decoration: none;
+    }
+    .mini-link::after {
+      content: "↗"; font-size: 10px; opacity: 0.6;
+    }
+
+    /* ─── Protocols ──────────────────────────────────── */
+    .protocol-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .protocol {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: var(--panel);
+      padding: 26px 26px 24px;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+    }
+    .protocol::before {
+      content: ""; position: absolute;
+      left: 0; top: 0; bottom: 0; width: 3px;
+      background: var(--accent);
+    }
+    .protocol.compliance::before { background: var(--gold); }
+    .protocol h3 {
+      margin: 0 0 16px;
+      color: var(--ink);
+      font-family: var(--serif); font-weight: 400;
+      font-size: 24px; letter-spacing: -0.01em;
+    }
+    .protocol ul {
+      margin: 0; padding: 0;
+      list-style: none;
+    }
+    .protocol li {
+      position: relative;
+      padding: 10px 0 10px 26px;
+      border-bottom: 1px solid var(--line);
+      color: var(--ink-2); font-size: 13.5px; line-height: 1.55;
+    }
+    .protocol li:last-child { border-bottom: 0; padding-bottom: 0; }
+    .protocol li::before {
+      content: ""; position: absolute;
+      left: 6px; top: 18px;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent); opacity: 0.8;
+    }
+    .protocol.compliance li::before { background: var(--gold); }
+
+    /* ─── Footer ─────────────────────────────────────── */
+    .footer {
+      border-top: 1px solid var(--line);
+      background: var(--panel);
+      padding: 32px 0;
+      color: var(--muted); font-size: 13px;
+      margin-top: 40px;
+    }
+    .footer .shell {
+      display: flex; justify-content: space-between;
+      gap: 20px; flex-wrap: wrap; align-items: center;
+    }
+    .footer-brand {
+      display: flex; align-items: center; gap: 10px;
+      color: var(--ink); font-weight: 600;
+    }
+    .footer-brand .brand-mark { width: 22px; height: 22px; }
+    .footer-note {
+      font-style: italic; max-width: 60ch;
+      font-family: var(--serif); font-size: 14px;
+      color: var(--muted);
+    }
+
+    /* ─── Responsive ─────────────────────────────────── */
+    @media (max-width: 980px) {
+      .hero-grid, .protocol-grid { grid-template-columns: 1fr; }
+      .metric-grid, .workflow, .asset-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .metric:nth-child(2) { border-right: 0; }
+      .metric:nth-child(1), .metric:nth-child(2) {
+        border-bottom: 1px solid var(--line);
+      }
+      .phase { grid-template-columns: 1fr; }
+      .phase-label { border-right: 0; border-bottom: 1px solid var(--line); }
+      .phase-label::before { left: 22px; top: 0; bottom: auto; width: 28px; height: 3px; }
+      .phase-body { grid-template-columns: 1fr; }
+      .phase-item { border-right: 0; border-bottom: 1px solid var(--line); }
+      .phase-item:last-child { border-bottom: 0; }
+      .week-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 640px) {
+      .shell { padding: 0 18px; }
+      .topbar .shell {
+        align-items: flex-start; flex-direction: column; gap: 10px;
+        padding-top: 14px; padding-bottom: 14px;
+      }
+      .top-status { align-self: flex-start; }
+      .hero { padding: 44px 0 36px; }
+      .hero h1 { font-size: 40px; }
+      .metric-grid, .workflow, .asset-grid, .week-grid { grid-template-columns: 1fr; }
+      .metric { border-right: 0; border-bottom: 1px solid var(--line); }
+      .metric:last-child { border-bottom: 0; }
+      .section-head { flex-direction: column; align-items: flex-start; }
+    }
+
+    /* fade in on load */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero h1, .hero .lead, .hero-actions, .status-panel {
+      animation: fadeUp .6s ease both;
+    }
+    .hero .lead { animation-delay: .08s; }
+    .hero-actions { animation-delay: .16s; }
+    .status-panel { animation-delay: .12s; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="shell">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"></div>
+        <div class="brand-text">
+          <strong>CultureRadar</strong>
+          <span>MVP · Command Center</span>
+        </div>
+      </div>
+      <nav aria-label="页面导航">
+        <a href="#overview">总览</a>
+        <a href="#workflow">研究流程</a>
+        <a href="#companies">公司池</a>
+        <a href="#roadmap">12 周路线图</a>
+        <a href="#assets">文件入口</a>
+        <a href="#protocol">规则</a>
+      </nav>
+      <span class="top-status">Live · v0.1</span>
+    </div>
+  </header>
+
+  <section class="hero" id="overview">
+    <div class="shell hero-grid">
+      <div>
+        <span class="eyebrow">A culture-signal research desk</span>
+        <h1>读懂美股公司的<br><em>文化拐点</em>。</h1>
+        <p class="lead">
+          面向长线个人投资者的美股文化拐点研究通讯。第一版采用手工研究、免费公开、双语并行，
+          用一套工作簿和判断追踪表，沉淀 12 周可证伪记录。
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="data/CultureRadar_MVP_Workbook.xlsx">
+            打开主工作簿 <span class="arrow">→</span>
+          </a>
+          <a class="button" href="docs/launch_checklist.md">启动清单</a>
+          <a class="button" href="templates/culture_health_card.md">解读卡模板</a>
+          <a class="button" href="content/public_about_page.md">公开说明页</a>
+        </div>
+      </div>
+
+      <aside class="status-panel" aria-label="MVP 状态摘要">
+        <div class="status-title">
+          <h2>Operational Snapshot</h2>
+          <span class="stamp">2026 · 05 · 22</span>
+        </div>
+        <div class="signal-stack">
+          <div class="signal-row idle">
+            <span>公司基线</span>
+            <div class="bar"><i style="width: 0%"></i></div>
+            <b>0 / 15</b>
+          </div>
+          <div class="signal-row idle">
+            <span>公开卡片</span>
+            <div class="bar"><i style="width: 0%"></i></div>
+            <b>0 / 12</b>
+          </div>
+          <div class="signal-row idle">
+            <span>追踪判断</span>
+            <div class="bar"><i style="width: 0%"></i></div>
+            <b>0 / 50</b>
+          </div>
+          <div class="signal-row idle">
+            <span>读者访谈</span>
+            <div class="bar"><i style="width: 0%"></i></div>
+            <b>0 / 10</b>
+          </div>
+        </div>
+        <div class="disclaimer-strip">
+          所有公司方向均为 TBD。必须完成四条证据线、主验证指标、阈值、截止日期和来源链接后，才能发布判断。
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <main class="shell">
+    <section>
+      <div class="metric-grid">
+        <div class="metric">
+          <div class="metric-key">Universe</div>
+          <b>15</b>
+          <span>首批入选公司，覆盖 SaaS 与半导体。</span>
+        </div>
+        <div class="metric">
+          <div class="metric-key">Alerts</div>
+          <b>90</b>
+          <span>Google Alerts 查询项，覆盖裁员、诉讼、SEC、调查、文化、管理层离任。</span>
+        </div>
+        <div class="metric">
+          <div class="metric-key">Cadence</div>
+          <b>12<sup>wk</sup></b>
+          <span>周试运行节奏，先积累公开记录再考虑收费。</span>
+        </div>
+        <div class="metric">
+          <div class="metric-key">Tracker</div>
+          <b>50</b>
+          <span>判断追踪表预留行，统一记录阈值、截止日期、结案状态。</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="workflow">
+      <div class="section-head">
+        <div class="section-head-text">
+          <span class="section-num">01 — Methodology</span>
+          <h2>四条证据线</h2>
+          <p>每张文化健康度解读卡都必须完成四条证据线。重点看变化率，不给假精确分数。</p>
+        </div>
+      </div>
+      <div class="workflow">
+        <article class="workflow-step" style="--accent-line: #1f6f9f">
+          <div class="step-head">
+            <small>Evidence · 01</small>
+            <div class="step-icon" style="background:#e0eff7; color:#1f6f9f">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0-3-3.87"/></svg>
+            </div>
+          </div>
+          <h3>关键人才流向</h3>
+          <p>手工记录 VP+、Staff+、核心产品与工程人才的季度流入流出、去向和角色层级。</p>
+        </article>
+        <article class="workflow-step" style="--accent-line: var(--teal)">
+          <div class="step-head">
+            <small>Evidence · 02</small>
+            <div class="step-icon" style="background: var(--teal-soft); color: var(--teal)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+          </div>
+          <h3>员工评价趋势</h3>
+          <p>记录综合评分、CEO 认可度、业务前景、管理层信心，并提炼 20-30 条评论主题漂移。</p>
+        </article>
+        <article class="workflow-step" style="--accent-line: var(--gold)">
+          <div class="step-head">
+            <small>Evidence · 03</small>
+            <div class="step-icon" style="background: var(--gold-soft); color: var(--gold)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v4H3z"/><path d="M5 7v13h14V7"/><path d="M9 12h6"/><path d="M9 16h6"/></svg>
+            </div>
+          </div>
+          <h3>管理层语言</h3>
+          <p>阅读最近 2-3 次财报会，观察增长、扩张、效率、纪律、重组等措辞变化。</p>
+        </article>
+        <article class="workflow-step" style="--accent-line: var(--red)">
+          <div class="step-head">
+            <small>Evidence · 04</small>
+            <div class="step-icon" style="background: var(--red-soft); color: var(--red)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22V4a2 2 0 0 1 2-2h11l4 4v8a2 2 0 0 1-2 2H7"/><path d="M4 22h6"/><path d="M9 14v8"/></svg>
+            </div>
+          </div>
+          <h3>外部红旗</h3>
+          <p>跟踪裁员、诉讼、SEC、调查、地方新闻和高管离任，用作兜底和交叉验证。</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="companies">
+      <div class="section-head">
+        <div class="section-head-text">
+          <span class="section-num">02 — Universe</span>
+          <h2>公司池</h2>
+          <p>15 家核心公司 + 3 家候补。评分代表 MVP 研究优先级，不代表公司文化好坏。</p>
+        </div>
+      </div>
+      <div class="tabs" role="group" aria-label="公司筛选">
+        <button class="tab is-active" type="button" data-filter="all">全部 <span class="tab-count">18</span></button>
+        <button class="tab" type="button" data-filter="core">核心 <span class="tab-count">15</span></button>
+        <button class="tab" type="button" data-filter="saas">SaaS <span class="tab-count">10</span></button>
+        <button class="tab" type="button" data-filter="semi">半导体 <span class="tab-count">8</span></button>
+        <button class="tab" type="button" data-filter="alt">候补 <span class="tab-count">3</span></button>
+      </div>
+      <div class="table-wrap">
+        <table id="companyTable">
+          <thead>
+            <tr>
+              <th>Company</th>
+              <th>Ticker</th>
+              <th>Industry</th>
+              <th>Segment</th>
+              <th>Priority</th>
+              <th>Score</th>
+              <th>Pilot Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-kind="core saas"><td class="company-name">Salesforce</td><td class="ticker">CRM</td><td><span class="tag saas">SaaS</span></td><td>CRM / enterprise platform</td><td>Core</td><td><div class="score high"><span class="score-num">14/15</span><span class="score-line"><i style="width: 93%"></i></span></div></td><td class="pilot">Deterioration/improvement candidate TBD</td></tr>
+            <tr data-kind="core saas"><td class="company-name">ServiceNow</td><td class="ticker">NOW</td><td><span class="tag saas">SaaS</span></td><td>Workflow automation</td><td>Core</td><td><div class="score high"><span class="score-num">14/15</span><span class="score-line"><i style="width: 93%"></i></span></div></td><td class="pilot">Stable candidate TBD</td></tr>
+            <tr data-kind="core saas"><td class="company-name">Workday</td><td class="ticker">WDAY</td><td><span class="tag saas">SaaS</span></td><td>HCM / finance SaaS</td><td>Core</td><td><div class="score"><span class="score-num">13/15</span><span class="score-line"><i style="width: 87%"></i></span></div></td><td class="pilot">TBD</td></tr>
+            <tr data-kind="core saas"><td class="company-name">Snowflake</td><td class="ticker">SNOW</td><td><span class="tag saas">SaaS</span></td><td>Data cloud</td><td>Core</td><td><div class="score high"><span class="score-num">14/15</span><span class="score-line"><i style="width: 93%"></i></span></div></td><td class="pilot">Improvement/deterioration candidate TBD</td></tr>
+            <tr data-kind="core saas"><td class="company-name">Datadog</td><td class="ticker">DDOG</td><td><span class="tag saas">SaaS</span></td><td>Observability / cloud monitoring</td><td>Core</td><td><div class="score"><span class="score-num">13/15</span><span class="score-line"><i style="width: 87%"></i></span></div></td><td class="pilot">TBD</td></tr>
+            <tr data-kind="core saas"><td class="company-name">HubSpot</td><td class="ticker">HUBS</td><td><span class="tag saas">SaaS</span></td><td>SMB CRM / marketing automation</td><td>Core</td><td><div class="score"><span class="score-num">13/15</span><span class="score-line"><i style="width: 87%"></i></span></div></td><td class="pilot">TBD</td></tr>
+            <tr data-kind="core saas"><td class="company-name">Atlassian</td><td class="ticker">TEAM</td><td><span class="tag saas">SaaS</span></td><td>Collaboration / developer tools</td><td>Core</td><td><div class="score"><span class="score-num">13/15</span><span class="score-line"><i style="width: 87%"></i></span></div></td><td class="pilot">TBD</td></tr>
+            <tr data-kind="core saas"><td class="company-name">MongoDB</td><td class="ticker">MDB</td><td><span class="tag saas">SaaS</span></td><td>Database / developer platform</td><td>Core</td><td><div class="score"><span class="score-num">13/15</span><span class="score-line"><i style="width: 87%"></i></span></div></td><td class="pilot">TBD</td></tr>
+            <tr data-kind="core semi"><td class="company-name">NVIDIA</td><td class="ticker">NVDA</td><td><span class="tag semi">Semiconductor</span></td><td>Accelerated computing / GPUs</td><td>Core</td><td><div class="score high"><span class="score-num">15/15</span><span class="score-line"><i style="width: 100%"></i></span></div></td><td class="pilot">Stable/improvement candidate TBD</td></tr>
+            <tr data-kind="core semi"><td class="company-name">AMD</td><td class="ticker">AMD</td><td><span class="tag semi">Semiconductor</span></td><td>CPUs / GPUs / data center chips</td><td>Core</td><td><div class="score high"><span class="score-num">15/15</span><span class="score-line"><i style="width: 100%"></i></span></div></td><td class="pilot">TBD</td></tr>
+            <tr data-kind="core semi"><td class="company-name">Intel</td><td class="ticker">INTC</td><td><span class="tag semi">Semiconductor</span></td><td>Integrated device manufacturer / foundry</td><td>Core</td><td><div class="score high"><span class="score-num">15/15</span><span class="score-line"><i style="width: 100%"></i></span></div></td><td class="pilot">Deterioration/improvement candidate TBD</td></tr>
+            <tr data-kind="core semi"><td class="company-name">Micron</td><td class="ticker">MU</td><td><span class="tag semi">Semiconductor</span></td><td>Memory</td><td>Core</td><td><div class="score"><span class="score-num">13/15</span><span class="score-line"><i style="width: 87%"></i></span></div></td><td class="pilot">TBD</td></tr>
+            <tr data-kind="core semi"><td class="company-name">Qualcomm</td><td class="ticker">QCOM</td><td><span class="tag semi">Semiconductor</span></td><td>Wireless / edge AI chips</td><td>Core</td><td><div class="score high"><span class="score-num">14/15</span><span class="score-line"><i style="width: 93%"></i></span></div></td><td class="pilot">TBD</td></tr>
+            <tr data-kind="core semi"><td class="company-name">Applied Materials</td><td class="ticker">AMAT</td><td><span class="tag semi">Semiconductor</span></td><td>Semiconductor equipment</td><td>Core</td><td><div class="score"><span class="score-num">13/15</span><span class="score-line"><i style="width: 87%"></i></span></div></td><td class="pilot">TBD</td></tr>
+            <tr data-kind="core semi"><td class="company-name">Lam Research</td><td class="ticker">LRCX</td><td><span class="tag semi">Semiconductor</span></td><td>Semiconductor equipment</td><td>Core</td><td><div class="score"><span class="score-num">13/15</span><span class="score-line"><i style="width: 87%"></i></span></div></td><td class="pilot">TBD</td></tr>
+            <tr data-kind="alt saas"><td class="company-name">Okta</td><td class="ticker">OKTA</td><td><span class="tag saas">SaaS</span></td><td>Identity / security SaaS</td><td><span class="tag alt">Alternate</span></td><td><div class="score"><span class="score-num">12/15</span><span class="score-line"><i style="width: 80%"></i></span></div></td><td class="pilot">Alternate</td></tr>
+            <tr data-kind="alt saas"><td class="company-name">Twilio</td><td class="ticker">TWLO</td><td><span class="tag saas">SaaS</span></td><td>Communications platform</td><td><span class="tag alt">Alternate</span></td><td><div class="score"><span class="score-num">13/15</span><span class="score-line"><i style="width: 87%"></i></span></div></td><td class="pilot">Alternate</td></tr>
+            <tr data-kind="alt semi"><td class="company-name">KLA</td><td class="ticker">KLAC</td><td><span class="tag semi">Semiconductor</span></td><td>Process control / metrology</td><td><span class="tag alt">Alternate</span></td><td><div class="score"><span class="score-num">12/15</span><span class="score-line"><i style="width: 80%"></i></span></div></td><td class="pilot">Alternate</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="roadmap">
+      <div class="section-head">
+        <div class="section-head-text">
+          <span class="section-num">03 — Timeline</span>
+          <h2>12 周路线图</h2>
+          <p>从研究底座到公开发布，再到验证闭环。前三个月不优化收入，优先优化可信度和连续交付。</p>
+        </div>
+      </div>
+      <div class="roadmap">
+        <article class="phase">
+          <div class="phase-label">
+            <span class="phase-week">Week 0 — 1</span>
+            <b>搭建底座</b>
+            <span>研究基础设施 & pilot</span>
+          </div>
+          <div class="phase-body">
+            <div class="phase-item"><h3>主工作簿</h3><p>确认公司池、四条证据线、来源库、判断追踪表。</p></div>
+            <div class="phase-item"><h3>Alerts</h3><p>按公司配置 90 个 Google Alerts 查询项。</p></div>
+            <div class="phase-item"><h3>Pilot</h3><p>选 3 家公司跑完整闭环，测算单卡耗时。</p></div>
+          </div>
+        </article>
+
+        <article class="phase">
+          <div class="phase-label">
+            <span class="phase-week">Week 2 — 4</span>
+            <b>首次公开</b>
+            <span>对外亮相 & 第一批卡片</span>
+          </div>
+          <div class="phase-body">
+            <div class="phase-item"><h3>说明页</h3><p>发布定位、方法论、合规边界和追踪表入口。</p></div>
+            <div class="phase-item"><h3>第一批卡片</h3><p>发布 3 张文化健康度解读卡，全部带来源和验证标准。</p></div>
+            <div class="phase-item"><h3>分发</h3><p>英文主文，中文摘要，同步 X/FinTwit 和一个中文渠道。</p></div>
+          </div>
+        </article>
+
+        <article class="phase">
+          <div class="phase-label">
+            <span class="phase-week">Week 5 — 8</span>
+            <b>稳定周更</b>
+            <span>固定节奏 & 双语 newsletter</span>
+          </div>
+          <div class="phase-body">
+            <div class="phase-item"><h3>周一到周三</h3><p>更新 alerts、员工评价、LinkedIn 人才流动和 transcript。</p></div>
+            <div class="phase-item"><h3>周四</h3><p>选择本周最强的一条可发布判断，避免硬凑结论。</p></div>
+            <div class="phase-item"><h3>周五</h3><p>发布一篇双语 newsletter，并登记追踪表。</p></div>
+          </div>
+        </article>
+
+        <article class="phase">
+          <div class="phase-label">
+            <span class="phase-week">Week 9 — 12</span>
+            <b>验证闭环</b>
+            <span>三个月复盘 & 可证伪审计</span>
+          </div>
+          <div class="phase-body">
+            <div class="phase-item"><h3>Baseline</h3><p>完成 12-15 家公司基线档案。</p></div>
+            <div class="phase-item"><h3>Tracker</h3><p>审计所有开放判断：指标、阈值、期限、状态必须齐全。</p></div>
+            <div class="phase-item"><h3>Review</h3><p>发布三个月复盘，不足 10 条结案前不公布命中率百分比。</p></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div class="section-head-text">
+          <span class="section-num">04 — Weekly Rhythm</span>
+          <h2>每周执行节奏</h2>
+          <p>让研究流程变成固定动作，减少每周重新决策的成本。</p>
+        </div>
+      </div>
+      <div class="week-grid">
+        <div class="weekday"><b>Monday</b><span>更新 Google Alerts、transcript、新闻红旗。</span></div>
+        <div class="weekday"><b>Tuesday</b><span>更新 Glassdoor 评分、分项、评论主题漂移。</span></div>
+        <div class="weekday"><b>Wednesday</b><span>手工记录 LinkedIn 关键人才流动。</span></div>
+        <div class="weekday"><b>Thursday</b><span>筛选本周 1-2 家，锁定主判断和验证标准。</span></div>
+        <div class="weekday"><b>Friday</b><span>发布双语 newsletter，更新追踪表，做分发。</span></div>
+      </div>
+    </section>
+
+    <section id="assets">
+      <div class="section-head">
+        <div class="section-head-text">
+          <span class="section-num">05 — Deliverables</span>
+          <h2>文件入口</h2>
+          <p>这些文件就是 MVP 的实际交付物。HTML 页面不替代表格，表格仍是唯一事实来源。</p>
+        </div>
+      </div>
+      <div class="asset-grid">
+        <article class="asset">
+          <div class="asset-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+          </div>
+          <h3>Data / Workbook</h3>
+          <p>主工作簿、公司池、判断追踪表、来源库、alerts 队列和 12 周节奏。</p>
+          <div class="links">
+            <a class="mini-link" href="data/CultureRadar_MVP_Workbook.xlsx">Workbook</a>
+            <a class="mini-link" href="data/company_universe.csv">Company CSV</a>
+            <a class="mini-link" href="data/judgment_tracker.csv">Tracker CSV</a>
+          </div>
+        </article>
+        <article class="asset">
+          <div class="asset-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
+          </div>
+          <h3>Docs</h3>
+          <p>研究 SOP、合规护栏和启动清单，确保每周执行方式一致。</p>
+          <div class="links">
+            <a class="mini-link" href="docs/research_sop.md">SOP</a>
+            <a class="mini-link" href="docs/compliance_guardrails.md">Compliance</a>
+            <a class="mini-link" href="docs/launch_checklist.md">Checklist</a>
+          </div>
+        </article>
+        <article class="asset">
+          <div class="asset-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+          </div>
+          <h3>Templates</h3>
+          <p>文化健康度卡片、newsletter、X thread 和读者访谈模板。</p>
+          <div class="links">
+            <a class="mini-link" href="templates/culture_health_card.md">Card</a>
+            <a class="mini-link" href="templates/newsletter_issue.md">Newsletter</a>
+            <a class="mini-link" href="templates/x_thread.md">X Thread</a>
+          </div>
+        </article>
+        <article class="asset">
+          <div class="asset-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <h3>Public Content</h3>
+          <p>公开说明页、方法论文章和第一周发布草稿。</p>
+          <div class="links">
+            <a class="mini-link" href="content/public_about_page.md">About</a>
+            <a class="mini-link" href="content/methodology_article.md">Methodology</a>
+            <a class="mini-link" href="content/week_01_launch_note.md">Launch Note</a>
+          </div>
+        </article>
+        <article class="asset">
+          <div class="asset-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <h3>Source Setup</h3>
+          <p>每家公司 6 类手工来源入口，全部服务四条证据线。</p>
+          <div class="links">
+            <a class="mini-link" href="data/source_library.csv">Source Library</a>
+            <a class="mini-link" href="data/google_alert_queries.csv">Alerts CSV</a>
+          </div>
+        </article>
+        <article class="asset">
+          <div class="asset-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10"/><path d="M20.49 15a9 9 0 0 1-14.85 3.36L1 14"/></svg>
+          </div>
+          <h3>Regeneration</h3>
+          <p>用脚本从同一份公司清单重建 Excel 和 CSV，避免资产漂移。</p>
+          <div class="links">
+            <a class="mini-link" href="scripts/generate_assets.py">Python Script</a>
+            <a class="mini-link" href="README.md">README</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="protocol">
+      <div class="section-head">
+        <div class="section-head-text">
+          <span class="section-num">06 — Protocol</span>
+          <h2>判断与合规规则</h2>
+          <p>CultureRadar 的信任资产来自可证伪记录，而不是听起来聪明的叙事。</p>
+        </div>
+      </div>
+      <div class="protocol-grid">
+        <article class="protocol">
+          <h3>可证伪规则</h3>
+          <ul>
+            <li>每条判断只允许一个主验证指标。</li>
+            <li>阈值和截止日期发布即锁死。</li>
+            <li>方向对但时机错，记为失手并旁注原因。</li>
+            <li>结案少于 10 条前，不公布命中率百分比。</li>
+            <li>部分项必须单独统计，防止阈值放水。</li>
+          </ul>
+        </article>
+        <article class="protocol compliance">
+          <h3>合规边界</h3>
+          <ul>
+            <li>不写买入、卖出、持有、目标价、仓位建议。</li>
+            <li>不做个性化投资建议或组合点评。</li>
+            <li>使用文化信号、观察、待验证判断等措辞。</li>
+            <li>每篇公开内容保留中英文免责声明。</li>
+            <li>正式收费或高阶会员权益上线前做法律审查。</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="shell">
+      <div class="footer-brand">
+        <div class="brand-mark" aria-hidden="true"></div>
+        CultureRadar
+      </div>
+      <span class="footer-note">Public-information research and investor education only. Not investment advice.</span>
+    </div>
+  </footer>
+
+  <script>
+    const tabs = Array.from(document.querySelectorAll(".tab"));
+    const rows = Array.from(document.querySelectorAll("#companyTable tbody tr"));
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const filter = tab.dataset.filter;
+        tabs.forEach((item) => item.classList.toggle("is-active", item === tab));
+        rows.forEach((row) => {
+          const kinds = row.dataset.kind.split(" ");
+          row.style.display = filter === "all" || kinds.includes(filter) ? "" : "none";
+        });
+      });
+    });
+  </script>
+</body>
+</html>

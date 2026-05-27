@@ -32,6 +32,15 @@
 **先做这条,因为它最干净、零合规风险、最容易建立手感。**
 
 - 找最近 **2–3 次**财报电话会 transcript(Seeking Alpha / Motley Fool / 公司 IR 页免费版)。
+- 如果常规入口被 403 / JS 动态加载挡住,不要立刻判定"没有 transcript"。按这个 fallback 顺序试:
+  1. 搜索公司 IR 直链:`site:<IR domain> transcript <company> <quarter> <year> pdf`。有些 IR 页会把 PDF 放在 `encrypt/files/...` 这类深层路径,页面抓不到但搜索索引能暴露直链。
+  2. 试静态 transcript 镜像源,优先 `TickerTrends`、`Alpha Spread`、`StockAnalysis`。这些页面对普通 HTTP 客户端通常比 Seeking Alpha / Investing / Yahoo 更友好。
+  3. 记录"访问失败"本身,但只作为 source availability note,不要把它当成项目不可做的结论。
+- TSMC / TSMC ADR (`TSM`) 的 2026Q1 已验证可用入口:
+  - 官方事件页: `https://investor.tsmc.com/english/quarterly-results/teleconference`
+  - 官方 PDF 直链可被搜索索引打开,但本机 `Invoke-WebRequest` 可能 403:`https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-04/3cef85204275f94fd111485cfdf4adb3c0263c45/TSMC%201Q26%20Transcript.pdf`
+  - 可脚本访问镜像:`https://tickertrends.io/transcripts/TSM/Q1-earnings-transcript-2026`
+  - 可脚本访问镜像:`https://www.alphaspread.com/security/twse/2330/investor-relations/earnings-call/q1-2026`
 - 只读两样:
   1. 用词重心有没有从"增长 / 扩张"**转向**"效率 / 纪律 / 聚焦"?(或反过来)
   2. 面对分析师尖锐提问(尤其关于人员、流失、竞争),是正面回答还是回避?

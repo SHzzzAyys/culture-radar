@@ -1,0 +1,359 @@
+{
+  "CRM": {
+    "founded": 1999,
+    "hq": "San Francisco, CA",
+    "ceo": "Marc Benioff",
+    "about": "全球最大的 CRM 与企业应用 SaaS 厂商。从 Sales Cloud 起家，扩张到 Service / Marketing / Platform / Data Cloud。Slack、Tableau、MuleSoft 是过去五年最重要的三笔并购。",
+    "business": [
+      ["Subscription & Support", 92, "Sales / Service / Marketing / Platform 等订阅业务"],
+      ["Professional Services", 8, "实施与培训服务"]
+    ],
+    "cultureTags": ["销售驱动", "Ohana 传教士", "并购整合者", "西海岸 SaaS"],
+    "glassdoor": "4.2",
+    "glassdoorCeo": "80%",
+    "glassdoorNote": "员工总体认可愿景，但近一年对效率压力与并购整合疲态有抱怨。",
+    "ceoStyle": "Benioff 是 CRM 行业的布道者；近年话语权部分让渡给联席与轮换 CEO。",
+    "insiderNarrative": "组织正从“传教士”转向“职业经理人”，活动家投资人介入后加速。",
+    "pilotNote": "重点观察“增长叙事 → 效率叙事”过渡时员工评价是否同步滑落。"
+  },
+  "NOW": {
+    "founded": 2003,
+    "hq": "Santa Clara, CA",
+    "ceo": "Bill McDermott",
+    "about": "企业工作流自动化平台。从 ITSM 起家，扩展到 HR / 客户服务 / 安全 / AI 工作流。被视为继 Salesforce 之后最具规模的纯 SaaS 工作流公司。",
+    "business": [
+      ["Subscription", 97, "Workflow Cloud + AI add-ons (Now Assist)"],
+      ["Professional Services", 3, "实施与咨询"]
+    ],
+    "cultureTags": ["McDermott 销售文化", "硅谷外貌的纽约执行力", "客户对接强", "高节奏"],
+    "glassdoor": "4.4",
+    "glassdoorCeo": "92%",
+    "glassdoorNote": "增长氛围强，员工对管理层信任度高于行业平均。",
+    "ceoStyle": "McDermott 来自 SAP，强销售文化与高执行节奏，公开露面频率极高。",
+    "insiderNarrative": "内部把流程纪律当作核心资产 — 自称“execution machine”。",
+    "pilotNote": "稳态样本，与 CRM、HUBS 等转型期 SaaS 对比观察。"
+  },
+  "WDAY": {
+    "founded": 2005,
+    "hq": "Pleasanton, CA",
+    "ceo": "Carl Eschenbach",
+    "about": "云端 HCM 与 Finance SaaS 双引擎。HR 是核心业务，Finance Cloud 是公司明确押注的第二增长曲线。客户长期主义是品牌底色。",
+    "business": [
+      ["Subscription Services", 89, "HCM + Financial Management 主订阅"],
+      ["Professional Services", 11, "实施与运维"]
+    ],
+    "cultureTags": ["HR 行业基因", "客户长期主义", "Aneel + Carl 双 CEO", "西海岸保守"],
+    "glassdoor": "4.0",
+    "glassdoorCeo": "75%",
+    "glassdoorNote": "稳定的 HR 工程文化，但销售层近年抱怨增长配额压力。",
+    "ceoStyle": "Carl Eschenbach 来自 VMware，强化执行；创始人 Aneel 仍参与战略决策。",
+    "insiderNarrative": "“客户在我们的肩膀上构建职业” — 高管经常复用的修辞。",
+    "pilotNote": "观察 HR / Finance 双引擎在 AI Agent 推广中是否出现叙事分裂。"
+  },
+  "SNOW": {
+    "founded": 2012,
+    "hq": "Bozeman, MT",
+    "ceo": "Sridhar Ramaswamy",
+    "about": "数据云平台。Data Warehouse 起家，扩展到 Snowpark、AI 数据集成与 Iceberg 表格式支持。消耗式商业模式让收入与客户用量强挂钩。",
+    "business": [
+      ["Product Revenue", 95, "Storage + Compute 消耗式计费"],
+      ["Professional Services", 5, "解决方案咨询"]
+    ],
+    "cultureTags": ["消耗式商业模式", "数据社区驱动", "前 Google AI 高管 CEO", "Slootman 余晖"],
+    "glassdoor": "4.2",
+    "glassdoorCeo": "88%",
+    "glassdoorNote": "技术氛围强，员工对 AI 转型反应积极。",
+    "ceoStyle": "Ramaswamy 接班 Slootman 后，叙事从“数据云”明显倾向“AI 数据平台”。",
+    "insiderNarrative": "从“打败 Databricks”转向“与 OpenAI / Anthropic 共建”。",
+    "pilotNote": "AI 整合是否真正反映在留存与扩张数据上，是关键观察点。"
+  },
+  "DDOG": {
+    "founded": 2010,
+    "hq": "New York, NY",
+    "ceo": "Olivier Pomel",
+    "about": "云原生可观测性 SaaS。从基础设施监控扩展到 APM、Log、安全、Cloud SIEM 与 AI 工作流监控。模块化产品扩品类是其商业模式核心。",
+    "business": [
+      ["Subscription — Infrastructure", 35, "基础设施监控（起家品类）"],
+      ["Subscription — APM & Logs", 45, "APM、日志、用户监控"],
+      ["Subscription — Security & Other", 20, "Cloud SIEM、CWPP、新品类"]
+    ],
+    "cultureTags": ["法国创始 / 美国总部", "工程驱动", "产品扩品类大师", "无强销售文化"],
+    "glassdoor": "4.5",
+    "glassdoorCeo": "94%",
+    "glassdoorNote": "工程文化好评，扩张节奏被员工认可。",
+    "ceoStyle": "Pomel 工程出身，低调但产品决策清晰；几乎不公开露面。",
+    "insiderNarrative": "“我们卖的不是工具，是一种监控的方法论”。",
+    "pilotNote": "持续观察新产品扩张对核心 Infra 留存的影响。"
+  },
+  "HUBS": {
+    "founded": 2006,
+    "hq": "Cambridge, MA",
+    "ceo": "Yamini Rangan",
+    "about": "面向中小企业的全栈营销 / 销售 / 服务 SaaS。Inbound marketing 是其原始品牌，近年向 CRM 全栈与 AI Agents 扩展。",
+    "business": [
+      ["Subscription", 98, "Marketing / Sales / Service / Content / Operations Hubs"],
+      ["Professional Services", 2, "实施培训"]
+    ],
+    "cultureTags": ["剑桥东岸 SaaS", "Culture Code 公开", "Inbound 信仰", "客户成功导向"],
+    "glassdoor": "4.3",
+    "glassdoorCeo": "87%",
+    "glassdoorNote": "Culture Code 公开是其品牌资产，员工自豪感高。",
+    "ceoStyle": "Yamini Rangan 接班 Brian Halligan，从产品 / 客户成功背景出发。",
+    "insiderNarrative": "“用对客户的方式对员工” — Culture Code 的核心命题。",
+    "pilotNote": "SMB 端宏观压力下，culture code 的实际兑现度是否会受冲击。"
+  },
+  "TEAM": {
+    "founded": 2002,
+    "hq": "Sydney, Australia",
+    "ceo": "Mike Cannon-Brookes & Scott Farquhar",
+    "about": "面向开发者与团队协作的 SaaS。Jira / Confluence / Bitbucket 是核心三件套；Rovo AI 与 Jira Service Management 是新增长来源。Team Anywhere 远程文化是行业知名招牌。",
+    "business": [
+      ["Subscription", 78, "Jira / Confluence / JSM 等云订阅"],
+      ["Maintenance", 12, "Data Center 自托管维护"],
+      ["Other", 10, "市场营销、培训等"]
+    ],
+    "cultureTags": ["澳洲创始 / 无销售 DNA", "Team Anywhere", "工程驱动", "双 CEO"],
+    "glassdoor": "4.1",
+    "glassdoorCeo": "70%",
+    "glassdoorNote": "Team Anywhere 远程文化曾是核心吸引力；近期裁员后评分回落。",
+    "ceoStyle": "双 CEO 制；Mike 偏外部影响力 / 社会议题，Scott 偏内部运营。",
+    "insiderNarrative": "“No Bullshit”是创始价值观；近期被员工质疑“是否还在”。",
+    "pilotNote": "远程 + 无销售文化在效率压力下能否守住？"
+  },
+  "MDB": {
+    "founded": 2007,
+    "hq": "New York, NY",
+    "ceo": "Dev Ittycheria",
+    "about": "文档数据库 + Atlas 云数据平台。Atlas（云托管）占收入大部分；向量搜索与 AI 数据底座是新故事的主轴。",
+    "business": [
+      ["Atlas (Cloud)", 70, "MongoDB Atlas 全托管"],
+      ["Enterprise Advanced", 28, "自托管商业版"],
+      ["Services", 2, "实施与咨询"]
+    ],
+    "cultureTags": ["开发者优先", "纽约 + 远程混合", "印度裔 CEO 长期任职", "开源到云转型"],
+    "glassdoor": "4.0",
+    "glassdoorCeo": "78%",
+    "glassdoorNote": "工程文化稳定，销售层有节奏压力。",
+    "ceoStyle": "Dev Ittycheria 任期长，注重商业模式从开源到云的转型。",
+    "insiderNarrative": "“developer love → enterprise spend” — 反复使用的内部叙事链。",
+    "pilotNote": "向量数据库竞争激烈，“开发者优先”是否会被现实压力削弱。"
+  },
+  "NVDA": {
+    "founded": 1993,
+    "hq": "Santa Clara, CA",
+    "ceo": "Jensen Huang",
+    "about": "AI 计算的事实标准。Data Center 业务两年从 30% 体量飙到 ~88%，公司已从 GPU 供应商转为加速计算平台。CUDA 是最深的护城河。",
+    "business": [
+      ["Data Center", 88, "Hopper / Blackwell GPU + 网络 + 软件栈"],
+      ["Gaming", 9, "RTX / GeForce 显卡"],
+      ["ProViz & Auto", 3, "工作站、汽车、机器人"]
+    ],
+    "cultureTags": ["工程师扁平", "高强度", "Jensen-led", "技术布道"],
+    "glassdoor": "4.7",
+    "glassdoorCeo": "97%",
+    "glassdoorNote": "员工对增长机会与技术深度极度认可，但工作强度高。",
+    "ceoStyle": "Jensen 有 30+ 直接汇报，绕开传统层级；既是 CEO 又是首席布道者。",
+    "insiderNarrative": "“Speed of light”是被反复提及的内部口号。",
+    "pilotNote": "样本组中的高基线 — 观察其文化在历史性繁荣期是否出现细微疲态。"
+  },
+  "AMD": {
+    "founded": 1969,
+    "hq": "Santa Clara, CA",
+    "ceo": "Lisa Su",
+    "about": "x86 CPU + GPU 双线选手。MI 系列 AI 加速器是新故事，但与 NVDA 仍有结构性差距。Xilinx（2022）提供 FPGA / DPU 第三条腿。",
+    "business": [
+      ["Data Center", 50, "EPYC CPU + MI300 / MI400 GPU"],
+      ["Client (PC CPU)", 25, "消费者与商用 PC 处理器"],
+      ["Gaming", 12, "主机半定制 + 显卡"],
+      ["Embedded (Xilinx)", 13, "FPGA / 自适应计算"]
+    ],
+    "cultureTags": ["Lisa Su 工程师 CEO", "克制叙事", "执行型组织", "复利式增长"],
+    "glassdoor": "4.3",
+    "glassdoorCeo": "92%",
+    "glassdoorNote": "员工高度认可 Lisa Su 的执行力。",
+    "ceoStyle": "Lisa Su 工程师出身，长期复利式叙事，少夸张承诺。",
+    "insiderNarrative": "从“追赶者”切换到“第二选择” — 仍在进行中。",
+    "pilotNote": "“第二选择”故事的兑现节奏，是文化稳定度的关键。"
+  },
+  "INTC": {
+    "founded": 1968,
+    "hq": "Santa Clara, CA",
+    "ceo": "Lip-Bu Tan",
+    "about": "IDM 元老与美国本土代工新选手。CPU 主业被 AMD 与 ARM 双侧蚕食；Intel Foundry 是 Pat Gelsinger 留下的核心赌注，现已交给 Lip-Bu Tan 推进或收尾。",
+    "business": [
+      ["Client Computing", 50, "消费者与商用 PC CPU"],
+      ["Data Center & AI", 30, "至强服务器 + Gaudi 加速器"],
+      ["Network & Edge", 10, "网络芯片、边缘计算"],
+      ["Foundry / Other", 10, "Intel Foundry Services"]
+    ],
+    "cultureTags": ["IDM 元老", "工程师老兵 + 重组中", "美政府利益绑定", "60 年身份重置"],
+    "glassdoor": "3.6",
+    "glassdoorCeo": "55%",
+    "glassdoorNote": "评分长期下滑；老员工与新管理层叙事冲突。",
+    "ceoStyle": "Lip-Bu Tan 上任后强调聚焦与现金；Pat Gelsinger 的“全栈复兴”叙事被淡化。",
+    "insiderNarrative": "组织正在经历 60 年来最深刻的身份重置。",
+    "pilotNote": "本观察池中唯一“文化崩塌中”样本 — 作为坏情况基线。"
+  },
+  "MU": {
+    "founded": 1978,
+    "hq": "Boise, ID",
+    "ceo": "Sanjay Mehrotra",
+    "about": "DRAM + NAND 内存巨头。HBM3E 在 AI 周期中是关键产品。极强周期性是公司文化的底色。",
+    "business": [
+      ["DRAM", 73, "通用 DRAM + HBM3E / HBM4"],
+      ["NAND", 26, "消费级与企业级 SSD"],
+      ["Other", 1, "新兴存储"]
+    ],
+    "cultureTags": ["爱达荷工厂文化", "周期性强", "工程导向", "本土制造叙事"],
+    "glassdoor": "3.8",
+    "glassdoorCeo": "78%",
+    "glassdoorNote": "工程氛围稳定，周期低谷期评分会波动。",
+    "ceoStyle": "Mehrotra 工程师出身，节奏与周期同步，少戏剧性。",
+    "insiderNarrative": "“熬过下一个低谷” — 内部不成文的命题。",
+    "pilotNote": "HBM 节奏让本轮文化叙事更亮；下一次周期下行是真正考验。"
+  },
+  "QCOM": {
+    "founded": 1985,
+    "hq": "San Diego, CA",
+    "ceo": "Cristiano Amon",
+    "about": "无线 SoC + IP 授权双引擎。手机芯片仍是主业，汽车与边缘 AI 是第二曲线。Apple modem 退出风险是结构性悬疑。",
+    "business": [
+      ["QCT — Handsets", 60, "Snapdragon 手机 SoC"],
+      ["QCT — Automotive", 11, "Snapdragon Digital Chassis"],
+      ["QCT — IoT", 15, "工业、PC、可穿戴"],
+      ["QTL (Licensing)", 14, "专利授权"]
+    ],
+    "cultureTags": ["南加州工程文化", "IP 收割机", "边缘 AI 押注", "Apple 风险悬疑"],
+    "glassdoor": "4.0",
+    "glassdoorCeo": "86%",
+    "glassdoorNote": "工程氛围稳定，对边缘 AI 团队扩张反应积极。",
+    "ceoStyle": "Amon 强调“连接性以外”的扩张，叙事从“手机巨头”转向“on-device AI”。",
+    "insiderNarrative": "“手机之外”已经讲了 5 年，市场仍在观望。",
+    "pilotNote": "新叙事最终能否反映在收入构成上，决定文化转向的可信度。"
+  },
+  "AMAT": {
+    "founded": 1967,
+    "hq": "Santa Clara, CA",
+    "ceo": "Gary Dickerson",
+    "about": "全球最大的半导体设备公司。覆盖刻蚀、沉积、CMP、过程控制等几乎所有 wafer fab 工艺。服务收入是稳定器。",
+    "business": [
+      ["Semiconductor Systems", 73, "刻蚀、沉积、CMP、离子注入"],
+      ["Applied Global Services", 24, "设备升级、备件、服务合约"],
+      ["Display & Adjacent", 3, "OLED、新兴市场"]
+    ],
+    "cultureTags": ["保守工程师文化", "服务收入扎实", "供应链长期主义", "硅谷设备老兵"],
+    "glassdoor": "4.0",
+    "glassdoorCeo": "84%",
+    "glassdoorNote": "稳定工程文化，少戏剧性。",
+    "ceoStyle": "Dickerson 任期长，强调跨周期纪律。",
+    "insiderNarrative": "“设备公司不该有大新闻” — 默认接受的命题。",
+    "pilotNote": "半导体设备组中相对“传统”的样本。"
+  },
+  "LRCX": {
+    "founded": 1980,
+    "hq": "Fremont, CA",
+    "ceo": "Tim Archer",
+    "about": "刻蚀与沉积设备龙头，与 AMAT 在多个工艺节点重叠。HBM 与先进逻辑节点是其核心订单来源。",
+    "business": [
+      ["Systems", 64, "刻蚀、沉积、清洗设备"],
+      ["Customer Support-Related", 36, "服务、备件、升级"]
+    ],
+    "cultureTags": ["设备工程师文化", "硅谷历史悠久", "客户工程深度", "无外向叙事"],
+    "glassdoor": "4.1",
+    "glassdoorCeo": "86%",
+    "glassdoorNote": "工程氛围稳定，客户工程师评价高。",
+    "ceoStyle": "Tim Archer 工程师出身，叙事克制。",
+    "insiderNarrative": "“我们在客户晶圆厂里几乎和员工一样多”。",
+    "pilotNote": "与 AMAT 配对作为周期对照组。"
+  },
+  "OKTA": {
+    "founded": 2009,
+    "hq": "San Francisco, CA",
+    "ceo": "Todd McKinnon",
+    "about": "身份与访问管理 SaaS。Workforce Identity 是核心；Customer Identity（Auth0 收购）是第二条腿。2023-2024 安全事件后正在重建信任。",
+    "business": [
+      ["Subscription — Workforce Identity", 60, "员工 SSO / MFA / Lifecycle"],
+      ["Subscription — Customer Identity", 36, "Auth0 集成，B2C / B2B 身份"],
+      ["Professional Services", 4, "实施与咨询"]
+    ],
+    "cultureTags": ["身份信任品牌", "事件后重建文化", "Workforce + Customer 双产品"],
+    "glassdoor": "3.9",
+    "glassdoorCeo": "72%",
+    "glassdoorNote": "评分受 2023-2024 安全事件影响，正在缓慢恢复。",
+    "ceoStyle": "McKinnon 创始人 CEO，强调透明度作为信任修复的核心手段。",
+    "insiderNarrative": "“信任不是一次性资产 — 是每天都要赚的”。",
+    "pilotNote": "信任修复中的文化样本 — 长期观察其与红旗指标的反向关系。"
+  },
+  "TWLO": {
+    "founded": 2008,
+    "hq": "San Francisco, CA",
+    "ceo": "Khozema Shipchandler",
+    "about": "通信 API + Segment CDP 平台。前 CEO Jeff Lawson 时代的“软件传教”文化已被新管理层重置为“盈利能力优先”。",
+    "business": [
+      ["Communications (API)", 89, "短信、语音、邮件、视频 API"],
+      ["Segment (Data & Apps)", 11, "客户数据平台 (CDP)"]
+    ],
+    "cultureTags": ["开发者品牌", "活动家投资人后重置", "盈利能力压力", "创始人离场"],
+    "glassdoor": "3.7",
+    "glassdoorCeo": "70%",
+    "glassdoorNote": "创始人时代后评分先降后稳；新文化仍在塑造中。",
+    "ceoStyle": "Shipchandler 来自 GE 与 Twilio 内部财务，强调纪律与现金流。",
+    "insiderNarrative": "“从传教到盈利” — 高管反复强调的转向。",
+    "pilotNote": "文化重置后的二轮验证 — 员工是否真心买账？"
+  },
+  "KLAC": {
+    "founded": 1975,
+    "hq": "Milpitas, CA",
+    "ceo": "Rick Wallace",
+    "about": "过程控制 / 量测设备龙头。比 AMAT / LRCX 更专业化，毛利率长期高于 60% 是其结构性特征。",
+    "business": [
+      ["Wafer Inspection", 50, "晶圆缺陷检测"],
+      ["Patterning", 18, "图案化质量控制"],
+      ["Specialty Semi Process", 16, "化合物半导体、MEMS"],
+      ["PCB / Display / Other", 16, "PCB、显示、其他"]
+    ],
+    "cultureTags": ["高毛利设备稀缺品", "工程精英文化", "硅谷老兵", "量测壁垒"],
+    "glassdoor": "4.4",
+    "glassdoorCeo": "91%",
+    "glassdoorNote": "设备组评分最高之一，员工对技术深度认可。",
+    "ceoStyle": "Rick Wallace 任期长，叙事克制专业。",
+    "insiderNarrative": "“量测是半导体里最难造假的工序” — 工程师文化的内核。",
+    "pilotNote": "设备组的高质量基线 — 长期与 INTC 对照看上下游分化。"
+  },
+  "TSLA": {
+    "founded": 2003,
+    "hq": "Austin, TX",
+    "ceo": "Elon Musk",
+    "about": "电动车 + 储能 + 自动驾驶 + AI 机器人 (Optimus) 的多线公司。叙事极度依赖 CEO 个人，business mix 在汽车 vs 能源 vs FSD 之间不断重新加权。",
+    "business": [
+      ["Automotive", 78, "Model 3 / Y / S / X / Cybertruck"],
+      ["Energy Generation & Storage", 12, "Megapack / Powerwall / Solar"],
+      ["Services & Other", 10, "充电、保险、二手车"]
+    ],
+    "cultureTags": ["CEO 主导叙事", "高强度工程文化", "频繁高管更替", "X / Twitter 联动"],
+    "glassdoor": "3.8",
+    "glassdoorCeo": "75%",
+    "glassdoorNote": "工程氛围强，但工时长 + CEO 公开言论争议是评论高频主题。",
+    "ceoStyle": "Elon Musk — 极端公开化的 CEO 风格；以 X 直接对接客户 / 股东 / 员工 / 政治议程。",
+    "insiderNarrative": "“第一性原理 + 24/7 工作” 是被反复使用的内部修辞。",
+    "pilotNote": "样本组中文化-业绩耦合最紧的样本 — CEO 行为本身就是产品变量。"
+  },
+  "TSM": {
+    "founded": 1987,
+    "hq": "Hsinchu, Taiwan",
+    "ceo": "C.C. Wei (魏哲家)",
+    "about": "全球最大纯代工厂。3nm / 5nm / 7nm 先进节点占晶圆收入 ~74%；Apple、NVIDIA、AMD 是顶级客户。Arizona Fab 21 量产中，Fab 12A 在建。",
+    "business": [
+      ["High Performance Computing", 51, "AI 加速器 / 服务器 CPU / 数据中心"],
+      ["Smartphone", 28, "Apple A 系列 + 高通 Snapdragon"],
+      ["IoT / Automotive / Other", 21, "物联网、车规、消费电子"]
+    ],
+    "cultureTags": ["新竹工程师文化", "代工纪律", "Morris Chang 余晖", "地缘政治压力"],
+    "glassdoor": "4.0",
+    "glassdoorCeo": "78%",
+    "glassdoorNote": "Western Glassdoor 样本薄（员工主体在台湾），北美 Arizona 站点评价偏中性（工作强度高）。",
+    "ceoStyle": "魏哲家技术出身，叙事克制；与创始人 Morris Chang 的“对客户负责”文化一脉相承。",
+    "insiderNarrative": "“我们不和客户竞争” — 纯代工身份的 50 年承诺。",
+    "pilotNote": "跨地区 alternate — Western LinkedIn / Glassdoor 信号弱，需结合台湾本地源验证。Transcript 中英双版本，须先定基线语种。"
+  }
+}

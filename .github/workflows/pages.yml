@@ -26,7 +26,7 @@ jobs:
       - name: Prepare site
         run: |
           mkdir _site
-          cp index_swiss.html _site/index.html
+          cp -r ./*.html _site/ 2>/dev/null || true
           [ -d data ]      && cp -r data      _site/data      || true
           [ -d docs ]      && cp -r docs      _site/docs      || true
           [ -d templates ] && cp -r templates _site/templates || true
