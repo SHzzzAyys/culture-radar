@@ -1,0 +1,42 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare site
+        run: |
+          mkdir _site
+          cp index_swiss.html _site/index.html
+          [ -d data ]      && cp -r data      _site/data      || true
+          [ -d docs ]      && cp -r docs      _site/docs      || true
+          [ -d templates ] && cp -r templates _site/templates || true
+          [ -d content ]   && cp -r content   _site/content   || true
+          [ -d scripts ]   && cp -r scripts   _site/scripts   || true
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
