@@ -26,20 +26,21 @@ OUT = ROOT / "data" / "live_companies.json"
 DASH = "—"
 
 
-def fmt_currency(n):
+def fmt_currency(n, currency="USD"):
     if n is None:
         return DASH
     try:
         n = float(n)
     except (TypeError, ValueError):
         return DASH
+    prefix = "$" if currency == "USD" else f"{currency} "
     if n >= 1e12:
-        return f"${n / 1e12:.2f}T"
+        return f"{prefix}{n / 1e12:.2f}T"
     if n >= 1e9:
-        return f"${n / 1e9:.1f}B"
+        return f"{prefix}{n / 1e9:.1f}B"
     if n >= 1e6:
-        return f"${n / 1e6:.0f}M"
-    return f"${n:,.0f}"
+        return f"{prefix}{n / 1e6:.0f}M"
+    return f"{prefix}{n:,.0f}"
 
 
 def fmt_pct(n):
@@ -84,9 +85,10 @@ def fetch_one(ticker: str) -> dict:
         info = yf.Ticker(ticker).info
     except Exception as exc:
         return {"error": f"yfinance fetch failed: {exc}"}
+    currency = info.get("financialCurrency", "USD") or "USD"
     return {
-        "marketCap": fmt_currency(info.get("marketCap")),
-        "revenue": fmt_currency(info.get("totalRevenue")),
+        "marketCap": fmt_currency(info.get("marketCap"), currency),
+        "revenue": fmt_currency(info.get("totalRevenue"), currency),
         "pe": fmt_ratio(info.get("trailingPE")),
         "revGrowth": fmt_pct(info.get("revenueGrowth")),
         "employees": fmt_int(info.get("fullTimeEmployees")),
