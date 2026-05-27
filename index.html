@@ -1001,6 +1001,9 @@
       grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
       gap: 48px;
     }
+    .expand-columns > .expand-col[style*="grid-column"] {
+      margin-top: 16px;
+    }
     .expand-col h4 {
       font-size: 10.5px;
       letter-spacing: 0.22em;
@@ -1162,6 +1165,16 @@
       border: 1px solid var(--accent);
       font-family: var(--sans);
     }
+
+    /* ─── Judgment Badges ───────────────────────────── */
+    .judgment-badge {
+      padding: 8px 0;
+      border-bottom: 1px dashed var(--rule-soft);
+      font-size: 13px;
+      line-height: 1.45;
+      overflow: hidden;
+    }
+    .judgment-badge:last-child { border-bottom: 0; }
 
     .table-hint {
       display: inline-block;
@@ -1693,6 +1706,7 @@
   <script>
     let COMPANIES = {};
     let DATA_UPDATED_AT = null;
+    let JUDGMENTS_BY_TICKER = {};  // populated by loadJudgments()
 
     const FIELD_DASH = "—";
     const LIVE_DEFAULTS = {
@@ -1727,6 +1741,56 @@
           el.style.color = "var(--grey-1)";
         }
       }
+    }
+
+    // ─── Judgment data loader ────────────────────────────────────
+    async function loadJudgments() {
+      try {
+        const resp = await fetch("./data/judgments/latest.json", { cache: "no-cache" });
+        if (!resp.ok) return;
+        const data = await resp.json();
+        // group by ticker, newest-first (already sorted by update_data.py)
+        data.judgments.forEach(j => {
+          if (!JUDGMENTS_BY_TICKER[j.ticker]) JUDGMENTS_BY_TICKER[j.ticker] = [];
+          JUDGMENTS_BY_TICKER[j.ticker].push(j);
+        });
+        rerenderOpenExpand();
+      } catch (e) {
+        // fetch fails when opened as file:// — silent fallback is expected
+      }
+    }
+
+    function buildJudgmentSection(ticker) {
+      const jlist = JUDGMENTS_BY_TICKER[ticker];
+      if (!jlist || jlist.length === 0) return "";
+      const dirColors = {
+        improving:    "#16a34a",
+        stable:       "#ca8a04",
+        deteriorating:"#dc2626",
+        tbd:          "#6b7280",
+      };
+      const statusLabels = {
+        "open":             "open",
+        "resolved-correct": "✓ correct",
+        "resolved-wrong":   "✗ wrong",
+        "expired":          "expired",
+      };
+      const rows = jlist.map(j => {
+        const color = dirColors[j.direction] || "#6b7280";
+        const statusLabel = statusLabels[j.status] || j.status;
+        return `
+          <div class="judgment-badge">
+            <span style="color:${color};font-weight:600">● ${j.direction}</span>
+            <span style="color:#6b7280;margin-left:8px">${j.metric}</span>
+            <span style="margin-left:8px;font-size:11px;color:#9ca3af">threshold: ${j.threshold}</span>
+            <span style="float:right;font-size:11px;color:#9ca3af">↗ ${j.deadline} &nbsp;·&nbsp; ${statusLabel}</span>
+          </div>`;
+      }).join("");
+      return `
+        <section class="expand-col" style="grid-column:1/-1;margin-top:0">
+          <h4>当前判断 · Active Judgments</h4>
+          ${rows}
+        </section>`;
     }
 
     function updateMasthead() {
@@ -1804,6 +1868,7 @@
                   <em>${c.insiderNarrative}</em>
                 </div>
               </section>
+              ${buildJudgmentSection(ticker)}
             </div>
             <div class="expand-footer">
               <p class="pilot-note">${c.pilotNote}</p>
@@ -1857,6 +1922,7 @@
     });
 
     loadCompanyData();
+    loadJudgments();
   </script>
 </body>
 </html>
