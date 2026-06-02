@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-01T12:41:07+00:00",
+  "updatedAt": "2026-06-02T11:20:23+00:00",
   "tickers": [
     "CRM",
     "NOW",
@@ -24,17 +24,16 @@
   ],
   "companies": {
     "CRM": {
-      "marketCap": "$156.5B",
+      "marketCap": "$171.7B",
       "revenue": "$42.8B",
-      "pe": "22",
+      "pe": "24",
       "revGrowth": "+13%",
       "employees": "83K",
-      "price": "$191.10",
-      "change30dPct": "+5.5%",
-      "change90dPct": "-1.9%",
-      "change30dRaw": 5.451939529996963,
+      "price": "$209.60",
+      "change30dPct": "+18.7%",
+      "change90dPct": "+8.6%",
+      "change30dRaw": 18.733364047412636,
       "priceHistory": [
-        232.83,
         234.71,
         238.72,
         247.46,
@@ -157,22 +156,22 @@
         179.08,
         177.51,
         176.17,
-        191.1
+        191.1,
+        209.6
       ],
       "priceCurrency": "USD"
     },
     "NOW": {
-      "marketCap": "$128.3B",
+      "marketCap": "$140.1B",
       "revenue": "$14.0B",
-      "pe": "74",
+      "pe": "81",
       "revGrowth": "+22%",
       "employees": "29K",
-      "price": "$124.37",
-      "change30dPct": "+39.9%",
-      "change90dPct": "+15.1%",
-      "change30dRaw": 39.91450511930745,
+      "price": "$135.86",
+      "change30dPct": "+53.8%",
+      "change90dPct": "+24.2%",
+      "change30dRaw": 53.84441667570916,
       "priceHistory": [
-        164.41,
         164.88,
         166.58,
         167.77,
@@ -295,22 +294,22 @@
         99.92,
         102.12,
         108.73,
-        124.37
+        124.37,
+        135.86
       ],
       "priceCurrency": "USD"
     },
     "WDAY": {
-      "marketCap": "$36.1B",
+      "marketCap": "$38.8B",
       "revenue": "$9.9B",
-      "pe": "45",
+      "pe": "49",
       "revGrowth": "+14%",
       "employees": "21K",
-      "price": "$146.19",
-      "change30dPct": "+19.4%",
-      "change90dPct": "+9.3%",
-      "change30dRaw": 19.407009782737063,
+      "price": "$157.23",
+      "change30dPct": "+28.5%",
+      "change90dPct": "+17.3%",
+      "change30dRaw": 28.45587726099503,
       "priceHistory": [
-        213.35,
         213.06,
         214.84,
         216.62,
@@ -433,22 +432,22 @@
         124.02,
         124.5,
         130.01,
-        146.19
+        146.19,
+        157.23
       ],
       "priceCurrency": "USD"
     },
     "SNOW": {
-      "marketCap": "$88.6B",
+      "marketCap": "$97.1B",
       "revenue": "$5.0B",
       "pe": "—",
       "revGrowth": "+34%",
       "employees": "9K",
-      "price": "$255.55",
-      "change30dPct": "+81.0%",
-      "change90dPct": "+51.7%",
-      "change30dRaw": 80.95878830391463,
+      "price": "$280.16",
+      "change30dPct": "+105.3%",
+      "change90dPct": "+64.5%",
+      "change30dRaw": 105.29054089259273,
       "priceHistory": [
-        252.0,
         259.68,
         265.0,
         234.77,
@@ -571,22 +570,22 @@
         177.6,
         175.26,
         239.2,
-        255.55
+        255.55,
+        280.16
       ],
       "priceCurrency": "USD"
     },
     "DDOG": {
-      "marketCap": "$88.0B",
+      "marketCap": "$98.8B",
       "revenue": "$3.7B",
-      "pe": "618",
+      "pe": "712",
       "revGrowth": "+32%",
       "employees": "8K",
-      "price": "$247.35",
-      "change30dPct": "+84.6%",
-      "change90dPct": "+120.9%",
-      "change30dRaw": 84.61711747366014,
+      "price": "$277.49",
+      "change30dPct": "+109.9%",
+      "change90dPct": "+149.7%",
+      "change30dRaw": 109.91753166611335,
       "priceHistory": [
-        157.9,
         156.48,
         155.83,
         153.0,
@@ -709,22 +708,22 @@
         223.65,
         221.81,
         225.24,
-        247.35
+        247.35,
+        277.49
       ],
       "priceCurrency": "USD"
     },
     "HUBS": {
-      "marketCap": "$11.3B",
+      "marketCap": "$13.4B",
       "revenue": "$3.3B",
-      "pe": "116",
+      "pe": "139",
       "revGrowth": "+23%",
       "employees": "9K",
-      "price": "$220.63",
-      "change30dPct": "-2.9%",
-      "change90dPct": "-16.6%",
-      "change30dRaw": -2.9130891604785436,
+      "price": "$262.20",
+      "change30dPct": "+18.2%",
+      "change90dPct": "-0.5%",
+      "change30dRaw": 18.235939169338632,
       "priceHistory": [
-        373.4,
         373.32,
         374.97,
         377.04,
@@ -847,22 +846,22 @@
         197.99,
         200.72,
         198.8,
-        220.63
+        220.63,
+        262.2
       ],
       "priceCurrency": "USD"
     },
     "TEAM": {
-      "marketCap": "$27.3B",
+      "marketCap": "$29.4B",
       "revenue": "$6.2B",
       "pe": "—",
       "revGrowth": "+32%",
       "employees": "14K",
-      "price": "$107.61",
-      "change30dPct": "+52.7%",
-      "change90dPct": "+43.2%",
-      "change30dRaw": 52.659957258504875,
+      "price": "$115.95",
+      "change30dPct": "+69.0%",
+      "change90dPct": "+57.1%",
+      "change30dRaw": 69.04797075224343,
       "priceHistory": [
-        151.58,
         153.91,
         156.76,
         156.54,
@@ -985,22 +984,22 @@
         84.92,
         89.07,
         93.29,
-        107.61
+        107.61,
+        115.95
       ],
       "priceCurrency": "USD"
     },
     "MDB": {
-      "marketCap": "$27.0B",
+      "marketCap": "$32.5B",
       "revenue": "$2.6B",
       "pe": "—",
       "revGrowth": "+25%",
       "employees": "6K",
-      "price": "$335.55",
-      "change30dPct": "+29.9%",
-      "change90dPct": "+2.2%",
-      "change30dRaw": 29.912105266204982,
+      "price": "$403.88",
+      "change30dPct": "+61.0%",
+      "change90dPct": "+24.3%",
+      "change30dRaw": 61.017422929671675,
       "priceHistory": [
-        328.87,
         401.99,
         405.94,
         396.73,
@@ -1123,22 +1122,22 @@
         307.35,
         294.46,
         325.68,
-        335.55
+        335.55,
+        403.88
       ],
       "priceCurrency": "USD"
     },
     "NVDA": {
-      "marketCap": "$5.11T",
+      "marketCap": "$5.43T",
       "revenue": "$253.5B",
-      "pe": "32",
+      "pe": "34",
       "revGrowth": "+85%",
       "employees": "42K",
-      "price": "$211.14",
-      "change30dPct": "+0.9%",
-      "change90dPct": "+19.2%",
-      "change30dRaw": 0.9032255147662704,
+      "price": "$224.36",
+      "change30dPct": "+12.4%",
+      "change90dPct": "+23.0%",
+      "change30dRaw": 12.421702849296047,
       "priceHistory": [
-        179.92,
         181.46,
         179.59,
         183.38,
@@ -1261,22 +1260,22 @@
         214.86,
         212.6,
         214.25,
-        211.14
+        211.14,
+        224.36
       ],
       "priceCurrency": "USD"
     },
     "AMD": {
-      "marketCap": "$841.6B",
+      "marketCap": "$831.8B",
       "revenue": "$37.5B",
-      "pe": "173",
+      "pe": "169",
       "revGrowth": "+38%",
       "employees": "31K",
-      "price": "$516.10",
-      "change30dPct": "+53.1%",
-      "change90dPct": "+157.8%",
-      "change30dRaw": 53.09542820207813,
+      "price": "$510.13",
+      "change30dPct": "+43.9%",
+      "change90dPct": "+156.8%",
+      "change30dRaw": 43.90533412397184,
       "priceHistory": [
-        219.76,
         215.24,
         217.6,
         215.98,
@@ -1399,22 +1398,22 @@
         503.89,
         495.54,
         518.09,
-        516.1
+        516.1,
+        510.13
       ],
       "priceCurrency": "USD"
     },
     "INTC": {
-      "marketCap": "$576.4B",
+      "marketCap": "$549.5B",
       "revenue": "$53.8B",
       "pe": "—",
       "revGrowth": "+7%",
       "employees": "85K",
-      "price": "$114.68",
-      "change30dPct": "+21.0%",
-      "change90dPct": "+151.4%",
-      "change30dRaw": 21.034301113641995,
+      "price": "$109.33",
+      "change30dPct": "+15.7%",
+      "change90dPct": "+140.3%",
+      "change30dRaw": 15.717610019571726,
       "priceHistory": [
-        40.01,
         43.47,
         43.76,
         40.5,
@@ -1537,22 +1536,22 @@
         123.52,
         121.77,
         120.89,
-        114.68
+        114.68,
+        109.33
       ],
       "priceCurrency": "USD"
     },
     "MU": {
-      "marketCap": "$1.10T",
+      "marketCap": "$1.17T",
       "revenue": "$58.1B",
-      "pe": "46",
+      "pe": "49",
       "revGrowth": "+196%",
       "employees": "53K",
-      "price": "$971.00",
-      "change30dPct": "+87.3%",
-      "change90dPct": "+135.5%",
-      "change30dRaw": 87.28541427466337,
+      "price": "$1,036",
+      "change30dPct": "+100.2%",
+      "change90dPct": "+150.9%",
+      "change30dRaw": 100.22817962955686,
       "priceHistory": [
-        240.46,
         239.49,
         234.16,
         226.65,
@@ -1675,22 +1674,22 @@
         895.88,
         928.41,
         923.52,
-        971.0
+        971.0,
+        1035.5
       ],
       "priceCurrency": "USD"
     },
     "QCOM": {
-      "marketCap": "$264.6B",
+      "marketCap": "$241.4B",
       "revenue": "$44.5B",
-      "pe": "27",
+      "pe": "25",
       "revGrowth": "-4%",
       "employees": "52K",
-      "price": "$251.02",
-      "change30dPct": "+60.9%",
-      "change90dPct": "+76.3%",
-      "change30dRaw": 60.91025914901343,
+      "price": "$228.99",
+      "change30dPct": "+27.5%",
+      "change90dPct": "+62.4%",
+      "change30dRaw": 27.514201558252193,
       "priceHistory": [
-        168.04,
         170.7,
         175.07,
         174.35,
@@ -1813,22 +1812,22 @@
         248.82,
         233.4,
         243.29,
-        251.02
+        251.02,
+        228.99
       ],
       "priceCurrency": "USD"
     },
     "AMAT": {
-      "marketCap": "$357.3B",
+      "marketCap": "$363.8B",
       "revenue": "$29.0B",
-      "pe": "42",
+      "pe": "43",
       "revGrowth": "+11%",
       "employees": "36K",
-      "price": "$450.06",
-      "change30dPct": "+17.6%",
-      "change90dPct": "+20.9%",
-      "change30dRaw": 17.63506674678339,
+      "price": "$458.17",
+      "change30dPct": "+16.1%",
+      "change90dPct": "+23.1%",
+      "change30dRaw": 16.142367302026006,
       "priceHistory": [
-        254.75,
         265.33,
         268.63,
         269.44,
@@ -1951,22 +1950,22 @@
         454.89,
         448.25,
         449.68,
-        450.06
+        450.06,
+        458.17
       ],
       "priceCurrency": "USD"
     },
     "LRCX": {
-      "marketCap": "$397.9B",
+      "marketCap": "$396.6B",
       "revenue": "$21.7B",
       "pe": "60",
       "revGrowth": "+24%",
       "employees": "21K",
-      "price": "$318.18",
-      "change30dPct": "+27.9%",
-      "change90dPct": "+36.0%",
-      "change30dRaw": 27.911554844535182,
+      "price": "$317.12",
+      "change30dPct": "+23.0%",
+      "change90dPct": "+37.3%",
+      "change30dRaw": 22.98146790198208,
       "priceHistory": [
-        154.79,
         158.19,
         159.75,
         157.09,
@@ -2089,22 +2088,22 @@
         322.68,
         318.93,
         318.0,
-        318.18
+        318.18,
+        317.12
       ],
       "priceCurrency": "USD"
     },
     "OKTA": {
-      "marketCap": "$21.4B",
+      "marketCap": "$24.3B",
       "revenue": "$3.0B",
-      "pe": "89",
+      "pe": "101",
       "revGrowth": "+11%",
       "employees": "6K",
-      "price": "$123.27",
-      "change30dPct": "+61.9%",
-      "change90dPct": "+70.0%",
-      "change30dRaw": 61.856605456539505,
+      "price": "$139.79",
+      "change30dPct": "+89.8%",
+      "change90dPct": "+89.0%",
+      "change30dRaw": 89.80310983023381,
       "priceHistory": [
-        80.64,
         81.87,
         86.34,
         85.9,
@@ -2227,22 +2226,22 @@
         93.81,
         89.5,
         94.72,
-        123.27
+        123.27,
+        139.79
       ],
       "priceCurrency": "USD"
     },
     "TWLO": {
-      "marketCap": "$28.9B",
+      "marketCap": "$34.5B",
       "revenue": "$5.3B",
-      "pe": "285",
+      "pe": "345",
       "revGrowth": "+20%",
       "employees": "6K",
-      "price": "$190.64",
-      "change30dPct": "+35.3%",
-      "change90dPct": "+57.6%",
-      "change30dRaw": 35.29202642474378,
+      "price": "$227.54",
+      "change30dPct": "+53.7%",
+      "change90dPct": "+83.8%",
+      "change30dRaw": 53.68093815892803,
       "priceHistory": [
-        127.56,
         129.77,
         128.12,
         125.22,
@@ -2365,22 +2364,22 @@
         189.65,
         181.57,
         184.6,
-        190.64
+        190.64,
+        227.54
       ],
       "priceCurrency": "USD"
     },
     "KLAC": {
-      "marketCap": "$251.0B",
+      "marketCap": "$253.4B",
       "revenue": "$13.1B",
-      "pe": "54",
+      "pe": "55",
       "revGrowth": "+12%",
       "employees": "15K",
-      "price": "$1,922",
-      "change30dPct": "+5.8%",
-      "change90dPct": "+26.1%",
-      "change30dRaw": 5.808799768146988,
+      "price": "$1,940",
+      "change30dPct": "+10.8%",
+      "change90dPct": "+26.4%",
+      "change30dRaw": 10.837264896870868,
       "priceHistory": [
-        1157.18,
         1189.86,
         1211.75,
         1208.08,
@@ -2503,22 +2502,22 @@
         2011.39,
         1957.19,
         1927.63,
-        1921.71
+        1921.71,
+        1940.04
       ],
       "priceCurrency": "USD"
     },
     "TSLA": {
-      "marketCap": "$1.64T",
+      "marketCap": "$1.56T",
       "revenue": "$97.9B",
-      "pe": "400",
+      "pe": "385",
       "revGrowth": "+16%",
       "employees": "135K",
-      "price": "$435.79",
-      "change30dPct": "+16.9%",
-      "change90dPct": "+8.3%",
-      "change30dRaw": 16.896465347239786,
+      "price": "$415.88",
+      "change30dPct": "+9.0%",
+      "change90dPct": "+3.1%",
+      "change30dRaw": 8.974661206347534,
       "priceHistory": [
-        430.14,
         429.24,
         446.74,
         454.53,
@@ -2641,22 +2640,22 @@
         433.59,
         440.36,
         442.1,
-        435.79
+        435.79,
+        415.88
       ],
       "priceCurrency": "USD"
     },
     "TSM": {
-      "marketCap": "TWD 2.17T",
+      "marketCap": "TWD 2.26T",
       "revenue": "TWD 4.10T",
-      "pe": "36",
+      "pe": "37",
       "revGrowth": "+35%",
       "employees": "77K",
-      "price": "TWD 418.45",
-      "change30dPct": "+6.3%",
-      "change90dPct": "+11.7%",
-      "change30dRaw": 6.251435003476558,
+      "price": "TWD 435.63",
+      "change30dPct": "+10.0%",
+      "change90dPct": "+18.0%",
+      "change30dRaw": 9.99091237896721,
       "priceHistory": [
-        287.68,
         292.09,
         295.45,
         292.93,
@@ -2779,7 +2778,8 @@
         412.32,
         422.73,
         424.86,
-        418.45
+        418.45,
+        435.63
       ],
       "priceCurrency": "TWD"
     }
