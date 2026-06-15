@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-14T10:26:43+00:00",
+  "updatedAt": "2026-06-15T13:18:21+00:00",
   "tickers": [
     "CRM",
     "NOW",
@@ -2094,7 +2094,7 @@
       "priceCurrency": "USD"
     },
     "OKTA": {
-      "marketCap": "$20.2B",
+      "marketCap": "$20.4B",
       "revenue": "$3.0B",
       "pe": "84",
       "revGrowth": "+11%",
