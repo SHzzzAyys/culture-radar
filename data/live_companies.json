@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-20T10:10:08+00:00",
+  "updatedAt": "2026-06-21T10:32:26+00:00",
   "tickers": [
     "CRM",
     "NOW",
@@ -578,7 +578,7 @@
     "DDOG": {
       "marketCap": "$79.4B",
       "revenue": "$3.7B",
-      "pe": "572",
+      "pe": "587",
       "revGrowth": "+32%",
       "employees": "8K",
       "price": "$223.00",
@@ -1268,7 +1268,7 @@
     "AMD": {
       "marketCap": "$876.2B",
       "revenue": "$37.5B",
-      "pe": "180",
+      "pe": "179",
       "revGrowth": "+38%",
       "employees": "31K",
       "price": "$537.37",
@@ -2234,7 +2234,7 @@
     "TWLO": {
       "marketCap": "$28.3B",
       "revenue": "$5.3B",
-      "pe": "282",
+      "pe": "286",
       "revGrowth": "+20%",
       "employees": "6K",
       "price": "$186.17",
@@ -2372,7 +2372,7 @@
     "KLAC": {
       "marketCap": "$339.1B",
       "revenue": "$13.1B",
-      "pe": "73",
+      "pe": "74",
       "revGrowth": "+12%",
       "employees": "15K",
       "price": "$259.56",
@@ -2510,7 +2510,7 @@
     "TSLA": {
       "marketCap": "$1.50T",
       "revenue": "$97.9B",
-      "pe": "367",
+      "pe": "371",
       "revGrowth": "+16%",
       "employees": "135K",
       "price": "$400.49",
