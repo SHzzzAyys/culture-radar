@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-03T10:06:53+00:00",
+  "updatedAt": "2026-07-04T09:25:13+00:00",
   "tickers": [
     "CRM",
     "NOW",
@@ -2510,7 +2510,7 @@
     "TSLA": {
       "marketCap": "$1.48T",
       "revenue": "$97.9B",
-      "pe": "354",
+      "pe": "358",
       "revGrowth": "+16%",
       "employees": "135K",
       "price": "$393.45",
