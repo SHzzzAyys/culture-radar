@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-19T09:05:43+00:00",
+  "updatedAt": "2026-07-20T10:14:37+00:00",
   "tickers": [
     "CRM",
     "NOW",
@@ -24,7 +24,7 @@
   ],
   "companies": {
     "CRM": {
-      "marketCap": "$139.9B",
+      "marketCap": "—",
       "revenue": "$42.8B",
       "pe": "20",
       "revGrowth": "+13%",
@@ -1266,7 +1266,7 @@
       "priceCurrency": "USD"
     },
     "AMD": {
-      "marketCap": "$808.4B",
+      "marketCap": "—",
       "revenue": "$37.5B",
       "pe": "164",
       "revGrowth": "+38%",
@@ -1542,7 +1542,7 @@
       "priceCurrency": "USD"
     },
     "MU": {
-      "marketCap": "$958.8B",
+      "marketCap": "—",
       "revenue": "$90.3B",
       "pe": "19",
       "revGrowth": "+346%",
@@ -2094,7 +2094,7 @@
       "priceCurrency": "USD"
     },
     "OKTA": {
-      "marketCap": "$26.2B",
+      "marketCap": "$26.0B",
       "revenue": "$3.0B",
       "pe": "109",
       "revGrowth": "+11%",
