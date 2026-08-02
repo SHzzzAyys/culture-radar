@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-01T09:07:29+00:00",
+  "updatedAt": "2026-08-02T09:10:25+00:00",
   "tickers": [
     "CRM",
     "NOW",
@@ -24,7 +24,7 @@
   ],
   "companies": {
     "CRM": {
-      "marketCap": "—",
+      "marketCap": "$150.7B",
       "revenue": "$42.8B",
       "pe": "21",
       "revGrowth": "+13%",
@@ -165,7 +165,7 @@
     "NOW": {
       "marketCap": "$115.0B",
       "revenue": "$14.7B",
-      "pe": "69",
+      "pe": "70",
       "revGrowth": "+24%",
       "employees": "29K",
       "price": "$111.23",
@@ -304,7 +304,7 @@
     "WDAY": {
       "marketCap": "$39.6B",
       "revenue": "$9.9B",
-      "pe": "49",
+      "pe": "50",
       "revGrowth": "+14%",
       "employees": "21K",
       "price": "$160.34",
@@ -721,7 +721,7 @@
     "HUBS": {
       "marketCap": "$12.2B",
       "revenue": "$3.3B",
-      "pe": "122",
+      "pe": "125",
       "revGrowth": "+23%",
       "employees": "9K",
       "price": "$237.36",
@@ -1138,7 +1138,7 @@
     "NVDA": {
       "marketCap": "$4.86T",
       "revenue": "$253.5B",
-      "pe": "30",
+      "pe": "31",
       "revGrowth": "+85%",
       "employees": "42K",
       "price": "$200.75",
@@ -1275,9 +1275,9 @@
       "priceCurrency": "USD"
     },
     "AMD": {
-      "marketCap": "—",
+      "marketCap": "$776.4B",
       "revenue": "$37.5B",
-      "pe": "161",
+      "pe": "159",
       "revGrowth": "+38%",
       "employees": "31K",
       "price": "$476.15",
@@ -1553,9 +1553,9 @@
       "priceCurrency": "USD"
     },
     "MU": {
-      "marketCap": "—",
+      "marketCap": "$929.5B",
       "revenue": "$90.3B",
-      "pe": "20",
+      "pe": "19",
       "revGrowth": "+346%",
       "employees": "53K",
       "price": "$823.03",
@@ -1833,7 +1833,7 @@
     "AMAT": {
       "marketCap": "$403.1B",
       "revenue": "$29.0B",
-      "pe": "47",
+      "pe": "48",
       "revGrowth": "+11%",
       "employees": "36K",
       "price": "$507.67",
@@ -1972,7 +1972,7 @@
     "LRCX": {
       "marketCap": "$366.6B",
       "revenue": "$23.2B",
-      "pe": "52",
+      "pe": "51",
       "revGrowth": "+30%",
       "employees": "—",
       "price": "$293.02",
@@ -2109,9 +2109,9 @@
       "priceCurrency": "USD"
     },
     "OKTA": {
-      "marketCap": "$24.7B",
+      "marketCap": "$24.9B",
       "revenue": "$3.0B",
-      "pe": "102",
+      "pe": "103",
       "revGrowth": "+11%",
       "employees": "6K",
       "price": "$141.93",
@@ -2250,7 +2250,7 @@
     "TWLO": {
       "marketCap": "$30.0B",
       "revenue": "$5.3B",
-      "pe": "286",
+      "pe": "304",
       "revGrowth": "+20%",
       "employees": "6K",
       "price": "$197.35",
@@ -2389,7 +2389,7 @@
     "KLAC": {
       "marketCap": "$238.8B",
       "revenue": "$13.6B",
-      "pe": "49",
+      "pe": "50",
       "revGrowth": "+15%",
       "employees": "—",
       "price": "$182.82",
@@ -2667,7 +2667,7 @@
     "TSM": {
       "marketCap": "TWD 2.10T",
       "revenue": "TWD 4.44T",
-      "pe": "35",
+      "pe": "36",
       "revGrowth": "+36%",
       "employees": "77K",
       "price": "TWD 404.25",
