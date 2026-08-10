@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-09T07:54:47+00:00",
+  "updatedAt": "2026-08-10T08:40:26+00:00",
   "tickers": [
     "CRM",
     "NOW",
@@ -24,7 +24,7 @@
   ],
   "companies": {
     "CRM": {
-      "marketCap": "$157.9B",
+      "marketCap": "—",
       "revenue": "$42.8B",
       "pe": "22",
       "revGrowth": "+13%",
@@ -719,7 +719,7 @@
       "priceCurrency": "USD"
     },
     "HUBS": {
-      "marketCap": "$10.5B",
+      "marketCap": "$10.8B",
       "revenue": "$3.4B",
       "pe": "75",
       "revGrowth": "+20%",
@@ -1553,7 +1553,7 @@
       "priceCurrency": "USD"
     },
     "MU": {
-      "marketCap": "$991.1B",
+      "marketCap": "—",
       "revenue": "$90.3B",
       "pe": "20",
       "revGrowth": "+346%",
@@ -2109,7 +2109,7 @@
       "priceCurrency": "USD"
     },
     "OKTA": {
-      "marketCap": "$26.0B",
+      "marketCap": "$25.8B",
       "revenue": "$3.0B",
       "pe": "107",
       "revGrowth": "+11%",
@@ -2252,7 +2252,7 @@
       "revenue": "$5.6B",
       "pe": "34",
       "revGrowth": "+22%",
-      "employees": "6K",
+      "employees": "5K",
       "price": "$241.28",
       "change30dPct": "+10.4%",
       "change90dPct": "+22.4%",
