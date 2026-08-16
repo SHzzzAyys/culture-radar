@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-15T07:32:19+00:00",
+  "updatedAt": "2026-08-16T07:32:49+00:00",
   "tickers": [
     "CRM",
     "NOW",
@@ -24,7 +24,7 @@
   ],
   "companies": {
     "CRM": {
-      "marketCap": "—",
+      "marketCap": "$160.7B",
       "revenue": "$42.8B",
       "pe": "23",
       "revGrowth": "+13%",
@@ -165,7 +165,7 @@
     "NOW": {
       "marketCap": "$128.2B",
       "revenue": "$14.7B",
-      "pe": "79",
+      "pe": "78",
       "revGrowth": "+24%",
       "employees": "29K",
       "price": "$124.00",
@@ -304,7 +304,7 @@
     "WDAY": {
       "marketCap": "$49.1B",
       "revenue": "$9.9B",
-      "pe": "65",
+      "pe": "62",
       "revGrowth": "+14%",
       "employees": "21K",
       "price": "$198.68",
@@ -719,15 +719,15 @@
       "priceCurrency": "USD"
     },
     "HUBS": {
-      "marketCap": "$11.5B",
+      "marketCap": "$11.2B",
       "revenue": "$3.4B",
-      "pe": "86",
+      "pe": "80",
       "revGrowth": "+20%",
       "employees": "9K",
       "price": "$224.14",
-      "change30dPct": "-0.2%",
-      "change90dPct": "+22.2%",
-      "change30dRaw": -0.19148057200243374,
+      "change30dPct": "+4.1%",
+      "change90dPct": "+25.2%",
+      "change30dRaw": 4.0913934350430115,
       "priceHistory": [
         247.31,
         250.14,
@@ -850,7 +850,6 @@
         202.43,
         210.45,
         215.91,
-        220.51,
         210.12,
         240.51,
         224.14
@@ -1277,7 +1276,7 @@
     "AMD": {
       "marketCap": "$839.7B",
       "revenue": "$41.3B",
-      "pe": "123",
+      "pe": "132",
       "revGrowth": "+50%",
       "employees": "31K",
       "price": "$514.39",
@@ -1553,9 +1552,9 @@
       "priceCurrency": "USD"
     },
     "MU": {
-      "marketCap": "—",
+      "marketCap": "$1.10T",
       "revenue": "$90.3B",
-      "pe": "21",
+      "pe": "22",
       "revGrowth": "+346%",
       "employees": "53K",
       "price": "$971.66",
@@ -1832,10 +1831,10 @@
     },
     "AMAT": {
       "marketCap": "$402.7B",
-      "revenue": "$29.0B",
-      "pe": "46",
-      "revGrowth": "+11%",
-      "employees": "36K",
+      "revenue": "$30.8B",
+      "pe": "44",
+      "revGrowth": "+25%",
+      "employees": "39K",
       "price": "$507.18",
       "change30dPct": "-9.6%",
       "change90dPct": "+15.1%",
@@ -1972,7 +1971,7 @@
     "LRCX": {
       "marketCap": "$415.9B",
       "revenue": "$23.2B",
-      "pe": "59",
+      "pe": "58",
       "revGrowth": "+30%",
       "employees": "23K",
       "price": "$332.36",
@@ -2109,15 +2108,15 @@
       "priceCurrency": "USD"
     },
     "OKTA": {
-      "marketCap": "$25.6B",
+      "marketCap": "$25.9B",
       "revenue": "$3.0B",
-      "pe": "113",
+      "pe": "106",
       "revGrowth": "+11%",
       "employees": "6K",
       "price": "$147.43",
-      "change30dPct": "-0.2%",
-      "change90dPct": "+81.9%",
-      "change30dRaw": -0.2098367441831117,
+      "change30dPct": "-2.3%",
+      "change90dPct": "+88.5%",
+      "change30dRaw": -2.2736364315876556,
       "priceHistory": [
         82.46,
         82.93,
@@ -2240,7 +2239,6 @@
         143.51,
         148.32,
         150.77,
-        150.33,
         147.3,
         154.95,
         147.43
@@ -2250,7 +2248,7 @@
     "TWLO": {
       "marketCap": "$36.6B",
       "revenue": "$5.6B",
-      "pe": "34",
+      "pe": "33",
       "revGrowth": "+22%",
       "employees": "5K",
       "price": "$238.20",
@@ -2389,7 +2387,7 @@
     "KLAC": {
       "marketCap": "$266.2B",
       "revenue": "$13.6B",
-      "pe": "57",
+      "pe": "56",
       "revGrowth": "+15%",
       "employees": "17K",
       "price": "$203.72",
