@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-05T11:10:25+00:00",
+  "updatedAt": "2026-09-06T11:33:36+00:00",
   "tickers": [
     "CRM",
     "NOW",
@@ -168,7 +168,7 @@
     "NOW": {
       "marketCap": "$146.0B",
       "revenue": "$14.7B",
-      "pe": "91",
+      "pe": "88",
       "revGrowth": "+24%",
       "employees": "29K",
       "price": "$141.26",
@@ -310,7 +310,7 @@
     "WDAY": {
       "marketCap": "$47.2B",
       "revenue": "$10.2B",
-      "pe": "42",
+      "pe": "40",
       "revGrowth": "+13%",
       "employees": "21K",
       "price": "$195.79",
@@ -734,7 +734,7 @@
       "priceCurrency": "USD"
     },
     "HUBS": {
-      "marketCap": "$12.7B",
+      "marketCap": "$12.3B",
       "revenue": "$3.4B",
       "pe": "88",
       "revGrowth": "+20%",
@@ -1020,7 +1020,7 @@
     "MDB": {
       "marketCap": "$29.7B",
       "revenue": "$2.8B",
-      "pe": "559",
+      "pe": "527",
       "revGrowth": "+30%",
       "employees": "6K",
       "price": "$368.74",
@@ -1304,7 +1304,7 @@
     "AMD": {
       "marketCap": "$779.6B",
       "revenue": "$41.3B",
-      "pe": "116",
+      "pe": "122",
       "revGrowth": "+50%",
       "employees": "31K",
       "price": "$477.57",
@@ -2014,7 +2014,7 @@
     "LRCX": {
       "marketCap": "$385.0B",
       "revenue": "$23.2B",
-      "pe": "51",
+      "pe": "54",
       "revGrowth": "+30%",
       "employees": "23K",
       "price": "$307.65",
@@ -2298,7 +2298,7 @@
     "TWLO": {
       "marketCap": "$35.8B",
       "revenue": "$5.6B",
-      "pe": "33",
+      "pe": "32",
       "revGrowth": "+22%",
       "employees": "5K",
       "price": "$232.98",
@@ -2440,7 +2440,7 @@
     "KLAC": {
       "marketCap": "$242.5B",
       "revenue": "$13.6B",
-      "pe": "47",
+      "pe": "51",
       "revGrowth": "+15%",
       "employees": "17K",
       "price": "$185.60",
@@ -2582,7 +2582,7 @@
     "TSLA": {
       "marketCap": "$1.40T",
       "revenue": "$103.6B",
-      "pe": "344",
+      "pe": "322",
       "revGrowth": "+26%",
       "employees": "135K",
       "price": "$354.08",
