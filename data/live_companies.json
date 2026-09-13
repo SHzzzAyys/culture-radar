@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-12T11:31:09+00:00",
+  "updatedAt": "2026-09-13T12:36:14+00:00",
   "tickers": [
     "CRM",
     "NOW",
@@ -731,7 +731,7 @@
     "HUBS": {
       "marketCap": "$11.5B",
       "revenue": "$3.4B",
-      "pe": "79",
+      "pe": "80",
       "revGrowth": "+20%",
       "employees": "9K",
       "price": "$225.33",
@@ -1013,7 +1013,7 @@
     "MDB": {
       "marketCap": "$29.1B",
       "revenue": "$2.8B",
-      "pe": "525",
+      "pe": "503",
       "revGrowth": "+30%",
       "employees": "6K",
       "price": "$362.21",
@@ -2141,7 +2141,7 @@
     "OKTA": {
       "marketCap": "$29.1B",
       "revenue": "$3.1B",
-      "pe": "103",
+      "pe": "100",
       "revGrowth": "+11%",
       "employees": "6K",
       "price": "$166.50",
@@ -2282,7 +2282,7 @@
     "TWLO": {
       "marketCap": "$34.9B",
       "revenue": "$5.6B",
-      "pe": "32",
+      "pe": "31",
       "revGrowth": "+22%",
       "employees": "5K",
       "price": "$227.35",
