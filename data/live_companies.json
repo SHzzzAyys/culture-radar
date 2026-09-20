@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-19T11:49:58+00:00",
+  "updatedAt": "2026-09-20T12:05:40+00:00",
   "tickers": [
     "CRM",
     "NOW",
@@ -308,7 +308,7 @@
     "WDAY": {
       "marketCap": "$46.7B",
       "revenue": "$10.2B",
-      "pe": "41",
+      "pe": "40",
       "revGrowth": "+13%",
       "employees": "21K",
       "price": "$193.87",
@@ -729,7 +729,7 @@
       "priceCurrency": "USD"
     },
     "HUBS": {
-      "marketCap": "$10.8B",
+      "marketCap": "$11.1B",
       "revenue": "$3.4B",
       "pe": "77",
       "revGrowth": "+20%",
@@ -1718,7 +1718,7 @@
     "QCOM": {
       "marketCap": "$189.8B",
       "revenue": "$44.1B",
-      "pe": "22",
+      "pe": "20",
       "revGrowth": "-4%",
       "employees": "52K",
       "price": "$177.72",
