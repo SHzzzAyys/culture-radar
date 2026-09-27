@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-26T12:06:25+00:00",
+  "updatedAt": "2026-09-27T12:51:08+00:00",
   "tickers": [
     "CRM",
     "NOW",
@@ -729,7 +729,7 @@
       "priceCurrency": "USD"
     },
     "HUBS": {
-      "marketCap": "$10.7B",
+      "marketCap": "$10.9B",
       "revenue": "$3.4B",
       "pe": "76",
       "revGrowth": "+20%",
@@ -1011,7 +1011,7 @@
       "priceCurrency": "USD"
     },
     "MDB": {
-      "marketCap": "$33.1B",
+      "marketCap": "$33.0B",
       "revenue": "$2.8B",
       "pe": "586",
       "revGrowth": "+30%",
@@ -1295,7 +1295,7 @@
     "AMD": {
       "marketCap": "$1.03T",
       "revenue": "$41.3B",
-      "pe": "162",
+      "pe": "161",
       "revGrowth": "+50%",
       "employees": "31K",
       "price": "$630.63",
@@ -2141,7 +2141,7 @@
     "OKTA": {
       "marketCap": "$34.1B",
       "revenue": "$3.1B",
-      "pe": "118",
+      "pe": "117",
       "revGrowth": "+11%",
       "employees": "6K",
       "price": "$195.19",
