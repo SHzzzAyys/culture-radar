@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-10T13:22:17+00:00",
+  "updatedAt": "2026-10-11T13:50:59+00:00",
   "tickers": [
     "CRM",
     "NOW",
@@ -167,7 +167,7 @@
     "NOW": {
       "marketCap": "$145.6B",
       "revenue": "$14.7B",
-      "pe": "88",
+      "pe": "87",
       "revGrowth": "+24%",
       "employees": "29K",
       "price": "$140.86",
@@ -729,7 +729,7 @@
       "priceCurrency": "USD"
     },
     "HUBS": {
-      "marketCap": "$11.7B",
+      "marketCap": "$11.4B",
       "revenue": "$3.4B",
       "pe": "82",
       "revGrowth": "+20%",
@@ -1011,7 +1011,7 @@
       "priceCurrency": "USD"
     },
     "MDB": {
-      "marketCap": "$31.0B",
+      "marketCap": "$31.1B",
       "revenue": "$2.8B",
       "pe": "536",
       "revGrowth": "+30%",
@@ -2000,7 +2000,7 @@
     "LRCX": {
       "marketCap": "$399.0B",
       "revenue": "$23.2B",
-      "pe": "56",
+      "pe": "55",
       "revGrowth": "+30%",
       "employees": "23K",
       "price": "$318.84",
@@ -2282,7 +2282,7 @@
     "TWLO": {
       "marketCap": "$44.5B",
       "revenue": "$5.6B",
-      "pe": "38",
+      "pe": "40",
       "revGrowth": "+22%",
       "employees": "5K",
       "price": "$289.47",
