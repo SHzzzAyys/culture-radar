@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-17T11:28:18+00:00",
+  "updatedAt": "2026-10-18T11:58:29+00:00",
   "tickers": [
     "CRM",
     "NOW",
@@ -2141,7 +2141,7 @@
     "OKTA": {
       "marketCap": "$32.7B",
       "revenue": "$3.1B",
-      "pe": "121",
+      "pe": "113",
       "revGrowth": "+11%",
       "employees": "6K",
       "price": "$187.26",
