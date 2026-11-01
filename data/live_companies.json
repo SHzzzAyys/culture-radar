@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-31T13:25:38+00:00",
+  "updatedAt": "2026-11-01T14:07:18+00:00",
   "tickers": [
     "CRM",
     "NOW",
@@ -2296,7 +2296,7 @@
       "priceCurrency": "USD"
     },
     "TWLO": {
-      "marketCap": "$31.5B",
+      "marketCap": "$31.7B",
       "revenue": "$5.8B",
       "pe": "28",
       "revGrowth": "+20%",
