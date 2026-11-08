@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-07T13:47:17+00:00",
+  "updatedAt": "2026-11-08T14:07:47+00:00",
   "tickers": [
     "CRM",
     "NOW",
@@ -2012,7 +2012,7 @@
       "priceCurrency": "USD"
     },
     "LRCX": {
-      "marketCap": "$250.8B",
+      "marketCap": "$250.4B",
       "revenue": "$26.1B",
       "pe": "30",
       "revGrowth": "+54%",
